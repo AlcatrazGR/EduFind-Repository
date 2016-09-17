@@ -1,7 +1,9 @@
-package codebrains.edufind;
+package codebrains.edufind.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import codebrains.edufind.R;
 
 public class LoginActivity extends AppCompatActivity {
 
