@@ -17,6 +17,8 @@
         </activity>
         <activity android:name=".Fragments.LoginFragment" >
         </activity>
+        <activity android:name=".Fragments.CreateAccountFragment" >
+        </activity>
     </application>
 
 </manifest>

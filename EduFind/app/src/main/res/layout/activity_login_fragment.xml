@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#3c3f41" >
+    android:layout_height="match_parent">
 
     <RelativeLayout
         xmlns:tools="http://schemas.android.com/tools"
@@ -21,8 +20,7 @@
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/textView"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:textColor="#f9f9f9"/>
+            android:layout_marginRight="20dp"/>
 
         <EditText
             android:layout_width="wrap_content"
@@ -34,8 +32,7 @@
             android:layout_alignRight="@+id/usernameEdt"
             android:layout_alignEnd="@+id/usernameEdt"
             android:layout_alignLeft="@+id/textView2"
-            android:layout_alignStart="@+id/textView2"
-            android:textColor="#f9f9f9"/>
+            android:layout_alignStart="@+id/textView2"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,7 +41,6 @@
             android:text="Όνομα χρήστη:"
             android:id="@+id/textView"
             android:layout_marginTop="98dp"
-            android:textColor="#f9f9f9"
             android:layout_alignParentTop="true"
             android:layout_alignLeft="@+id/usernameEdt"
             android:layout_alignStart="@+id/usernameEdt" />
@@ -58,8 +54,7 @@
             android:layout_below="@+id/usernameEdt"
             android:layout_alignLeft="@+id/usernameEdt"
             android:layout_alignStart="@+id/usernameEdt"
-            android:layout_marginTop="30dp"
-            android:textColor="#f9f9f9"/>
+            android:layout_marginTop="30dp"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -73,16 +68,5 @@
             android:layout_alignRight="@+id/passwordEdt"
             android:layout_alignEnd="@+id/passwordEdt" />
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Εγγραφή"
-            android:id="@+id/signupBtn"
-            android:layout_below="@+id/loginBtn"
-            android:layout_alignLeft="@+id/loginBtn"
-            android:layout_alignStart="@+id/loginBtn"
-            android:layout_alignRight="@+id/loginBtn"
-            android:layout_alignEnd="@+id/loginBtn" />
     </RelativeLayout>
 </ScrollView>

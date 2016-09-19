@@ -4,6 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import codebrains.edufind.Fragments.CreateAccountFragment;
+import codebrains.edufind.Fragments.LoginFragment;
+
 /**
  * Created by Vasilhs on 9/19/2016.
  */
@@ -20,16 +23,17 @@ public class MainTabsAdapter extends FragmentStatePagerAdapter {
 
         switch(position) {
             case 0:
+                return new LoginFragment();
 
-            break;
+            case 1:
+                return new CreateAccountFragment();
         }
-
 
         return null;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return TOTAL_TABS;
     }
 }
