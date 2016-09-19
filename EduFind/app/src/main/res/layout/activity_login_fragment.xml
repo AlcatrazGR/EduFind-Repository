@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#3c3f41" >
+
+    <RelativeLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".LoginFragment"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/usernameEdt"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/textView"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColor="#f9f9f9"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/passwordEdt"
+            android:layout_below="@+id/textView2"
+            android:layout_alignRight="@+id/usernameEdt"
+            android:layout_alignEnd="@+id/usernameEdt"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_alignStart="@+id/textView2"
+            android:textColor="#f9f9f9"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Όνομα χρήστη:"
+            android:id="@+id/textView"
+            android:layout_marginTop="98dp"
+            android:textColor="#f9f9f9"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/usernameEdt"
+            android:layout_alignStart="@+id/usernameEdt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Κωδικός:"
+            android:id="@+id/textView2"
+            android:layout_below="@+id/usernameEdt"
+            android:layout_alignLeft="@+id/usernameEdt"
+            android:layout_alignStart="@+id/usernameEdt"
+            android:layout_marginTop="30dp"
+            android:textColor="#f9f9f9"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Είσοδος"
+            android:id="@+id/loginBtn"
+            android:layout_below="@+id/passwordEdt"
+            android:layout_alignLeft="@+id/passwordEdt"
+            android:layout_alignStart="@+id/passwordEdt"
+            android:layout_marginTop="25dp"
+            android:layout_alignRight="@+id/passwordEdt"
+            android:layout_alignEnd="@+id/passwordEdt" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Εγγραφή"
+            android:id="@+id/signupBtn"
+            android:layout_below="@+id/loginBtn"
+            android:layout_alignLeft="@+id/loginBtn"
+            android:layout_alignStart="@+id/loginBtn"
+            android:layout_alignRight="@+id/loginBtn"
+            android:layout_alignEnd="@+id/loginBtn" />
+    </RelativeLayout>
+</ScrollView>
