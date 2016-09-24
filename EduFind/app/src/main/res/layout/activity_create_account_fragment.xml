@@ -157,7 +157,8 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/gps_btn_icon"
             android:layout_alignRight="@+id/textView5"
-            android:layout_alignEnd="@+id/textView5" />
+            android:layout_alignEnd="@+id/textView5"
+            android:onClick="GetGeolocationOfUser"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -204,7 +205,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Area: -"
+                android:text="Postal Code: -"
                 android:id="@+id/textView9"
                 android:layout_alignParentBottom="true"
                 android:layout_alignLeft="@+id/textView7"

@@ -1,12 +1,10 @@
 package codebrains.edufind.Utils;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -19,12 +17,16 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by Vasilhs on 9/20/2016.
+ * Class the contains methods necessary to calculate the geolocation of a device (longitude, latitude,
+ * city, state etc).
  */
 public class Coordinates extends Service implements LocationListener {
 
@@ -52,14 +54,16 @@ public class Coordinates extends Service implements LocationListener {
     // Declaring a Location Manager
     protected LocationManager locationManager;
 
-    private String city;
-
     //Constructor
     public Coordinates(Context context) {
         this.mContext = context;
         GetLocation();
     }
 
+    /**
+     * Method that gets the location (longitude, latitude) of the device.
+     * @return Returns a Location object containing the location info.
+     */
     @TargetApi(Build.VERSION_CODES.M)
     public Location GetLocation() {
 
@@ -77,19 +81,6 @@ public class Coordinates extends Service implements LocationListener {
 
             if (!isGPSEnabled || !isNetworkEnabled) {
                 // no network provider is enabled
-            }
-
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-                // TODO: Consider calling
-                //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for Activity#requestPermissions for more details.
-                return null;
             }
 
             // If GPS Enabled get lat/long using GPS Services
@@ -140,7 +131,9 @@ public class Coordinates extends Service implements LocationListener {
     /**
      * Method that returns the ciy name with the coordinates given.
      */
-    public String GetCityFromCoordinates() {
+    public JSONObject GetLocationInfoFromCoordinates() {
+
+        JSONObject locationAreaJson = new JSONObject();
         if (location != null) {
             Geocoder gcd = new Geocoder(this.mContext, Locale.getDefault());
             List<Address> addresses = null;
@@ -151,11 +144,19 @@ public class Coordinates extends Service implements LocationListener {
                 e.printStackTrace();
             }
 
-            this.city = addresses.get(0).getLocality();
+            try {
+                locationAreaJson.put("address", addresses.get(0).getAddressLine(0));
+                locationAreaJson.put("city", addresses.get(0).getLocality()+ "  " +addresses.get(0).getSubThoroughfare() );
+                locationAreaJson.put("postal", addresses.get(0).getPostalCode());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
         }
 
-        // return latitude
-        return city;
+        return locationAreaJson;
     }
 
     /**
@@ -165,17 +166,6 @@ public class Coordinates extends Service implements LocationListener {
     @TargetApi(Build.VERSION_CODES.M)
     public void StopUsingGPS() {
 
-        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for Activity#requestPermissions for more details.
-            return;
-        }
 
         if (locationManager != null) {
 
