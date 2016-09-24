@@ -7,12 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import codebrains.edufind.R;
 import codebrains.edufind.Utils.Coordinates;
 
+/**
+ * Fragment activity for account creation.
+ */
 public class CreateAccountFragment extends Fragment {
 
     @Override

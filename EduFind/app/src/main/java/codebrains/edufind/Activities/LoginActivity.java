@@ -6,17 +6,18 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
-
 import codebrains.edufind.Adapters.MainTabsAdapter;
 import codebrains.edufind.Fragments.CreateAccountFragment;
 import codebrains.edufind.R;
 
+/**
+ * Main activity of the application, its the first that is fired after boot.
+ */
 public class LoginActivity extends ActionBarActivity implements android.support.v7.app.ActionBar.TabListener {
 
     private ViewPager tabsviewPager;
     private MainTabsAdapter mTabsAdapter;
     private ActionBar actionBar;
-
 
     //Fragment objects
     private CreateAccountFragment caf;
@@ -33,10 +34,6 @@ public class LoginActivity extends ActionBarActivity implements android.support.
 
         //Initialize fragment objects
         caf = new CreateAccountFragment();
-
-
-
-
 
         //Initializing the tab view of this activity
         tabsviewPager = (ViewPager) findViewById(R.id.tabspager);
@@ -86,8 +83,6 @@ public class LoginActivity extends ActionBarActivity implements android.support.
         this.caf.GetGeolocationInfo(this);
 
     }
-
-
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {

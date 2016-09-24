@@ -23,7 +23,7 @@ public class MessageCenter {
      * Error method that is displayed to the user when the GPS is not enabled and can redirect to
      * the device settings.
      * */
-    public void GPSNotEnabledErrorDialog(){
+    public void GPSNotEnabledErrorDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
         // Setting Dialog Title

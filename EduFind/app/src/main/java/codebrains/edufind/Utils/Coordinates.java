@@ -3,7 +3,6 @@ package codebrains.edufind.Utils;
 import android.annotation.TargetApi;
 import android.app.Service;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -13,10 +12,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,21 +63,16 @@ public class Coordinates extends Service implements LocationListener {
     @TargetApi(Build.VERSION_CODES.M)
     public Location GetLocation() {
 
+        MessageCenter msgCent = new MessageCenter(this.mContext);
+
         try {
-            locationManager = (LocationManager) mContext
-                    .getSystemService(LOCATION_SERVICE);
+            locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
 
             // getting GPS status
-            isGPSEnabled = locationManager
-                    .isProviderEnabled(LocationManager.GPS_PROVIDER);
+            isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
             // getting network status
-            isNetworkEnabled = locationManager
-                    .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-            if (!isGPSEnabled || !isNetworkEnabled) {
-                // no network provider is enabled
-            }
+            isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
             // If GPS Enabled get lat/long using GPS Services
             if (isGPSEnabled) {
@@ -100,8 +91,11 @@ public class Coordinates extends Service implements LocationListener {
                         longitude = location.getLongitude();
                     }
                 }
-
             }
+            else {
+                msgCent.GPSNotEnabledErrorDialog();
+            }
+
 
             // If the network in not enabled
             if (isNetworkEnabled) {

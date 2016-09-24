@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Όνομα Χρήστη:"
+            android:text="Username:"
             android:id="@+id/textView3"
             android:layout_marginTop="15dp" />
 
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Κωδικός:"
+            android:text="Password:"
             android:id="@+id/textView4"
             android:layout_below="@+id/editText"
             android:layout_marginTop="15dp" />
@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Επανάληψη Κωδικού:"
+            android:text="Retype Password:"
             android:id="@+id/textView11"
             android:layout_below="@+id/editText2"
             android:layout_marginTop="15dp"/>
@@ -102,7 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Αριθμός:"
+            android:text="Number:"
             android:id="@+id/textView12"
             android:layout_below="@+id/editText4"
             android:layout_alignParentLeft="true"
@@ -127,7 +127,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Πάροχος:"
+            android:text="Provider:"
             android:id="@+id/textView13"
             android:layout_below="@+id/editText5"
             android:layout_alignParentLeft="true"
@@ -225,7 +225,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Καταχώρηση"
+            android:text="Submit"
             android:id="@+id/button2"
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/linearLayout"
