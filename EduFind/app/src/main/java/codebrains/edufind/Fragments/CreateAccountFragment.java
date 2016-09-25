@@ -37,34 +37,6 @@ public class CreateAccountFragment extends Fragment {
     public JSONObject GetGeolocationInfo(Activity activity) {
 
         JSONObject geoJson;
-        Coordinates coordinates = new Coordinates(activity);
-
-        geoJson = coordinates.GetLocationInfoFromCoordinates();
-        try {
-            geoJson.put("longitude", coordinates.GetLongitude());
-            geoJson.put("latitude", coordinates.GetLatitude());
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        //Displaying results
-        TextView longitudeTxt = (TextView) activity.findViewById(R.id.textView6);
-        TextView latitudeTxt = (TextView) activity.findViewById(R.id.textView7);
-        TextView cityTxt = (TextView) activity.findViewById(R.id.textView8);
-        TextView postalTxt = (TextView) activity.findViewById(R.id.textView9);
-        TextView addressTxt = (TextView) activity.findViewById(R.id.textView10);
-
-        try {
-            longitudeTxt.setText("Longitude :" + geoJson.get("longitude").toString());
-            latitudeTxt.setText("Latitude :" + geoJson.get("latitude").toString());
-            cityTxt.setText("City :" + geoJson.get("city").toString());
-            postalTxt.setText("Postal Code :" + geoJson.get("postal").toString());
-            addressTxt.setText("Address :" + geoJson.get("address").toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
 
         return geoJson;
     }
