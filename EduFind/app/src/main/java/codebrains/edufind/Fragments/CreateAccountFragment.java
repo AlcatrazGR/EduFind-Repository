@@ -7,15 +7,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
+import codebrains.edufind.Controllers.CreateAccountController;
 import codebrains.edufind.R;
-import codebrains.edufind.Utils.Coordinates;
-import codebrains.edufind.Utils.MessageCenter;
 
 /**
  * Fragment activity for account creation.
@@ -36,7 +30,8 @@ public class CreateAccountFragment extends Fragment {
      */
     public JSONObject GetGeolocationInfo(Activity activity) {
 
-        JSONObject geoJson;
+        CreateAccountController cac = new CreateAccountController();
+        JSONObject geoJson = cac.HandleGeoLocationInfo(activity);
 
         return geoJson;
     }
@@ -47,6 +42,12 @@ public class CreateAccountFragment extends Fragment {
      */
     public void CreateAccount(Activity mActivity, JSONObject geoInfo) {
 
+        CreateAccountController cac = new CreateAccountController();
+
+        if(cac.CreateAccount(mActivity, geoInfo)) {
+            JSONObject accountJSON = cac.GetAccountJSON();
+            Log.d("Account JSON : ", accountJSON.toString());
+        }
 
     }
 

@@ -1,35 +1,27 @@
 package codebrains.edufind.Controllers;
 
 import android.app.Activity;
-import android.widget.TextView;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 import codebrains.edufind.Models.CreateAccount;
-import codebrains.edufind.R;
-import codebrains.edufind.Utils.Coordinates;
 
 /**
  * Created by Vasilhs on 9/25/2016.
  */
 public class CreateAccountController {
 
-    JSONObject accountJSON;
+    private JSONObject accountJSON;
 
     public CreateAccountController(){
         this.accountJSON = new JSONObject();
     }
 
-    public JSONObject DisplayGeoLocationInfo(Activity mActivity) {
+    public JSONObject HandleGeoLocationInfo(Activity mActivity) {
 
         CreateAccount ca = new CreateAccount();
+        JSONObject geoInfo = ca.GetCurrentGeoLocationInfo(mActivity);
+        ca.DisplayGeolocationInfo(mActivity, geoInfo);
 
-
-
-
-
-
-
+        return geoInfo;
     }
 
     public boolean CreateAccount(Activity mActivity, JSONObject geoInfo) {
@@ -45,6 +37,10 @@ public class CreateAccountController {
         }
 
         return check;
+    }
+
+    public JSONObject GetAccountJSON() {
+        return this.accountJSON;
     }
 
 }

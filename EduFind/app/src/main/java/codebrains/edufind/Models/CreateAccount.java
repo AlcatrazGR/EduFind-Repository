@@ -20,7 +20,6 @@ public class CreateAccount {
 
     }
 
-
     public JSONObject GetCurrentGeoLocationInfo(Activity mActivity) {
 
         JSONObject geoJson;
@@ -58,6 +57,7 @@ public class CreateAccount {
         }
 
     }
+
 
     public boolean CheckGeoLocationInfoJSON(Activity mActivity, JSONObject geoInfo) {
 
