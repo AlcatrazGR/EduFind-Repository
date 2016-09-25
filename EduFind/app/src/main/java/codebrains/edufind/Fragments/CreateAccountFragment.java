@@ -7,7 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import codebrains.edufind.R;
@@ -72,17 +75,6 @@ public class CreateAccountFragment extends Fragment {
      */
     public void CreateAccount(Activity mActivity, JSONObject geoInfo) {
 
-        Log.d("Display : ", String.valueOf(geoInfo));
-        MessageCenter msgCent = new MessageCenter(mActivity);
-        if(geoInfo.length() == 0) {
-            String title = "Error Occurred";
-            String message = "The geolocation information are not initialized! Please press the button" +
-                    " with the gps icon on the form to initialize geolocation info.";
-            msgCent.DisplayErrorDialog(mActivity, title, message);
-        }
-        else {
-            Log.d("Status", "OK");
-        }
 
     }
 
