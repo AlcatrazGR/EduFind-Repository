@@ -69,8 +69,34 @@ public class MessageCenter {
         alertDialog.setCancelable(false);
         // On pressing Settings button
         alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog,int which) {
+            public void onClick(DialogInterface dialog, int which) {
                 mActivity.finish();
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
+    }
+
+    /**
+     * Method that displays an error message to the user without closing the application.
+     * @param mActivity The activity that called this method.
+     * @param title The title of the dialog.
+     * @param message The message of the dialog.
+     */
+    public void DisplayErrorDialog(Activity mActivity, String title, String message) {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+
+        // Setting Dialog Title
+        alertDialog.setTitle(title);
+
+        // Setting Dialog Message
+        alertDialog.setMessage(message);
+        alertDialog.setCancelable(false);
+        // On pressing Settings button
+        alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
             }
         });
 

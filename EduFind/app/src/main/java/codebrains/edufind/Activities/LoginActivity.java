@@ -6,6 +6,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import org.json.JSONObject;
+
 import codebrains.edufind.Adapters.MainTabsAdapter;
 import codebrains.edufind.Fragments.CreateAccountFragment;
 import codebrains.edufind.R;
@@ -24,9 +27,11 @@ public class LoginActivity extends ActionBarActivity implements android.support.
     //Fragment objects
     private CreateAccountFragment caf;
 
+    private JSONObject geoInfo;
+
     //Constructor
     public LoginActivity() {
-
+        this.geoInfo = new JSONObject();
     }
 
     @Override
@@ -96,9 +101,16 @@ public class LoginActivity extends ActionBarActivity implements android.support.
      * @param view The view object that called this event.
      */
     public void GetGeolocationOfUser(View view) {
+        this.geoInfo = this.caf.GetGeolocationInfo(this);
+    }
 
-        this.caf.GetGeolocationInfo(this);
-
+    /**
+     * Event listener method that is fired whenever the submit button on the account creation form
+     * is pressed.
+     * @param view The view that called that fired the event.
+     */
+    public void CreateNewAccountProcess(View view) {
+        this.caf.CreateAccount(this, this.geoInfo);
     }
 
     @Override

@@ -3,6 +3,7 @@ package codebrains.edufind.Fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import codebrains.edufind.R;
 import codebrains.edufind.Utils.Coordinates;
+import codebrains.edufind.Utils.MessageCenter;
 
 /**
  * Fragment activity for account creation.
@@ -31,13 +33,13 @@ public class CreateAccountFragment extends Fragment {
      */
     public JSONObject GetGeolocationInfo(Activity activity) {
 
-        JSONObject geoJson = new JSONObject();
+        JSONObject geoJson;
         Coordinates coordinates = new Coordinates(activity);
 
-        JSONObject locationInfoJSON = coordinates.GetLocationInfoFromCoordinates();
+        geoJson = coordinates.GetLocationInfoFromCoordinates();
         try {
-            locationInfoJSON.put("longitude", coordinates.GetLongitude());
-            locationInfoJSON.put("latitude", coordinates.GetLatitude());
+            geoJson.put("longitude", coordinates.GetLongitude());
+            geoJson.put("latitude", coordinates.GetLatitude());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -51,17 +53,37 @@ public class CreateAccountFragment extends Fragment {
         TextView addressTxt = (TextView) activity.findViewById(R.id.textView10);
 
         try {
-            longitudeTxt.setText("Longitude :" + locationInfoJSON.get("longitude").toString());
-            latitudeTxt.setText("Latitude :" + locationInfoJSON.get("latitude").toString());
-            cityTxt.setText("City :" + locationInfoJSON.get("city").toString());
-            postalTxt.setText("Postal Code :" + locationInfoJSON.get("postal").toString());
-            addressTxt.setText("Address" + locationInfoJSON.get("address").toString());
+            longitudeTxt.setText("Longitude :" + geoJson.get("longitude").toString());
+            latitudeTxt.setText("Latitude :" + geoJson.get("latitude").toString());
+            cityTxt.setText("City :" + geoJson.get("city").toString());
+            postalTxt.setText("Postal Code :" + geoJson.get("postal").toString());
+            addressTxt.setText("Address :" + geoJson.get("address").toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
 
         return geoJson;
+    }
+
+    /**
+     * Method that handles the account creation of a user.
+     * @param mActivity The activity that called this method.
+     */
+    public void CreateAccount(Activity mActivity, JSONObject geoInfo) {
+
+        Log.d("Display : ", String.valueOf(geoInfo));
+        MessageCenter msgCent = new MessageCenter(mActivity);
+        if(geoInfo.length() == 0) {
+            String title = "Error Occurred";
+            String message = "The geolocation information are not initialized! Please press the button" +
+                    " with the gps icon on the form to initialize geolocation info.";
+            msgCent.DisplayErrorDialog(mActivity, title, message);
+        }
+        else {
+            Log.d("Status", "OK");
+        }
+
     }
 
 
