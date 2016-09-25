@@ -3,7 +3,7 @@ package codebrains.edufind.Utils;
 import java.security.MessageDigest;
 
 /**
- * Created by Vasilhs on 9/25/2016.
+ * Class that contains necessary methods for encrypting or hashing data.
  */
 public class Cryptography {
 
@@ -12,6 +12,11 @@ public class Cryptography {
 
     }
 
+    /**
+     * Method that creates a SHA-256 hash of a string message.
+     * @param message The message to be hashed.
+     * @return Returns a string representation of the hashed message.
+     */
     public static String HashSHA256(String message) {
 
         try{

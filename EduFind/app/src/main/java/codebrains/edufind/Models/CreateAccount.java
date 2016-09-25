@@ -3,7 +3,6 @@ package codebrains.edufind.Models;
 import android.app.Activity;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import codebrains.edufind.R;
@@ -11,7 +10,7 @@ import codebrains.edufind.Utils.Coordinates;
 import codebrains.edufind.Utils.MessageCenter;
 
 /**
- * Created by Vasilhs on 9/25/2016.
+ * Class that handles processes associated with account creation.
  */
 public class CreateAccount {
 
@@ -20,6 +19,12 @@ public class CreateAccount {
 
     }
 
+    /**
+     * Method that gets the current geolocation info of a user's position (address, longitude, latitude,
+     * postal code etc).
+     * @param mActivity The activity that called this method.
+     * @return Returns a JSON object that contains all the geolocation info.
+     */
     public JSONObject GetCurrentGeoLocationInfo(Activity mActivity) {
 
         JSONObject geoJson;
@@ -37,6 +42,11 @@ public class CreateAccount {
         return geoJson;
     }
 
+    /**
+     * Method that displays the geolocation info generated to the user in the form text views.
+     * @param activity The activity that called this method.
+     * @param geoJson The JSON object that holds all the geo location information.
+     */
     public void DisplayGeolocationInfo(Activity activity, JSONObject geoJson) {
 
         //Displaying results
@@ -58,7 +68,14 @@ public class CreateAccount {
 
     }
 
-
+    /**
+     * Method that checks if the geolocation info object is empty (happens if the user didn't press
+     * the render geolocation info button or if an error occurred and the object wasnt initialized
+     * correctly).
+     * @param mActivity The activity that called this method.
+     * @param geoInfo The JSON that holds all the geolocation info.
+     * @return Returns a boolean variable that represents the status of the check.
+     */
     public boolean CheckGeoLocationInfoJSON(Activity mActivity, JSONObject geoInfo) {
 
         boolean check = true;
@@ -74,6 +91,13 @@ public class CreateAccount {
         return check;
     }
 
+    /**
+     * Method that after a successfull rendering of the geolocation info it creates a full JSON object
+     * holding all the data of the new account to be created.
+     * @param mActivity The activity that called the method.
+     * @param geoInfo The JSON that holds all the geolocation info.
+     * @return Returns a JSON object with all the new account data.
+     */
     public JSONObject CreateNewAccountJSONObject(Activity mActivity, JSONObject geoInfo) {
 
         JSONObject accountJSON = geoInfo;
