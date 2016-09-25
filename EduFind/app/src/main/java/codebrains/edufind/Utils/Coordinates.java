@@ -140,7 +140,7 @@ public class Coordinates extends Service implements LocationListener {
 
             try {
                 locationAreaJson.put("address", addresses.get(0).getAddressLine(0));
-                locationAreaJson.put("city", addresses.get(0).getLocality()+ "  " +addresses.get(0).getSubThoroughfare() );
+                locationAreaJson.put("city", addresses.get(0).getLocality());
                 locationAreaJson.put("postal", addresses.get(0).getPostalCode());
 
             } catch (JSONException e) {
