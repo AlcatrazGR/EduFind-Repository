@@ -1,6 +1,7 @@
 package codebrains.edufind.Models;
 
 import android.app.Activity;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import org.json.JSONException;
@@ -67,6 +68,31 @@ public class CreateAccount {
         }
 
     }
+
+    /**
+     * Method that displays an error message to the user if the terms and conditions are not agreed.
+     * @param mActivity The activity that called this method.
+     * @return Returns a boolean representing the status of the check.
+     */
+    public boolean CheckIfTermsAreAgreed(Activity mActivity) {
+
+        boolean check = true;
+        CheckBox termsChkbx = (CheckBox) mActivity.findViewById(R.id.checkBox);
+
+        if(!termsChkbx.isChecked()) {
+            String title = "Terms & Conditions Error";
+            String message = "In order to create a new account you need to agree to our" +
+                    " terms & conditions. Please check the checkbox on the account creation" +
+                    " form to proceed.";
+            check = false;
+            MessageCenter msgCent = new MessageCenter(mActivity);
+            msgCent.DisplayErrorDialog(mActivity, title, message);
+
+        }
+
+        return check;
+    }
+
 
     /**
      * Method that checks if the geolocation info object is empty (happens if the user didn't press

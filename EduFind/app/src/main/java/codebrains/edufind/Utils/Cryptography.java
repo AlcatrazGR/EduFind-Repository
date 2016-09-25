@@ -17,7 +17,7 @@ public class Cryptography {
      * @param message The message to be hashed.
      * @return Returns a string representation of the hashed message.
      */
-    public static String HashSHA256(String message) {
+    public String HashSHA256(String message) {
 
         try{
             MessageDigest digest = MessageDigest.getInstance("SHA-256");

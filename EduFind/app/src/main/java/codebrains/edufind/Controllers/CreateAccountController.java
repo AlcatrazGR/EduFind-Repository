@@ -42,11 +42,15 @@ public class CreateAccountController {
         boolean check = false;
         CreateAccount ca = new CreateAccount();
 
-        //If the geolocation info have been initialized successfully.
-        if(ca.CheckGeoLocationInfoJSON(mActivity, geoInfo)) {
+        //If the terms & condition are not agreed.
+        if(ca.CheckIfTermsAreAgreed(mActivity)) {
 
-            this.accountJSON = ca.CreateNewAccountJSONObject(mActivity, geoInfo);
-            check = true;
+            //If the geolocation info have been initialized successfully.
+            if(ca.CheckGeoLocationInfoJSON(mActivity, geoInfo)) {
+
+                this.accountJSON = ca.CreateNewAccountJSONObject(mActivity, geoInfo);
+                check = true;
+            }
         }
 
         return check;
