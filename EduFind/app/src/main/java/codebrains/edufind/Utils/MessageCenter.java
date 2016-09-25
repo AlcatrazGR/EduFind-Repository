@@ -1,5 +1,6 @@
 package codebrains.edufind.Utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -44,6 +45,32 @@ public class MessageCenter {
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
+    }
+
+    /**
+     * Method that displayes an error message to the user informing him that there is no internet
+     * connection, by pressing the ok button the application is finished (cant continue further).
+     * @param mActivity The activity that called this method.
+     */
+    public void NoInternetConnectionErrorDialog(final Activity mActivity) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+
+        // Setting Dialog Title
+        alertDialog.setTitle("Internet Connection Error");
+
+        // Setting Dialog Message
+        alertDialog.setMessage("Your device is not connected to internet. Please enable your device's wifi" +
+                " or your transfer data and reopen the application.");
+        alertDialog.setCancelable(false);
+        // On pressing Settings button
+        alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int which) {
+                mActivity.finish();
             }
         });
 

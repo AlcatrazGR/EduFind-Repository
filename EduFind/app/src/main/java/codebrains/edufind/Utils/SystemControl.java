@@ -33,17 +33,7 @@ public class SystemControl {
 
         boolean check = true;
         if (IsNetworkAvailable()) {
-            try {
-                HttpURLConnection urlc = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
-                urlc.setRequestProperty("User-Agent", "Test");
-                urlc.setRequestProperty("Connection", "close");
-                urlc.setConnectTimeout(1500);
-                urlc.connect();
-                //return (urlc.getResponseCode() == 200);
-            } catch (IOException e) {
-                Log.e("Error", "Error checking internet connection", e);
-                check = false;
-            }
+
         } else {
             check = false;
         }
@@ -59,6 +49,7 @@ public class SystemControl {
      * @return Returns a boolean which represents the status of the check.
      */
     private boolean IsNetworkAvailable() {
+
         ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(this.mContext.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null;

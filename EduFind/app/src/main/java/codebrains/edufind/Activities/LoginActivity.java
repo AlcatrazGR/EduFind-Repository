@@ -9,6 +9,8 @@ import android.view.View;
 import codebrains.edufind.Adapters.MainTabsAdapter;
 import codebrains.edufind.Fragments.CreateAccountFragment;
 import codebrains.edufind.R;
+import codebrains.edufind.Utils.MessageCenter;
+import codebrains.edufind.Utils.SystemControl;
 
 /**
  * Main activity of the application, its the first that is fired after boot.
@@ -31,6 +33,8 @@ public class LoginActivity extends ActionBarActivity implements android.support.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        DeviceIsConnectedToInternet(); //Check if connected to internet.
 
         //Initialize fragment objects
         caf = new CreateAccountFragment();
@@ -72,6 +76,19 @@ public class LoginActivity extends ActionBarActivity implements android.support.
             public void onPageScrollStateChanged(int arg0) {
             }
         });
+    }
+
+    /**
+     * Method that calls the appropriate code to check whether the device is connected to internet.
+     */
+    private void DeviceIsConnectedToInternet() {
+
+        SystemControl sc = new SystemControl(this);
+        if(!sc.HasActiveInternetConnection()) {
+            MessageCenter msgCent = new MessageCenter(this);
+            msgCent.NoInternetConnectionErrorDialog(this);
+        }
+
     }
 
     /**
