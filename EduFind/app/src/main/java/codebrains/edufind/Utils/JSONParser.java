@@ -1,10 +1,135 @@
 package codebrains.edufind.Utils;
 
+import android.net.Uri;
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by Vasilhs on 1/18/2016.
  */
 public class JSONParser {
+
+
+    public JSONObject HttpRequestPostData(String path, String method, JSONObject data) throws IOException, JSONException {
+
+        String response = null; //String that will contain raw JSON response.
+        BufferedReader reader = null; //Buffered reader for reading the input stream.
+        HttpURLConnection urlConnection = null; //The url connection object.
+
+        try {
+
+            URL url = new URL(path);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod(method); //Transit method initialize.
+            urlConnection.setDoInput(true);
+            urlConnection.setDoOutput(true);
+
+            Uri.Builder builder = new Uri.Builder()
+                .appendQueryParameter("account", String.valueOf(data));
+            String query = builder.build().getEncodedQuery();
+
+            OutputStream os = urlConnection.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+
+            writer.write(query);
+            writer.flush();
+            writer.close();
+            os.close();
+
+            int responseCode = urlConnection.getResponseCode();
+
+            if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                String line;
+                BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                while ((line = br.readLine()) != null) {
+                    response += line;
+                }
+            }
+            else {
+                response = null;
+            }
+
+
+
+            /*
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+            if (in == null) {
+                return null; // Nothing to do.
+            }
+
+            reader = new BufferedReader(new InputStreamReader(in, "iso-8859-1"), 8);
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+
+            if (sb.length() == 0) {
+                return null;  // Stream was empty.  No point in parsing.
+            }
+
+            in.close();
+            response = sb.toString();
+
+        }
+        catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        catch (NullPointerException e){
+            throw new NullPointerException();
+        }
+        finally {
+
+            if(urlConnection != null)
+                urlConnection.disconnect();
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (final IOException e) {
+                    Log.e("PlaceholderFragment", "Error closing stream", e);
+                }
+            }
+        }
+
+        Log.d("Response Before : ", response);
+
+        //Calls the analytics remover method to clean the response.
+        ServerAnalytics sa = new ServerAnalytics();
+        response = sa.RemoveServerAnalyticsFromResponse(response);
+
+        Log.d("Response After : ", response);
+
+        return new JSONObject(response);
+        */
+    }
+
+
+
+
+
+
 
 
 

@@ -8,7 +8,14 @@ import android.provider.Settings;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
 import codebrains.edufind.Utils.Cryptography;
+import codebrains.edufind.Utils.JSONParser;
 
 /**
  * Asynchronous task for communicating with the remote server to create a new account. There are three
@@ -51,7 +58,14 @@ public class AsyncCreateAccount extends AsyncTask<String, String, String> {
             e.printStackTrace();
         }
 
-
+        JSONParser jp = new JSONParser();
+        try {
+            jp.HttpRequest("http://www.edufind.comlu.com/Android/test.php", "POST");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
         return null;
