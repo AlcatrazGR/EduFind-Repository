@@ -1,39 +1,58 @@
 package codebrains.edufind.Utils;
 
+import android.app.Activity;
 import android.net.Uri;
 import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- * Created by Vasilhs on 1/18/2016.
+ * Class that contains methods which handle the HTTP requests and responses from the remote server
+ * and process the response so that the output will be a JSON object.
  */
 public class JSONParser {
 
+    private String path;
 
-    public JSONObject HttpRequestPostData(String path, String method, JSONObject data) throws IOException, JSONException {
+    //Constructor
+    public JSONParser() {
+        this.path = "http://www.edufind.comlu.com/Android";
+    }
+
+    /**
+     * Method that handles post data to the remote server, receiving back the response processing
+     * it in JSON object format.
+     * @param script The name of the script to post / get data.
+     * @param data The data to be transmitted in a JSON object format.
+     * @param mActivity The activity that fired the async task.
+     * @return Returns a JSON object with the response of the server.
+     * @throws IOException Exception for the input and output data while processing them.
+     * @throws JSONException Exception that occurs whenever processing JSON data and something goes wrong.
+     */
+    public JSONObject HttpRequestPostData(String script, JSONObject data, Activity mActivity) throws IOException, JSONException {
 
         String response = ""; //String that will contain raw JSON response.
-        BufferedReader reader = null; //Buffered reader for reading the input stream.
+        BufferedReader br = null; //Buffered reader for reading the input stream.
         HttpURLConnection urlConnection = null; //The url connection object.
 
         try {
 
-            URL url = new URL(path);
+            URL url = new URL(this.path + script);
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod(method); //Transmit method initialize.
+            urlConnection.setRequestMethod("POST"); //Transmit method initialize.
             urlConnection.setDoInput(true);
             urlConnection.setDoOutput(true);
 
@@ -51,59 +70,22 @@ public class JSONParser {
 
             int responseCode = urlConnection.getResponseCode();
 
+            //If the http connection was ok (response code = 200) then start processing the
+            //response, if not then display message and do nothing.
             if (responseCode == HttpsURLConnection.HTTP_OK) {
-
                 String line;
-                BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                 while ((line = br.readLine()) != null) {
                     response += line;
                 }
             } else {
                 response = null;
+                MessageCenter msgCent = new MessageCenter(mActivity);
+                String title = "Connection Error";
+                String message = "There was an error while trying to communicate with the server." +
+                        " Please try again later, or contact the support team.";
+                msgCent.DisplayErrorDialog(mActivity,title, message);
             }
-        }
-        catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        catch (NullPointerException e){
-            throw new NullPointerException();
-        }
-
-        Log.d("Before Analytics : ", response);
-
-        //Calls the analytics remover method to clean the response.
-        ServerAnalytics sa = new ServerAnalytics();
-        response = sa.RemoveServerAnalyticsFromResponse(response);
-
-        Log.d("After Analytics : ", response);
-
-
-        return new JSONObject(response);
-
-            /*
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-
-            if (in == null) {
-                return null; // Nothing to do.
-            }
-
-            reader = new BufferedReader(new InputStreamReader(in, "iso-8859-1"), 8);
-            StringBuilder sb = new StringBuilder();
-            String line = null;
-
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-
-            if (sb.length() == 0) {
-                return null;  // Stream was empty.  No point in parsing.
-            }
-
-            in.close();
-            response = sb.toString();
 
         }
         catch (UnsupportedEncodingException e) {
@@ -116,176 +98,94 @@ public class JSONParser {
             throw new NullPointerException();
         }
         finally {
-
-            if(urlConnection != null)
-                urlConnection.disconnect();
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (final IOException e) {
-                    Log.e("PlaceholderFragment", "Error closing stream", e);
-                }
-            }
+            if (br != null) br.close();
+            if (urlConnection != null) urlConnection.disconnect();
         }
 
-        Log.d("Response Before : ", response);
+        Log.d("Before Analytics : ", response);
 
         //Calls the analytics remover method to clean the response.
         ServerAnalytics sa = new ServerAnalytics();
         response = sa.RemoveServerAnalyticsFromResponse(response);
 
-        Log.d("Response After : ", response);
+        Log.d("After Analytics : ", response);
+
 
         return new JSONObject(response);
-        */
     }
 
 
+    /**
+     * Method that handled the connection with a script at the remote server without posting any data.
+     * After that it processes the response and returns it to JSON object format.
+     * @param script The name of the script to post / get data.
+     * @param mActivity The activity that fired the async task.
+     * @return Returns a JSON object which is the response from the remote server.
+     * @throws IOException Exception for the input and output data while processing them.
+     * @throws JSONException Exception that occurs whenever processing JSON data and something goes wrong.
+     */
+    public JSONObject HTTPRequestGetData(String script, Activity mActivity) throws IOException, JSONException {
 
-
-
-
-
-
-
-    /*
-    static InputStream is = null;
-    static JSONObject jObj = null;
-    static String json = "";
-
-    public JSONParser() {
-
-    }
-
-    public JSONObject GetJSONFromUrl(final String url) {
+        HttpURLConnection urlConnection = null;
+        String response = "";
+        BufferedReader br = null;
 
         try {
+            URL url = new URL(this.path + script);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            int connectionStatus = urlConnection.getResponseCode();
 
-            DefaultHttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(url);
+            //If connection is ok (status code 200)
+            if(connectionStatus == HttpURLConnection.HTTP_OK) {
+                InputStream in = urlConnection.getInputStream();
+                br = new BufferedReader(new InputStreamReader(in));
 
-            // Execute the POST request and store the response locally.
-            HttpResponse httpResponse = httpClient.execute(httpPost);
+                String line = "";
+                while((line = br.readLine()) != null) {
+                    response += line;
+                }
 
-            // Extract data from the response.
-            HttpEntity httpEntity = httpResponse.getEntity();
-
-            // Open an inputStream with the data content.
-            is = httpEntity.getContent();
-
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            // Create a BufferedReader to parse through the inputStream.
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    is, "iso-8859-1"), 8);
-
-            // Declare a string builder to help with the parsing.
-            StringBuilder sb = new StringBuilder();
-
-            // Declare a string to store the JSON object data in string form.
-            String line = null;
-
-            // Build the string until null.
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+            }
+            else {
+                response = null;
+                MessageCenter msgCent = new MessageCenter(mActivity);
+                String title = "Connection Error";
+                String message = "There was an error while trying to communicate with the server." +
+                        " Please try again later, or contact the support team.";
+                msgCent.DisplayErrorDialog(mActivity,title, message);
             }
 
-            // Close the input stream.
-            is.close();
-
-            // Convert the string builder data to an actual string.
-            json = sb.toString();
-        } catch (Exception e) {
-            Log.e("Buffer Error", "Error converting result " + e.toString());
         }
-
-        // Try to parse the string to a JSON object
-        try {
-            jObj = new JSONObject(json);
-        } catch (JSONException e) {
-            Log.e("JSON Parser", "Error parsing data " + e.toString());
+        catch (MalformedURLException e) {
+            e.printStackTrace();
         }
-
-        // Return the JSON Object.
-        return jObj;
-    }
-
-    public JSONObject MakeHttpRequest(String url, String method, List<NameValuePair> params) {
-
-        // Making HTTP request
-        try {
-
-            // check for request method
-            if(method == "POST"){
-
-                // request method is POST defaultHttpClient
-                DefaultHttpClient httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost(url);
-                httpPost.setEntity(new UrlEncodedFormEntity(params));
-                HttpResponse httpResponse = httpClient.execute(httpPost);
-                HttpEntity httpEntity = httpResponse.getEntity();
-                is = httpEntity.getContent();
-
-            }else if(method == "GET"){
-
-                // request method is GET
-                DefaultHttpClient httpClient = new DefaultHttpClient();
-                String paramString = URLEncodedUtils.format(params, "utf-8");
-                url += "?" + paramString;
-                HttpGet httpGet = new HttpGet(url);
-                HttpResponse httpResponse = httpClient.execute(httpGet);
-                HttpEntity httpEntity = httpResponse.getEntity();
-                is = httpEntity.getContent();
+        catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (urlConnection != null) urlConnection.disconnect();
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e){
-            throw new NullPointerException();
         }
 
-
-        try {
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
-            StringBuilder sb = new StringBuilder();
-            String line = null;
-
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-
-            is.close();
-            json = sb.toString();
-        } catch (Exception e) {
-            Log.e("Buffer Error", "Error converting result " + e.toString());
-        }
-
-        Log.d("JSON Response - ", json);
+        Log.d("Before Analytics : ", response);
 
         //Calls the analytics remover method to clean the response.
         ServerAnalytics sa = new ServerAnalytics();
-        json = sa.RemoveServerAnalyticsFromResponse(json);
+        response = sa.RemoveServerAnalyticsFromResponse(response);
 
-        // try parse the string to a JSON object
-        try {
-            jObj = new JSONObject(json);
-        } catch (JSONException e) {
-            Log.e("JSON Parser", "Error parsing data " + e.toString());
-        }
+        Log.d("After Analytics : ", response);
 
-        return jObj;
+
+        return new JSONObject(response);
     }
 
-    */
 }

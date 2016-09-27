@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
@@ -54,7 +53,7 @@ public class AsyncCreateAccount extends AsyncTask<String, String, String> {
 
         JSONParser jp = new JSONParser();
         try {
-            JSONObject responseJSON = jp.HttpRequestPostData("http://www.edufind.comlu.com/Android/test.php", "POST", this.accountJSON);
+            JSONObject responseJSON = jp.HttpRequestPostData("/test.php", this.accountJSON, this.mActivity);
             Log.d("Response : ", String.valueOf(responseJSON));
         } catch (IOException e) {
             e.printStackTrace();
