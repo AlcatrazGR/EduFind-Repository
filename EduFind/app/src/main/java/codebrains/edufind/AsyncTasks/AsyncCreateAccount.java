@@ -3,17 +3,11 @@ package codebrains.edufind.AsyncTasks;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.provider.Settings;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.List;
 import codebrains.edufind.Utils.Cryptography;
 import codebrains.edufind.Utils.JSONParser;
 
@@ -60,7 +54,8 @@ public class AsyncCreateAccount extends AsyncTask<String, String, String> {
 
         JSONParser jp = new JSONParser();
         try {
-            jp.HttpRequest("http://www.edufind.comlu.com/Android/test.php", "POST");
+            JSONObject responseJSON = jp.HttpRequestPostData("http://www.edufind.comlu.com/Android/test.php", "POST", this.accountJSON);
+            Log.d("Response : ", String.valueOf(responseJSON));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {

@@ -5,17 +5,14 @@ import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -28,7 +25,7 @@ public class JSONParser {
 
     public JSONObject HttpRequestPostData(String path, String method, JSONObject data) throws IOException, JSONException {
 
-        String response = null; //String that will contain raw JSON response.
+        String response = ""; //String that will contain raw JSON response.
         BufferedReader reader = null; //Buffered reader for reading the input stream.
         HttpURLConnection urlConnection = null; //The url connection object.
 
@@ -36,12 +33,12 @@ public class JSONParser {
 
             URL url = new URL(path);
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod(method); //Transit method initialize.
+            urlConnection.setRequestMethod(method); //Transmit method initialize.
             urlConnection.setDoInput(true);
             urlConnection.setDoOutput(true);
 
             Uri.Builder builder = new Uri.Builder()
-                .appendQueryParameter("account", String.valueOf(data));
+                    .appendQueryParameter("account", String.valueOf(data).trim());
             String query = builder.build().getEncodedQuery();
 
             OutputStream os = urlConnection.getOutputStream();
@@ -61,12 +58,30 @@ public class JSONParser {
                 while ((line = br.readLine()) != null) {
                     response += line;
                 }
-            }
-            else {
+            } else {
                 response = null;
             }
+        }
+        catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        catch (NullPointerException e){
+            throw new NullPointerException();
+        }
+
+        Log.d("Before Analytics : ", response);
+
+        //Calls the analytics remover method to clean the response.
+        ServerAnalytics sa = new ServerAnalytics();
+        response = sa.RemoveServerAnalyticsFromResponse(response);
+
+        Log.d("After Analytics : ", response);
 
 
+        return new JSONObject(response);
 
             /*
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());

@@ -19,15 +19,10 @@ public class ServerAnalytics {
      */
     public String RemoveServerAnalyticsFromResponse(String response){
 
-        String result;
-        try {
-            result = response.substring(3).trim();
-        }
-        catch(NullPointerException e){
-            throw new NullPointerException();
-        }
+        String[] end = response.split("@EOR@"); //Separate analytics with data.
 
-        return result;
+        String result = end[0]; // Get the data part
+        return result.replace("\\", ""); // Replace all the regex chars.
     }
 
 }

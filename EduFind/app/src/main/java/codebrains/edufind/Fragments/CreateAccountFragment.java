@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import org.json.JSONObject;
+
+import codebrains.edufind.AsyncTasks.AsyncCreateAccount;
 import codebrains.edufind.Controllers.CreateAccountController;
 import codebrains.edufind.R;
 
@@ -46,7 +48,8 @@ public class CreateAccountFragment extends Fragment {
 
         if(cac.CreateAccount(mActivity, geoInfo)) {
             JSONObject accountJSON = cac.GetAccountJSON();
-            Log.d("Account JSON : ", accountJSON.toString());
+            AsyncCreateAccount aca = new AsyncCreateAccount(mActivity, accountJSON);
+            aca.execute();
         }
 
     }
