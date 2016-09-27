@@ -48,6 +48,19 @@ public class JSONParser {
         BufferedReader br = null; //Buffered reader for reading the input stream.
         HttpURLConnection urlConnection = null; //The url connection object.
 
+        MessageCenter msgCent = new MessageCenter(mActivity);
+        SystemControl sc = new SystemControl(mActivity);
+
+        // If the server is not reachable.
+        if(!sc.RemoteServerIsReachable(this.path)) {
+            String title = "Connection Error";
+            String message = "There was an error while trying to connect to the server. It seems " +
+                    "that the server is currently offline. Please try again later or contact the " +
+                    "support team.";
+            msgCent.DisplayErrorDialog(mActivity, title, message);
+            return null;
+        }
+
         try {
 
             URL url = new URL(this.path + script);
@@ -80,7 +93,6 @@ public class JSONParser {
                 }
             } else {
                 response = null;
-                MessageCenter msgCent = new MessageCenter(mActivity);
                 String title = "Connection Error";
                 String message = "There was an error while trying to communicate with the server." +
                         " Please try again later, or contact the support team.";
@@ -130,6 +142,19 @@ public class JSONParser {
         String response = "";
         BufferedReader br = null;
 
+        MessageCenter msgCent = new MessageCenter(mActivity);
+        SystemControl sc = new SystemControl(mActivity);
+
+        // If the server is not reachable.
+        if(!sc.RemoteServerIsReachable(this.path)) {
+            String title = "Connection Error";
+            String message = "There was an error while trying to connect to the server. It seems " +
+                    "that the server is currently offline. Please try again later or contact the " +
+                    "support team.";
+            msgCent.DisplayErrorDialog(mActivity, title, message);
+            return null;
+        }
+
         try {
             URL url = new URL(this.path + script);
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -148,7 +173,6 @@ public class JSONParser {
             }
             else {
                 response = null;
-                MessageCenter msgCent = new MessageCenter(mActivity);
                 String title = "Connection Error";
                 String message = "There was an error while trying to communicate with the server." +
                         " Please try again later, or contact the support team.";
