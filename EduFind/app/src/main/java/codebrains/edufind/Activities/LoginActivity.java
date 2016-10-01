@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import org.json.JSONObject;
 import codebrains.edufind.Adapters.MainTabsAdapter;
+import codebrains.edufind.AsyncTasks.AsyncRetriveFeedTask;
 import codebrains.edufind.Fragments.CreateAccountFragment;
 import codebrains.edufind.R;
 import codebrains.edufind.Utils.MessageCenter;
@@ -79,6 +80,10 @@ public class LoginActivity extends ActionBarActivity implements android.support.
             public void onPageScrollStateChanged(int arg0) {
             }
         });
+
+        new AsyncRetriveFeedTask(this).execute();
+
+
     }
 
     /**

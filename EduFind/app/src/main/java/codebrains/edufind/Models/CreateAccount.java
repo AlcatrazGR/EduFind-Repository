@@ -86,7 +86,7 @@ public class CreateAccount {
                     " form to proceed.";
             check = false;
             MessageCenter msgCent = new MessageCenter(mActivity);
-            msgCent.DisplayErrorDialog(mActivity, title, message);
+            msgCent.DisplayErrorDialog(title, message);
 
         }
 
@@ -110,7 +110,7 @@ public class CreateAccount {
             String title = "Error Occurred";
             String message = "The geolocation information are not initialized! Please press the button" +
                     " with the gps icon on the form to initialize geolocation info.";
-            msgCent.DisplayErrorDialog(mActivity, title, message);
+            msgCent.DisplayErrorDialog(title, message);
             check = false;
         }
 

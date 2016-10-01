@@ -4,11 +4,18 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import codebrains.edufind.Utils.Cryptography;
 import codebrains.edufind.Utils.JSONParser;
+import codebrains.edufind.Utils.MessageCenter;
 
 /**
  * Asynchronous task for communicating with the remote server to create a new account. There are three
@@ -52,17 +59,17 @@ public class AsyncCreateAccount extends AsyncTask<String, String, String> {
         }
 
         JSONParser jp = new JSONParser();
-        try {
-            JSONObject responseJSON = jp.HttpRequestPostData("/test.php", this.accountJSON, this.mActivity);
-            Log.d("Response : ", String.valueOf(responseJSON));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+        List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+        parameters.add(new BasicNameValuePair("data", this.accountJSON.toString()));
+
+        //JSONObject responseJSON = jp.HttpRequestPostData("/CreateAccount.php", this.accountJSON, this.mActivity);
+        JSONObject responseJSON = jp.HttpRequestPostData(parameters, "/CreateAccount.php");
+
+        Log.d("Response : ", String.valueOf(responseJSON));
+        return String.valueOf(responseJSON); //sends to postExecute
 
 
-        return null;
     }
 
     @Override
@@ -70,6 +77,19 @@ public class AsyncCreateAccount extends AsyncTask<String, String, String> {
 
         // dismiss the dialog once product deleted
         pDialog.dismiss();
+
+        if(response != null) {
+            try {
+                JSONObject responseJSON = new JSONObject(response);
+
+                MessageCenter msgCenter = new MessageCenter(this.mActivity);
+                msgCenter.DisplayErrorDialog(responseJSON.get("title").toString(),
+                        responseJSON.get("message").toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
 
 
     }

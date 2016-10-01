@@ -6,10 +6,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 import codebrains.edufind.AsyncTasks.AsyncCreateAccount;
 import codebrains.edufind.Controllers.CreateAccountController;
 import codebrains.edufind.R;
+import codebrains.edufind.Utils.MessageCenter;
 
 /**
  * Fragment activity for account creation.
@@ -46,8 +49,25 @@ public class CreateAccountFragment extends Fragment {
 
         if(cac.CreateAccount(mActivity, geoInfo)) {
             JSONObject accountJSON = cac.GetAccountJSON();
-            AsyncCreateAccount aca = new AsyncCreateAccount(mActivity, accountJSON);
-            aca.execute();
+
+            try {
+                if(accountJSON.get("password").toString().length() >= 6 &&
+                        accountJSON.get("password").toString().length() <= 12 ) {
+
+                    AsyncCreateAccount aca = new AsyncCreateAccount(mActivity, accountJSON);
+                    aca.execute();
+                }
+                else {
+                    String title = "Result";
+                    String message = "The `password` field must be between 6 and 12 characters long.";
+                    MessageCenter msgCent = new MessageCenter(mActivity);
+                    msgCent.DisplayErrorDialog(title, message);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
 
     }

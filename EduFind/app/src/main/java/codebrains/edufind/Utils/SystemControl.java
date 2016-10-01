@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * Class that contains methods appropriate for the system such as checking if the device is connected
@@ -29,19 +30,28 @@ public class SystemControl {
         return cm.getActiveNetworkInfo() != null;
     }
 
+    /**
+     * Method that checks if the remote server is reachable by the application.
+     * @return Returns a boolean determining the result of the check.
+     */
+    public boolean RemoteServerIsReachable() {
 
-    public boolean RemoteServerIsReachable(String path) {
+        String path = "edufind.comlu.com";
 
         try {
-            if(!InetAddress.getByName(path).isReachable(2000))
-                return false;
 
+            InetAddress ipAddr = InetAddress.getByName(path);
+            if (ipAddr.equals("")) { return false; }
+            else { return true; }
+
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            return false;
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
 
-        return true;
     }
 
 
