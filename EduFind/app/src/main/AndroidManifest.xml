@@ -31,17 +31,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Fragments.LoginFragment" >
+        <activity android:name=".Fragments.LoginFragment" >
         </activity>
-        <activity
-            android:name=".Fragments.CreateAccountFragment" >
+        <activity android:name=".Fragments.CreateAccountFragment" >
         </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="" />
 
+        <activity android:name=".Activities.AdminActivity" >
+        </activity>
     </application>
 
 </manifest>

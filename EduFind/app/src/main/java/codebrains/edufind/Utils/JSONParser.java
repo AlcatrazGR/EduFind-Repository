@@ -28,6 +28,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -149,6 +150,8 @@ public class JSONParser {
             result = sb.toString();
 
         } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
