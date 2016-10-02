@@ -6,6 +6,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 import codebrains.edufind.Adapters.MainTabsAdapter;
 import codebrains.edufind.AsyncTasks.AsyncRetriveFeedTask;
@@ -125,7 +127,11 @@ public class LoginActivity extends ActionBarActivity implements android.support.
      */
     public void LoginProcess(View view) {
 
-        this.lof.LoginToSystem(this);
+        try {
+            this.lof.LoginToSystem(this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
