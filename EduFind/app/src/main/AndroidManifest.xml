@@ -42,6 +42,8 @@
 
         <activity android:name=".Activities.AdminActivity" >
         </activity>
+        <activity android:name=".Activities.ProviderActivity" >
+        </activity>
     </application>
 
 </manifest>

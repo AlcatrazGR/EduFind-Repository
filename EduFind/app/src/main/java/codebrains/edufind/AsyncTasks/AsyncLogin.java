@@ -2,17 +2,16 @@ package codebrains.edufind.AsyncTasks;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import codebrains.edufind.Interfaces.IAsyncResponse;
+import codebrains.edufind.Activities.AdminActivity;
+import codebrains.edufind.Activities.ProviderActivity;
 import codebrains.edufind.Utils.Cryptography;
 import codebrains.edufind.Utils.JSONParser;
 import codebrains.edufind.Utils.MessageCenter;
@@ -25,8 +24,6 @@ public class AsyncLogin extends AsyncTask<String, String, JSONObject> {
     private Activity mActivity;
     private ProgressDialog pDialog;
     private JSONObject loginJSON;
-
-    public IAsyncResponse delegate = null;
 
     //Constructor
     public AsyncLogin(Activity act, JSONObject jsonObject) {
@@ -84,14 +81,42 @@ public class AsyncLogin extends AsyncTask<String, String, JSONObject> {
 
         // dismiss the dialog once product deleted
         pDialog.dismiss();
+        MessageCenter msgCenter = new MessageCenter(this.mActivity);
 
-        if(response != null) {
+        if(response != null || response.has("status")) {
 
-            this.delegate.processFinish(response); //add the response to the interface object.
+            try {
+                if(response.get("status") == 1) {
+
+                    Intent intent = null;
+                    int type = (int) response.get("type");
+                    switch(type) {
+
+                        case 0 : //simple user
+                            intent = new Intent(this.mActivity, ProviderActivity.class);
+                            intent.putExtra("username", response.get("username").toString());
+                            this.mActivity.finish();
+                            this.mActivity.startActivity(intent);
+                        break;
+
+                        case 1 : //admin user
+                            intent = new Intent(this.mActivity, AdminActivity.class);
+                            this.mActivity.finish();
+                            this.mActivity.startActivity(intent);
+                        break;
+                    }
+
+                }
+                else {
+                    msgCenter.DisplayErrorDialog("Login Error", response.get("message").toString());
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
         }
         else {
-            MessageCenter msgCenter = new MessageCenter(this.mActivity);
             msgCenter.DisplayErrorDialog("Login Error", "Error occurred while trying to retrieve " +
                     "data from database. Please try again later or contact the support.");
         }

@@ -7,14 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import codebrains.edufind.Interfaces.IAsyncResponse;
 import codebrains.edufind.R;
 
-public class LoginFragment extends Fragment implements IAsyncResponse{
+public class LoginFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,11 +29,6 @@ public class LoginFragment extends Fragment implements IAsyncResponse{
         loginJSON.put("password", passwordEdt.getText().toString().trim());
 
 
-
     }
 
-    @Override
-    public void processFinish(JSONObject output) {
-        //TODO: Retrieve the data from response.
-    }
 }
