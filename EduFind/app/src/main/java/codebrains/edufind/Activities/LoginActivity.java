@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import codebrains.edufind.Adapters.MainTabsAdapter;
 import codebrains.edufind.AsyncTasks.AsyncRetriveFeedTask;
 import codebrains.edufind.Fragments.CreateAccountFragment;
+import codebrains.edufind.Fragments.LoginFragment;
 import codebrains.edufind.R;
 import codebrains.edufind.Utils.MessageCenter;
 import codebrains.edufind.Utils.SystemControl;
@@ -25,6 +26,7 @@ public class LoginActivity extends ActionBarActivity implements android.support.
 
     //Fragment objects
     private CreateAccountFragment caf;
+    private LoginFragment lof;
 
     private JSONObject geoInfo;
 
@@ -41,7 +43,8 @@ public class LoginActivity extends ActionBarActivity implements android.support.
         DeviceIsConnectedToInternet(); //Check if connected to internet.
 
         //Initialize fragment objects
-        caf = new CreateAccountFragment();
+        this.caf = new CreateAccountFragment();
+        this.lof = new LoginFragment();
 
         //Initializing the tab view of this activity
         tabsviewPager = (ViewPager) findViewById(R.id.tabspager);
@@ -114,6 +117,16 @@ public class LoginActivity extends ActionBarActivity implements android.support.
      */
     public void CreateNewAccountProcess(View view) {
         this.caf.CreateAccount(this, this.geoInfo);
+    }
+
+    /**
+     * Event on click listener for the login button in the login fragment.
+     * @param view The view object that called this event.
+     */
+    public void LoginProcess(View view) {
+
+        this.lof.LoginToSystem(this);
+
     }
 
     @Override

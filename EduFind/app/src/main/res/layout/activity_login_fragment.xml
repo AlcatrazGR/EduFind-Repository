@@ -68,7 +68,8 @@
             android:layout_alignStart="@+id/passwordEdt"
             android:layout_marginTop="25dp"
             android:layout_alignRight="@+id/passwordEdt"
-            android:layout_alignEnd="@+id/passwordEdt" />
+            android:layout_alignEnd="@+id/passwordEdt"
+            android:onClick="LoginProcess"/>
 
     </RelativeLayout>
 </ScrollView>
