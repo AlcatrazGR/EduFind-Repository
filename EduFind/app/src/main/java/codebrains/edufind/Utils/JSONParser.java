@@ -133,6 +133,9 @@ public class JSONParser {
             // request method is POST defaultHttpClient
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(this.path + script);
+
+            Log.d("Data to be send : ", String.valueOf(params));
+
             httpPost.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
             HttpResponse httpResponse = httpClient.execute(httpPost);
             HttpEntity httpEntity = httpResponse.getEntity();

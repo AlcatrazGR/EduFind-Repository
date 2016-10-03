@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -54,8 +56,11 @@ public class AsyncLogin extends AsyncTask<String, String, JSONObject> {
                 Cryptography crpy = new Cryptography();
                 this.loginJSON.put("password", crpy.HashSHA256(this.loginJSON.get("password").toString()));
 
-                List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-                parameters.add(new BasicNameValuePair("data", this.loginJSON.toString()));
+                Log.d("Password after crypt : ", loginJSON.get("password").toString());
+
+                List<NameValuePair> parameters = new ArrayList<NameValuePair>(2);
+                parameters.add(new BasicNameValuePair("usname", this.loginJSON.get("username").toString()));
+                parameters.add(new BasicNameValuePair("pass", this.loginJSON.get("password").toString()));
 
                 JSONParser jp = new JSONParser();
                 JSONObject responseJSON = jp.HttpRequestPostData(parameters, "/LoginController.php");
@@ -83,7 +88,9 @@ public class AsyncLogin extends AsyncTask<String, String, JSONObject> {
         pDialog.dismiss();
         MessageCenter msgCenter = new MessageCenter(this.mActivity);
 
-        if(response != null || response.has("status")) {
+        if(response != null) {
+
+            Log.d("Login Response : ", String.valueOf(response));
 
             try {
                 if(response.get("status") == 1) {
@@ -94,7 +101,7 @@ public class AsyncLogin extends AsyncTask<String, String, JSONObject> {
 
                         case 0 : //simple user
                             intent = new Intent(this.mActivity, ProviderActivity.class);
-                            intent.putExtra("username", response.get("username").toString());
+                            intent.putExtra("userdata", String.valueOf(response));
                             this.mActivity.finish();
                             this.mActivity.startActivity(intent);
                         break;
@@ -118,7 +125,10 @@ public class AsyncLogin extends AsyncTask<String, String, JSONObject> {
         }
         else {
             msgCenter.DisplayErrorDialog("Login Error", "Error occurred while trying to retrieve " +
-                    "data from database. Please try again later or contact the support.");
+                    "data from database. This can be either a malfunction or maintenance on the " +
+                    "server, or hardware error on you mobile phone. To ensure that its not a hardware " +
+                    "problem close the wifi, restart your mobile phone and boot the app once again. " +
+                    "If this doesnt help you please contact the support team.");
         }
 
 
