@@ -5,18 +5,25 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import org.json.JSONObject;
 
+import codebrains.edufind.Interfaces.IAsyncResponse;
+import codebrains.edufind.Utils.JSONParser;
+import codebrains.edufind.Utils.MessageCenter;
+
 /**
  * Asynchronous task that handles the process of retrieving all the user account requests in
  * order to initialize the admins panel.
  */
-public class AsyncRetrieveUsersNonVerifiedUsers extends AsyncTask<String, String, JSONObject> {
+public class AsyncRetrieveNonVerifiedUsers extends AsyncTask<String, String, JSONObject> {
 
     private Activity mActivity;
     private ProgressDialog pDialog;
 
+    public IAsyncResponse delegate; //Interface Object
+
     //Constructor
-    public AsyncRetrieveUsersNonVerifiedUsers(Activity act) {
+    public AsyncRetrieveNonVerifiedUsers(Activity act) {
         this.mActivity = act;
+        this.delegate = null;
     }
 
     @Override
@@ -34,7 +41,10 @@ public class AsyncRetrieveUsersNonVerifiedUsers extends AsyncTask<String, String
     @Override
     protected JSONObject doInBackground(String... params) {
 
-        return null;
+        JSONParser jp = new JSONParser();
+        JSONObject userAccInfo = jp.HttpRequestGetData("/AccountInfoController.php");
+
+        return userAccInfo;
     }
 
     @Override
@@ -42,6 +52,16 @@ public class AsyncRetrieveUsersNonVerifiedUsers extends AsyncTask<String, String
 
         // dismiss the dialog once product deleted
         pDialog.dismiss();
+
+        if(response != null) {
+           this.delegate.ProcessFinish(response, this.mActivity);
+        }
+        else {
+            MessageCenter msgCenter = new MessageCenter(this.mActivity);
+            msgCenter.DisplayErrorDialog("Server Error", "An error occurred while trying to communicate " +
+                    "with the database. Please try again later or contact the support team.");
+        }
+
 
     }
 

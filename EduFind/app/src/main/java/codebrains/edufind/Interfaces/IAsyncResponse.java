@@ -1,5 +1,7 @@
 package codebrains.edufind.Interfaces;
 
+import android.app.Activity;
+
 import org.json.JSONObject;
 
 
@@ -8,5 +10,5 @@ import org.json.JSONObject;
  */
 public interface  IAsyncResponse {
 
-    void processFinish(JSONObject output);
+    void ProcessFinish(JSONObject output, Activity mActivity);
 }
