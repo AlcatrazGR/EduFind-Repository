@@ -14,10 +14,12 @@ import java.util.List;
 public class AdminPanel {
 
     private HashMap<String, List<String>> listDataChild;
+    private List<String> listHeader;
 
     //Constructor
     public AdminPanel() {
         this.listDataChild = new HashMap<String, List<String>>();
+        this.listHeader = new ArrayList<String>();
     }
 
     /**
@@ -40,7 +42,8 @@ public class AdminPanel {
                 items.add(account.get("city").toString());
                 items.add(account.get("address").toString());
 
-                listDataChild.put(account.get("provider").toString(), items);
+                this.listHeader.add(account.get("provider").toString());
+                this.listDataChild.put(account.get("provider").toString(), items);
             }
 
         } catch (JSONException e) {
@@ -58,6 +61,12 @@ public class AdminPanel {
         return this.listDataChild;
     }
 
-
+    /**
+     * Method that returns the list of headers that will be used on the expandable list.
+     * @return Returns the private header list.
+     */
+    public List<String> GetListHeader() {
+        return this.listHeader;
+    }
 
 }

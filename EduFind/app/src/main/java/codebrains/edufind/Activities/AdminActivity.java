@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import codebrains.edufind.Adapters.AdminExpandableListAdapter;
 import codebrains.edufind.AsyncTasks.AsyncRetrieveNonVerifiedUsers;
+import codebrains.edufind.Controllers.AdminController;
 import codebrains.edufind.Interfaces.IAsyncResponse;
 import codebrains.edufind.R;
 
@@ -32,11 +33,8 @@ public class AdminActivity extends AppCompatActivity implements IAsyncResponse {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
-        //this.expListView = (ExpandableListView) findViewById(R.id.admin_expanded_menu);
+        this.expListView = (ExpandableListView) findViewById(R.id.admin_expanded_menu);
         GetListData();
-
-        //this.listAdapter = new AdminExpandableListAdapter(this, this.listDataHeader, this.listDataChild);
-        //this.expListView.setAdapter(this.listAdapter);
     }
 
     /**
@@ -48,16 +46,24 @@ public class AdminActivity extends AppCompatActivity implements IAsyncResponse {
         AsyncRetrieveNonVerifiedUsers arnvu = new AsyncRetrieveNonVerifiedUsers(this);
         arnvu.delegate = this;
         arnvu.execute();
-
-
     }
 
     /**
      * Method that handles the display process of user account info the the expandable list.
      * @param response The response from the web server.
      */
-    private void DisplayUserAccountInfoToExpandableList(JSONObject response) {
+    private void DisplayUserAccountInfoToExpandableList(JSONObject response, Activity mActivity) {
 
+        AdminController ac = new AdminController();
+        this.listDataChild = ac.SetAdminPanelProcess(response, mActivity);
+
+        if(listDataChild != null) {
+
+            this.userAccInfo = response;
+            this.listDataHeader = ac.GetListHeader();
+            this.listAdapter = new AdminExpandableListAdapter(this, this.listDataHeader, this.listDataChild);
+            this.expListView.setAdapter(this.listAdapter);
+        }
 
     }
 
@@ -65,7 +71,7 @@ public class AdminActivity extends AppCompatActivity implements IAsyncResponse {
     public void ProcessFinish(JSONObject output, Activity mActivity) {
 
         Log.d("Server To Interface : ", String.valueOf(output));
-        this.DisplayUserAccountInfoToExpandableList(output);
+        this.DisplayUserAccountInfoToExpandableList(output, mActivity);
     }
 
 
