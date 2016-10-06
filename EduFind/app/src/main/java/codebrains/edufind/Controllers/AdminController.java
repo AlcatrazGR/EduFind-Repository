@@ -5,6 +5,7 @@ import android.app.Activity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import codebrains.edufind.Models.AdminPanel;
 import codebrains.edufind.Utils.MessageCenter;
 
 /**
@@ -12,6 +13,8 @@ import codebrains.edufind.Utils.MessageCenter;
  * expandable list in admins panel, and also making decisions on what info to display.
  */
 public class AdminController {
+
+
 
     //Constructor
     public AdminController() {
@@ -38,7 +41,17 @@ public class AdminController {
 
                 //All data came successfully
                 case 1 :
+                    AdminPanel ap = new AdminPanel();
+                    if(ap.SetExpandableListData(response)) {
 
+                    }
+                    else {
+                        MessageCenter msgCenter = new MessageCenter(mActivity);
+                        msgCenter.FatalErrorDialogDisplay(mActivity, "Data Error",
+                                "There was an error while trying to set the user account information " +
+                                "to the list. Please try again by re logging into the system, or " +
+                                "contact the support team.");
+                    }
                 break;
 
                 //No error but no results

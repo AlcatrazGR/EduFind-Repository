@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.List;
 import codebrains.edufind.Adapters.AdminExpandableListAdapter;
