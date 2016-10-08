@@ -12,7 +12,7 @@ import android.widget.TextView;
 import codebrains.edufind.R;
 
 /**
- * Custom adapter class that binds the group items and the items of each group and displayes them
+ * Custom adapter class that binds the group items and the items of each group and displays them
  * to the expandable list as a unit. This adapter is made for the admin panel.
  */
 public class AdminExpandableListAdapter extends BaseExpandableListAdapter {

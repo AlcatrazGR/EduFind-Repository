@@ -3,12 +3,13 @@ package codebrains.edufind.Adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-
 import codebrains.edufind.Fragments.CreateAccountFragment;
 import codebrains.edufind.Fragments.LoginFragment;
 
 /**
- * Created by Vasilhs on 9/19/2016.
+ * Tabs adapter class for the main activity. This class handles the fragments of the main activity
+ * tab which are the login fragment and the create account fragment and initializes to them an
+ * integer which represents each tab.
  */
 public class MainTabsAdapter extends FragmentStatePagerAdapter {
 
