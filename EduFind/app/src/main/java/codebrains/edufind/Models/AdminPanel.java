@@ -68,8 +68,10 @@ public class AdminPanel {
      */
     public JSONObject RemoveUserFromUsersJson(JSONObject prevUsersJSON, String username) {
 
-        JSONObject usersInfo = null;
-        JSONArray accountArray = null;
+        Log.d("User Prev Info : ", prevUsersJSON.toString());
+
+        JSONObject usersInfo = new JSONObject();
+        JSONArray accountArray = new JSONArray();
         try {
             JSONArray prevUsersJSONArray = (JSONArray) prevUsersJSON.get("accounts");
             for(int i = 0; i < prevUsersJSONArray.length(); i++) {

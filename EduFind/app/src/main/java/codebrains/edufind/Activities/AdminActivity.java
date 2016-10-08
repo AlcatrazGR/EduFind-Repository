@@ -1,6 +1,8 @@
 package codebrains.edufind.Activities;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,8 +21,6 @@ import codebrains.edufind.AsyncTasks.AsyncRetrieveNonVerifiedUsers;
 import codebrains.edufind.Controllers.AdminController;
 import codebrains.edufind.Interfaces.IAsyncResponse;
 import codebrains.edufind.R;
-import codebrains.edufind.Utils.MessageCenter;
-
 
 /**
  * Activity class for the admin panel.
@@ -86,18 +86,10 @@ public class AdminActivity extends AppCompatActivity implements IAsyncResponse {
 
         Log.d("The username : ", username);
 
-        MessageCenter msgCenter = new MessageCenter(this);
-        msgCenter.DisplayConfirmationDialog("User Accept", "Do you really want to accept the `" +
-            username + "` request ?");
+        this.DisplayConfirmationDialog("Do you really want to accept the `" +
+                username + "` request ?", username, this, "Accept", this.userAccInfo);
 
         Log.d("---- check ---- : ", "HERE");
-
-        if(msgCenter.GetStatusFlag()) {
-            AsyncAcceptUsersRequest aur = new AsyncAcceptUsersRequest(username, this, this.userAccInfo);
-            aur.delegate = this;
-            aur.execute();
-        }
-
 
     }
 
@@ -112,14 +104,69 @@ public class AdminActivity extends AppCompatActivity implements IAsyncResponse {
         TextView usernameTv = (TextView) r1.findViewById(R.id.lblListHeader);
         String username = usernameTv.getText().toString().trim();
 
-        MessageCenter msgCenter = new MessageCenter(this);
-        msgCenter.DisplayConfirmationDialog("User Deletion", "Do you really want to delete the `" +
-                username + "` request ?");
+        this.DisplayConfirmationDialog("Do you really want to delete the `" +
+                username + "` request ?", username, this, "Delete", this.userAccInfo);
 
-        if(msgCenter.GetStatusFlag()) {
+    }
 
-        }
+    /**
+     * Method that displays a confirmation massage of `yes` or `no` to the user.
+     * @param message The message of the dialog.
+     * @param username Username of the the user that requested the account creation.
+     * @param aa Activity object.
+     * @param process The process to follow, either deletion or acceptance of a user.
+     * @param data The json object with all the users info.
+     */
+    private void DisplayConfirmationDialog(final String message, final String username, final AdminActivity aa,
+                                           final String process, final JSONObject data) {
 
+        boolean status = false;
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+        // Setting Dialog Title
+        alertDialog.setTitle("Confirmation Message");
+
+        // Setting Dialog Message
+        alertDialog.setMessage(message);
+        alertDialog.setCancelable(false);
+        // On pressing Settings button
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+                switch (process) {
+
+                    case "Accept":
+                        aa.CallAcceptAccountAsyncTask(username, data);
+                        break;
+
+                    case "Delete":
+                        break;
+
+                }
+
+            }
+        });
+
+        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
+
+    }
+
+    /**
+     * Method that calls the asynchronous task for accepting a users request.
+     * @param username Username of the the user that requested the account creation.
+     * @param data The json object with all the users info.
+     */
+    public void CallAcceptAccountAsyncTask(String username, JSONObject data) {
+        AsyncAcceptUsersRequest aur = new AsyncAcceptUsersRequest(username, this, data);
+        aur.delegate = this;
+        aur.execute();
     }
 
     @Override

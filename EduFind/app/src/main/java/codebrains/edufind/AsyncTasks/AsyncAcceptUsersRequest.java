@@ -65,7 +65,19 @@ public class AsyncAcceptUsersRequest extends AsyncTask<String, String, JSONObjec
         // dismiss the dialog once product deleted
         pDialog.dismiss();
 
+        if(response != null) {
+            this.delegate.ProcessFinish(response, this.mActivity);
+        }
+        else {
+            MessageCenter msgCenter = new MessageCenter(this.mActivity);
+            msgCenter.DisplayErrorDialog("Server Error", "An error occurred while trying to communicate " +
+                    "with the database. Please try again later or contact the support team.");
+        }
 
+
+
+
+        /*
         if(response != null) {
 
             try {
@@ -92,6 +104,7 @@ public class AsyncAcceptUsersRequest extends AsyncTask<String, String, JSONObjec
                     "problem close the wifi, restart your mobile phone and boot the app once again. " +
                     "If this doesnt help you please contact the support team.");
         }
+        */
 
     }
 

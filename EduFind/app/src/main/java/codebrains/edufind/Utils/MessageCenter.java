@@ -14,12 +14,10 @@ import android.support.v7.app.AlertDialog;
 public class MessageCenter {
 
     private Context mContext;
-    private boolean status;
 
     //Constructor
     public MessageCenter(Context context) {
         this.mContext = context;
-        this.status = false;
     }
 
     /**
@@ -131,54 +129,5 @@ public class MessageCenter {
         alertDialog.show();
     }
 
-    /**
-     * Method that displays a confirmation massage of `yes` or `no` to the user.
-     * @param title The title of the dialog.
-     * @param message The message of the dialog.
-     */
-    public void DisplayConfirmationDialog(String title, String message) {
-
-        boolean status = false;
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-
-        // Setting Dialog Title
-        alertDialog.setTitle(title);
-
-        // Setting Dialog Message
-        alertDialog.setMessage(message);
-        alertDialog.setCancelable(false);
-        // On pressing Settings button
-        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                SetStatusFlag(true);
-            }
-        });
-
-        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                SetStatusFlag(false);
-            }
-        });
-
-        // Showing Alert Message
-        alertDialog.show();
-
-    }
-
-    /**
-     * Method that returns the status flag which is used in many confirmation dialogs.
-     * @return Returns true or false depending on the users selection.
-     */
-    public boolean GetStatusFlag() {
-        return this.status;
-    }
-
-    /**
-     * Method that returns the status flag which is used in many confirmation dialogs.
-     * @param flag The boolean value to set the flag.
-     */
-    public void SetStatusFlag(boolean flag) {
-        this.status = flag;
-    }
 
 }
