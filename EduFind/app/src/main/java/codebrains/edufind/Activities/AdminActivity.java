@@ -8,16 +8,18 @@ import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 import codebrains.edufind.Adapters.AdminExpandableListAdapter;
+import codebrains.edufind.AsyncTasks.AsyncAcceptUsersRequest;
 import codebrains.edufind.AsyncTasks.AsyncRetrieveNonVerifiedUsers;
 import codebrains.edufind.Controllers.AdminController;
 import codebrains.edufind.Interfaces.IAsyncResponse;
 import codebrains.edufind.R;
+import codebrains.edufind.Utils.MessageCenter;
 
 
 /**
@@ -45,7 +47,7 @@ public class AdminActivity extends AppCompatActivity implements IAsyncResponse {
      * Method that handles the call to server in order to retrieve the account info for the
      * initialization of the admin panel.
      */
-    private void GetListData() {
+    public void GetListData() {
 
         AsyncRetrieveNonVerifiedUsers arnvu = new AsyncRetrieveNonVerifiedUsers(this);
         arnvu.delegate = this;
@@ -78,8 +80,23 @@ public class AdminActivity extends AppCompatActivity implements IAsyncResponse {
     public void AcceptUserRequest(View view) {
 
         LinearLayout l1 = (LinearLayout) view.getParent();
-        TextView usernameTv = (TextView) l1.findViewById(R.id.lblListHeader);
+        RelativeLayout r1 = (RelativeLayout) l1.getParent();
+        TextView usernameTv = (TextView) r1.findViewById(R.id.lblListHeader);
         String username = usernameTv.getText().toString().trim();
+
+        Log.d("The username : ", username);
+
+        MessageCenter msgCenter = new MessageCenter(this);
+        msgCenter.DisplayConfirmationDialog("User Accept", "Do you really want to accept the `" +
+            username + "` request ?");
+
+        Log.d("---- check ---- : ", "HERE");
+
+        if(msgCenter.GetStatusFlag()) {
+            AsyncAcceptUsersRequest aur = new AsyncAcceptUsersRequest(username, this, this.userAccInfo);
+            aur.delegate = this;
+            aur.execute();
+        }
 
 
     }
@@ -91,9 +108,17 @@ public class AdminActivity extends AppCompatActivity implements IAsyncResponse {
     public void DeleteUserRequest(View view) {
 
         LinearLayout l1 = (LinearLayout) view.getParent();
-        TextView usernameTv = (TextView) l1.findViewById(R.id.lblListHeader);
+        RelativeLayout r1 = (RelativeLayout) l1.getParent();
+        TextView usernameTv = (TextView) r1.findViewById(R.id.lblListHeader);
         String username = usernameTv.getText().toString().trim();
 
+        MessageCenter msgCenter = new MessageCenter(this);
+        msgCenter.DisplayConfirmationDialog("User Deletion", "Do you really want to delete the `" +
+                username + "` request ?");
+
+        if(msgCenter.GetStatusFlag()) {
+
+        }
 
     }
 
