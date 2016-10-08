@@ -22,7 +22,8 @@ public class ServerAnalytics {
         String[] end = response.split("@EOR@"); //Separate analytics with data.
 
         String result = end[0]; // Get the data part
-        return result.replace("\\", ""); // Replace all the regex chars.
+       // return result.replace("\\", ""); // Replace all the regex chars.
+        return result; // Replace all the regex chars.
     }
 
 }

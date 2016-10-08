@@ -4,8 +4,12 @@ import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
@@ -67,12 +71,38 @@ public class AdminActivity extends AppCompatActivity implements IAsyncResponse {
 
     }
 
+    /**
+     * Event method that handles the accept of a user's request to create an account.
+     * @param view The view of the activity that fired this event
+     */
+    public void AcceptUserRequest(View view) {
+
+        LinearLayout l1 = (LinearLayout) view.getParent();
+        TextView usernameTv = (TextView) l1.findViewById(R.id.lblListHeader);
+        String username = usernameTv.getText().toString().trim();
+
+
+    }
+
+    /**
+     * Event method that handles the deletion of a user's request to create an account.
+     * @param view The view of the activity that fired this event
+     */
+    public void DeleteUserRequest(View view) {
+
+        LinearLayout l1 = (LinearLayout) view.getParent();
+        TextView usernameTv = (TextView) l1.findViewById(R.id.lblListHeader);
+        String username = usernameTv.getText().toString().trim();
+
+
+    }
+
     @Override
     public void ProcessFinish(JSONObject output, Activity mActivity) {
 
-        Log.d("Server To Interface : ", String.valueOf(output));
         this.DisplayUserAccountInfoToExpandableList(output, mActivity);
     }
+
 
 
 }

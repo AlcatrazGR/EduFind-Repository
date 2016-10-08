@@ -2,8 +2,9 @@ package codebrains.edufind.Utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
-
+import android.util.Log;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -52,6 +53,29 @@ public class SystemControl {
             return false;
         }
 
+    }
+
+    /**
+     * Method that converts a UTF-8 encoded message into a human readable string.
+     * @param encoded The encoded string.
+     * @return Returns the readable string after the conversion.
+     */
+    public String ConvertUTF8EncodedStringToReadable(String encoded) {
+
+        byte[] byteStream;
+        String result = null;
+
+        try {
+
+            //Converts string to UTF-8 decoded byte stream.
+            byteStream = encoded.toString().getBytes("UTF-8");
+            result = new String(byteStream, "UTF-8");
+
+        } catch (UnsupportedEncodingException e) {
+            Log.e("Exception!! : ", "UnsupportedEncodingException --> " + e.toString());
+        }
+
+        return result;
     }
 
 

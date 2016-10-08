@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -55,8 +54,6 @@ public class AsyncLogin extends AsyncTask<String, String, JSONObject> {
                 //Hash the password
                 Cryptography crpy = new Cryptography();
                 this.loginJSON.put("password", crpy.HashSHA256(this.loginJSON.get("password").toString()));
-
-                Log.d("Password after crypt : ", loginJSON.get("password").toString());
 
                 List<NameValuePair> parameters = new ArrayList<NameValuePair>(2);
                 parameters.add(new BasicNameValuePair("usname", this.loginJSON.get("username").toString()));

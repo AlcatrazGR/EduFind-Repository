@@ -1,11 +1,14 @@
 package codebrains.edufind.Models;
 
+import android.app.Activity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import codebrains.edufind.Utils.SystemControl;
 
 /**
  * Class that handles the setting of data into the expandable list items and groups in order to
@@ -28,22 +31,24 @@ public class AdminPanel {
      * @param response The JSON response from the server that contains the account info.
      * @return Returns a boolean to represent result of the process.
      */
-    public boolean SetExpandableListData(JSONObject response) {
+    public boolean SetExpandableListData(JSONObject response, Activity mActivity) {
 
         try {
 
+            SystemControl sc = new SystemControl(mActivity);
             JSONArray usersJSONArray = (JSONArray) response.get("accounts");
-            for(int i = 0; i <= usersJSONArray.length(); i++) {
+
+            for(int i = 0; i < usersJSONArray.length(); i++) {
 
                 JSONObject account = usersJSONArray.getJSONObject(i);
                 List<String> items = new ArrayList<String>();
-                items.add(account.get("username").toString());
-                items.add(account.get("mail").toString());
-                items.add(account.get("city").toString());
-                items.add(account.get("address").toString());
+                items.add("Provider: " + sc.ConvertUTF8EncodedStringToReadable(account.get("provider").toString()));
+                items.add("Email: " + account.get("mail").toString());
+                items.add("City: " + account.get("city").toString());
+                items.add("Address: " + account.get("address").toString());
 
-                this.listHeader.add(account.get("provider").toString());
-                this.listDataChild.put(account.get("provider").toString(), items);
+                this.listHeader.add(sc.ConvertUTF8EncodedStringToReadable(account.get("username").toString()));
+                this.listDataChild.put(sc.ConvertUTF8EncodedStringToReadable(account.get("username").toString()), items);
             }
 
         } catch (JSONException e) {

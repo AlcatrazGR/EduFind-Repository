@@ -138,11 +138,11 @@ public class JSONParser {
             result = sb.toString();
 
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            Log.e("Exception!!! : ", "UnsupportedEncodingException, "+e);
         } catch (UnknownHostException e) {
-            e.printStackTrace();
+            Log.e("Exception!!! : ", "UnknownHostException, " + e);
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("Exception!!! : ", "IOException, " + e);
         } catch (NullPointerException e){
             throw new NullPointerException();
         }

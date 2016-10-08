@@ -43,7 +43,7 @@ public class AdminController {
                 //All data came successfully
                 case 1 :
                     AdminPanel ap = new AdminPanel();
-                    if(ap.SetExpandableListData(response)) {
+                    if(ap.SetExpandableListData(response, mActivity)) {
                         HashMap<String, List<String>> listDataChild = ap.GetListData();
                         this.listHeader = ap.GetListHeader();
                         return listDataChild;
@@ -83,6 +83,5 @@ public class AdminController {
     public List<String> GetListHeader() {
         return this.listHeader;
     }
-
 
 }
