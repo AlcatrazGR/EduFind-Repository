@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -17,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import codebrains.edufind.Adapters.AdminExpandableListAdapter;
 import codebrains.edufind.AsyncTasks.AsyncAcceptUsersRequest;
+import codebrains.edufind.AsyncTasks.AsyncDeleteUsersRequest;
 import codebrains.edufind.AsyncTasks.AsyncRetrieveNonVerifiedUsers;
 import codebrains.edufind.Controllers.AdminController;
 import codebrains.edufind.Interfaces.IAsyncResponse;
@@ -84,13 +84,8 @@ public class AdminActivity extends AppCompatActivity implements IAsyncResponse {
         TextView usernameTv = (TextView) r1.findViewById(R.id.lblListHeader);
         String username = usernameTv.getText().toString().trim();
 
-        Log.d("The username : ", username);
-
         this.DisplayConfirmationDialog("Do you really want to accept the `" +
                 username + "` request ?", username, this, "Accept", this.userAccInfo);
-
-        Log.d("---- check ---- : ", "HERE");
-
     }
 
     /**
@@ -140,10 +135,9 @@ public class AdminActivity extends AppCompatActivity implements IAsyncResponse {
                         break;
 
                     case "Delete":
+                        aa.CallDeleteAccountAsyncTask(username, data);
                         break;
-
                 }
-
             }
         });
 
@@ -167,6 +161,17 @@ public class AdminActivity extends AppCompatActivity implements IAsyncResponse {
         AsyncAcceptUsersRequest aur = new AsyncAcceptUsersRequest(username, this, data);
         aur.delegate = this;
         aur.execute();
+    }
+
+    /**
+     * Method that calls the asynchronous task for deleting a users request.
+     * @param username Username of the the user that requested the account creation.
+     * @param data The json object with all the users info.
+     */
+    public void CallDeleteAccountAsyncTask(String username, JSONObject data) {
+        AsyncDeleteUsersRequest adur = new AsyncDeleteUsersRequest(username, this, data);
+        adur.delegate = this;
+        adur.execute();
     }
 
     @Override

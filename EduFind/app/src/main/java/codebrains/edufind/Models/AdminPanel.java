@@ -61,39 +61,6 @@ public class AdminPanel {
     }
 
     /**
-     * Method that finds a user account info into the users account array.
-     * @param prevUsersJSON All users info requests.
-     * @param username The username of the one to search.
-     * @return Return a JSON object with all the information of the searched user.
-     */
-    public JSONObject RemoveUserFromUsersJson(JSONObject prevUsersJSON, String username) {
-
-        Log.d("User Prev Info : ", prevUsersJSON.toString());
-
-        JSONObject usersInfo = new JSONObject();
-        JSONArray accountArray = new JSONArray();
-        try {
-            JSONArray prevUsersJSONArray = (JSONArray) prevUsersJSON.get("accounts");
-            for(int i = 0; i < prevUsersJSONArray.length(); i++) {
-
-                JSONObject account = (JSONObject) prevUsersJSONArray.get(i);
-                if(account.get("username") != username) {
-                    accountArray.put(account);
-                }
-            }
-
-            usersInfo.put("status", 1);
-            usersInfo.put("accounts", accountArray);
-
-        } catch (JSONException e) {
-            Log.e("Exception ! ->", "JSONException : " + e);
-        }
-
-        return usersInfo;
-    }
-
-
-    /**
      * Method that returns the private list data that has been previously setted.
      * @return Returns the list data.
      */
