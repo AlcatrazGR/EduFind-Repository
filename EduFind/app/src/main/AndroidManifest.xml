@@ -44,6 +44,12 @@
         </activity>
         <activity android:name=".Activities.ProviderActivity" >
         </activity>
+        <activity android:name=".Fragments.ProvidersProfileFragment" >
+        </activity>
+        <activity android:name=".Fragments.InsertBookFragment" >
+        </activity>
+        <activity android:name=".Fragments.DisplayProvidersBooks" >
+        </activity>
     </application>
 
 </manifest>

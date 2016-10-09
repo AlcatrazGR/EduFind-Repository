@@ -7,9 +7,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import codebrains.edufind.Adapters.ProviderTabsAdapter;
+import codebrains.edufind.Fragments.ProvidersProfileFragment;
 import codebrains.edufind.R;
 
 public class ProviderActivity extends ActionBarActivity implements android.support.v7.app.ActionBar.TabListener  {
@@ -20,10 +23,9 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
     private ActionBar actionBar;
 
     //Fragment objects
+    private ProvidersProfileFragment ppf;
 
-    private JSONObject userData;
-
-
+    private static JSONObject userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,9 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
         } catch (JSONException e) {
             Log.e("Excepiton ! ->", "getStringExtra : " + e);
         }
+
+        //Initializing the fragment data
+        this.ppf = new ProvidersProfileFragment();
 
         //Initializing the tab view of this activity
         tabsviewPager = (ViewPager) findViewById(R.id.tabspager);
@@ -82,6 +87,29 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
 
     }
 
+    /**
+     * Method that returns the providers information to all the available tabs (its static).
+     * @return Returns the providers account information.
+     */
+    public static JSONObject GetUserData() {
+        return userData;
+    }
+
+    /**
+     * Event listener for the update providers profile button.
+     * @param view The view of the activity that fired the event.
+     */
+    public void UpdateProvidersProfile(View view) {
+
+    }
+
+    /**
+     * Event listener for the delete providers profile button.
+     * @param view The view of the activity that fired the event.
+     */
+    public void DeleteProvidersProfile(View view) {
+
+    }
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
@@ -97,5 +125,7 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
         tabsviewPager.setCurrentItem(tab.getPosition());
     }
+
+
 
 }
