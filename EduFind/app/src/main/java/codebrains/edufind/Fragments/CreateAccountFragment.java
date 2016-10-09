@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +36,23 @@ public class CreateAccountFragment extends Fragment {
 
         CreateAccountController cac = new CreateAccountController();
         JSONObject geoJson = cac.HandleGeoLocationInfo(activity);
+
+        //Displaying results
+        TextView longitudeTxt = (TextView) activity.findViewById(R.id.textView6);
+        TextView latitudeTxt = (TextView) activity.findViewById(R.id.textView7);
+        TextView cityTxt = (TextView) activity.findViewById(R.id.textView8);
+        TextView postalTxt = (TextView) activity.findViewById(R.id.textView9);
+        TextView addressTxt = (TextView) activity.findViewById(R.id.textView10);
+
+        try {
+            longitudeTxt.setText("Longitude :" + geoJson.get("longitude").toString());
+            latitudeTxt.setText("Latitude :" + geoJson.get("latitude").toString());
+            cityTxt.setText("City :" + geoJson.get("city").toString());
+            postalTxt.setText("Postal Code :" + geoJson.get("postal").toString());
+            addressTxt.setText("Address :" + geoJson.get("address").toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         return geoJson;
     }

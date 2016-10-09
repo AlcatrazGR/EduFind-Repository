@@ -78,5 +78,30 @@ public class SystemControl {
         return result;
     }
 
+    /**
+     * Method that returns the value part from a geolocation information. Usually geo info in the
+     * UI are presented as Longitude: value, so this method splits with the semicolon char and
+     * returns the second part which is the value.
+     * @param geolocationInfo The whole geo info string.
+     * @return Returns the real value of the geo info in string form.
+     */
+    public String GetValuePartFromGeolocationDisplay(String geolocationInfo) {
+
+        Log.d("---- Split ---", geolocationInfo);
+
+        String[] splitted = geolocationInfo.split(":");
+        return splitted[1];
+    }
+
+    /**
+     * Method that converts a string variable into a double.
+     * @param value The string value.
+     * @return Returns the double representation of the string variable.
+     */
+    public double ConvertStringToDouble(String value) {
+        double result = Double.parseDouble(value);
+        return result;
+    }
+
 
 }

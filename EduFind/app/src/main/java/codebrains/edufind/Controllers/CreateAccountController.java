@@ -26,10 +26,11 @@ public class CreateAccountController {
 
         CreateAccount ca = new CreateAccount();
         JSONObject geoInfo = ca.GetCurrentGeoLocationInfo(mActivity);
-        ca.DisplayGeolocationInfo(mActivity, geoInfo);
 
         return geoInfo;
     }
+
+
 
     /**
      * Method that calls the appropriate methods of the model to validate the account creation.

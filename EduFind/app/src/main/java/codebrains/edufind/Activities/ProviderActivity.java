@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import codebrains.edufind.Adapters.ProviderTabsAdapter;
@@ -93,6 +92,22 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
      */
     public static JSONObject GetUserData() {
         return userData;
+    }
+
+    /**
+     * Method that sets the providers account info.
+     * @param newUserData The new account info of the provider.
+     */
+    public static void SetUserData(JSONObject newUserData) {
+        userData = newUserData;
+    }
+
+    /**
+     * Event listener for the geolocation button.
+     * @param view The view of the activity that fired the event.
+     */
+    public void GetGeolocationOfUser(View view) {
+        this.ppf.GetGeolocationOfUser(this);
     }
 
     /**
