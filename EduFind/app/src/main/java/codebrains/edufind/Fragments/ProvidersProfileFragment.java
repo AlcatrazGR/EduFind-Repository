@@ -11,7 +11,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import codebrains.edufind.AsyncTasks.AsyncUpdateProvidersProfile;
 import codebrains.edufind.R;
+import codebrains.edufind.Utils.Cryptography;
+
 import static codebrains.edufind.Activities.ProviderActivity.GetUserData;
 
 public class ProvidersProfileFragment extends Fragment {
@@ -61,7 +65,8 @@ public class ProvidersProfileFragment extends Fragment {
 
             Log.d("-- Whole JSON --", profileInfo.toString());
 
-
+            AsyncUpdateProvidersProfile aupp = new AsyncUpdateProvidersProfile(mActivity, profileInfo);
+            aupp.execute();
 
         } catch (JSONException e) {
             Log.d("Exception! ->", "JSONException: " + e);
@@ -75,9 +80,16 @@ public class ProvidersProfileFragment extends Fragment {
 
     }
 
+    /**
+     * Method that gets all the current providers account information from the profile in order
+     * to either update the account or delete it.
+     * @param mActivity The activity that called this method.
+     * @return Returns a json object with all the current account data.
+     */
     private JSONObject GetProvidersProfileData(Activity mActivity) {
 
         JSONObject newProfileData = new JSONObject();
+        Cryptography cpy = new Cryptography();
 
         TextView usernameTv = (TextView) mActivity.findViewById(R.id.provider_username);
         EditText passwordEdt = (EditText) mActivity.findViewById(R.id.provider_password);
@@ -92,7 +104,7 @@ public class ProvidersProfileFragment extends Fragment {
 
         try {
             newProfileData.put("username", usernameTv.getText().toString().trim());
-            newProfileData.put("password", passwordEdt.getText().toString().trim());
+            newProfileData.put("password", cpy.HashSHA256(passwordEdt.getText().toString().trim()));
             newProfileData.put("mail", emailEdt.getText().toString().trim());
             newProfileData.put("lon", longitudeTv.getText().toString());
             newProfileData.put("lat", latitudeTv.getText().toString());

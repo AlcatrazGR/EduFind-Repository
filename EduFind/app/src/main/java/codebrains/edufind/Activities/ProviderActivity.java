@@ -100,7 +100,7 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
      * @param view The view of the activity that fired the event.
      */
     public void UpdateProvidersProfile(View view) {
-
+        this.ppf.UpdateProvidersProfile(this);
     }
 
     /**
