@@ -8,9 +8,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 import codebrains.edufind.Adapters.ProviderTabsAdapter;
+import codebrains.edufind.Fragments.InsertBookFragment;
 import codebrains.edufind.Fragments.ProvidersProfileFragment;
 import codebrains.edufind.R;
 
@@ -23,8 +25,11 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
 
     //Fragment objects
     private ProvidersProfileFragment ppf;
+    private InsertBookFragment ibf;
 
     private static JSONObject userData;
+
+    private int bookAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +43,11 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
             Log.e("Excepiton ! ->", "getStringExtra : " + e);
         }
 
+        this.bookAmount = 0;
+
         //Initializing the fragment data
         this.ppf = new ProvidersProfileFragment();
+        this.ibf = new InsertBookFragment();
 
         //Initializing the tab view of this activity
         tabsviewPager = (ViewPager) findViewById(R.id.tabspager);
@@ -123,8 +131,30 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
      * @param view The view of the activity that fired the event.
      */
     public void DeleteProvidersProfile(View view) {
+        this.ppf.DeleteProvidersProfile(this);
+    }
+
+
+
+    public void BookAmountAddition(View view) {
+
+        TextView amountTv = (TextView) findViewById(R.id.textView25);
+        this.bookAmount += 1;
+        amountTv.setText(String.valueOf(this.bookAmount));
 
     }
+
+    public void BookAmountSubtraction(View view) {
+
+        TextView amountTv = (TextView) findViewById(R.id.textView25);
+        this.bookAmount -= 1;
+
+        if(this.bookAmount <= 0)
+            this.bookAmount = 0;
+
+        amountTv.setText(String.valueOf(this.bookAmount));
+    }
+
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {

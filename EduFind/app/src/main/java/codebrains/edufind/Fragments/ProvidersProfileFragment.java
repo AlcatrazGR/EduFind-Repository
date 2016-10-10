@@ -79,6 +79,10 @@ public class ProvidersProfileFragment extends Fragment {
 
     }
 
+    /**
+     * Method that handles the deletion of an provider account through the providers profile.
+     * @param mActivity The activity that called the method.
+     */
     public void DeleteProvidersProfile(Activity mActivity) {
 
     }
