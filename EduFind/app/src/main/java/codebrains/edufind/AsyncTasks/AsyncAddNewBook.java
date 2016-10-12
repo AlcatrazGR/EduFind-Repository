@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
-
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.util.ArrayList;
+import java.util.List;
 import codebrains.edufind.Utils.JSONParser;
 import codebrains.edufind.Utils.MessageCenter;
 
@@ -37,12 +39,14 @@ public class AsyncAddNewBook extends AsyncTask<String, String, JSONObject> {
         pDialog.show();
     }
 
-
     @Override
     protected JSONObject doInBackground(String... params) {
 
+        List<NameValuePair> parameters = new ArrayList<NameValuePair>(1);
+        parameters.add(new BasicNameValuePair("data", this.newBook.toString()));
+
         JSONParser jp = new JSONParser();
-        JSONObject response = jp.HttpRequestGetData("/AddBookController.php");
+        JSONObject response = jp.HttpRequestPostData(parameters, "/AddBookController.php");
 
         return response;
     }

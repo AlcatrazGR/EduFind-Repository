@@ -40,7 +40,7 @@ public class InsertBookFragment extends Fragment {
         if(bc.BookAdditionProcess(mActivity, userdata)) {
 
             JSONObject newBook = bc.GetNewBookJson();
-            AsyncAddNewBook aanb = new AsyncAddNewBook(mActivity, userdata);
+            AsyncAddNewBook aanb = new AsyncAddNewBook(mActivity, newBook);
             aanb.execute();
 
         }

@@ -140,7 +140,7 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
      */
     public void BookAmountAddition(View view) {
 
-        TextView amountTv = (TextView) findViewById(R.id.textView25);
+        TextView amountTv = (TextView) findViewById(R.id.book_amount);
         this.bookAmount += 1;
         amountTv.setText(String.valueOf(this.bookAmount));
 
@@ -152,7 +152,7 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
      */
     public void BookAmountSubtraction(View view) {
 
-        TextView amountTv = (TextView) findViewById(R.id.textView25);
+        TextView amountTv = (TextView) findViewById(R.id.book_amount);
         this.bookAmount -= 1;
 
         if(this.bookAmount <= 0)
