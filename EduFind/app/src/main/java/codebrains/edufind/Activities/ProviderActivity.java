@@ -31,6 +31,7 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
 
     private int bookAmount;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +78,6 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
         //Event listener that runs whenever the tabs are swiped, it is used to make enable the
         //respective tab.
         tabsviewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
             @Override
             public void onPageSelected(int position) {
                 actionBar.setSelectedNavigationItem(position); //Enable the respective tab.
@@ -134,8 +134,10 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
         this.ppf.DeleteProvidersProfile(this);
     }
 
-
-
+    /**
+     * Method that adds an additional number to the amount of books.
+     * @param view The view of the activity.
+     */
     public void BookAmountAddition(View view) {
 
         TextView amountTv = (TextView) findViewById(R.id.textView25);
@@ -144,6 +146,10 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
 
     }
 
+    /**
+     * Method that subtracts an additional number to the amount of books.
+     * @param view The view of the activity.
+     */
     public void BookAmountSubtraction(View view) {
 
         TextView amountTv = (TextView) findViewById(R.id.textView25);
@@ -155,6 +161,13 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
         amountTv.setText(String.valueOf(this.bookAmount));
     }
 
+    /**
+     * Event that is called whenever the submit button on the add book form is pressed.
+     * @param view The view of the activity that called the event.
+     */
+    public void AddBookEvent(View view) {
+        this.ibf.AddNewBookProcess(this, GetUserData());
+    }
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {

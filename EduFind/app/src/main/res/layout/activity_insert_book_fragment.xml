@@ -25,7 +25,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText7"
+            android:id="@+id/book_title"
             android:layout_below="@+id/textView15"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -41,7 +41,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Authors:"
             android:id="@+id/textView20"
-            android:layout_below="@+id/editText7"
+            android:layout_below="@+id/book_title"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginTop="10dp"/>
@@ -49,7 +49,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText8"
+            android:id="@+id/book_authors"
             android:layout_below="@+id/textView20"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -65,7 +65,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Publisher:"
             android:id="@+id/textView21"
-            android:layout_below="@+id/editText8"
+            android:layout_below="@+id/book_authors"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginTop="10dp"/>
@@ -73,7 +73,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText9"
+            android:id="@+id/book_publisher"
             android:layout_below="@+id/textView21"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -87,10 +87,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Sectors:"
+            android:text="Sector:"
             android:id="@+id/textView22"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/editText9" />
+            android:layout_below="@+id/book_publisher" />
 
         <Spinner
             android:layout_width="wrap_content"
@@ -104,24 +104,13 @@
             android:layout_marginTop="10dp"
             android:entries="@array/sectors" />
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text=""
-            android:id="@+id/textView24"
-            android:layout_below="@+id/spinner"
-            android:layout_alignLeft="@+id/spinner"
-            android:layout_alignStart="@+id/spinner" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Amount:"
             android:id="@+id/textView23"
-            android:layout_below="@+id/textView24"
+            android:layout_below="@+id/spinner"
             android:layout_marginTop="10dp"/>
 
         <Button
@@ -134,7 +123,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignRight="@+id/linearLayout2"
             android:layout_alignEnd="@+id/linearLayout2"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:onClick="AddBookEvent"/>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -150,7 +140,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="0"
-                android:id="@+id/textView25"
+                android:id="@+id/book_amount"
                 android:layout_below="@+id/textView23"
                 android:layout_alignLeft="@+id/textView24"
                 android:layout_alignStart="@+id/textView24"
