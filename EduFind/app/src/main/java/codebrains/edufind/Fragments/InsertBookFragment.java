@@ -7,7 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import org.json.JSONObject;
+
+import codebrains.edufind.AsyncTasks.AsyncAddNewBook;
+import codebrains.edufind.Controllers.BookController;
 import codebrains.edufind.R;
+import codebrains.edufind.Utils.MessageCenter;
 
 public class InsertBookFragment extends Fragment {
 
@@ -32,8 +36,20 @@ public class InsertBookFragment extends Fragment {
      */
     public void AddNewBookProcess(Activity mActivity, JSONObject userdata){
 
+        BookController bc = new BookController();
+        if(bc.BookAdditionProcess(mActivity, userdata)) {
 
+            JSONObject newBook = bc.GetNewBookJson();
+            AsyncAddNewBook aanb = new AsyncAddNewBook(mActivity, userdata);
+            aanb.execute();
 
+        }
+        else {
+            MessageCenter msgCenter = new MessageCenter(mActivity);
+            msgCenter.DisplayErrorDialog("Error Occurred", "There was an error while trying to " +
+                    "obtain all the information from the add new book form. Please try again " +
+                    "or contact the support team.");
+        }
 
     }
 

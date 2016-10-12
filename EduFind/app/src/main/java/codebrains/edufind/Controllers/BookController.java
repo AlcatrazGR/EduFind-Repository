@@ -12,9 +12,11 @@ import codebrains.edufind.Models.BookModel;
  */
 public class BookController {
 
+    private JSONObject newBookData;
+
     //Constructor
     public BookController() {
-
+        this.newBookData = new JSONObject();
     }
 
     /**
@@ -25,12 +27,20 @@ public class BookController {
     public boolean BookAdditionProcess(Activity mActivity, JSONObject userdata) {
 
         BookModel bm = new BookModel();
-        JSONObject newBookData = bm.GetAddNewBookFormData(mActivity, userdata);
+        this.newBookData = bm.GetAddNewBookFormData(mActivity, userdata);
 
-        if(newBookData == null)
+        if(this.newBookData == null)
             return false;
 
         return true;
+    }
+
+    /**
+     * Method that returns the initialized book json.
+     * @return Returns the private book json object.
+     */
+    public JSONObject GetNewBookJson() {
+        return this.newBookData;
     }
 
 }
