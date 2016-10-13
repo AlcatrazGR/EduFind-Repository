@@ -1,8 +1,10 @@
 package codebrains.edufind.Fragments;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import codebrains.edufind.AsyncTasks.AsyncDeleteAccount;
 import codebrains.edufind.AsyncTasks.AsyncUpdateProvidersProfile;
 import codebrains.edufind.Controllers.CreateAccountController;
 import codebrains.edufind.R;
@@ -68,8 +72,8 @@ public class ProvidersProfileFragment extends Fragment {
             profileInfo.put("newProfileData", this.GetProvidersProfileData(mActivity).toString());
             profileInfo.put("oldProfileData", GetUserData());
 
-            AsyncUpdateProvidersProfile aupp = new AsyncUpdateProvidersProfile(mActivity, profileInfo);
-            aupp.execute();
+            this.DisplayConfirmationDialog("Do you really want to update your account ?", mActivity,
+                    "Update", profileInfo);
 
         } catch (JSONException e) {
             Log.e("Exception! ->", "JSONException: " + e);
@@ -84,8 +88,65 @@ public class ProvidersProfileFragment extends Fragment {
      * @param mActivity The activity that called the method.
      */
     public void DeleteProvidersProfile(Activity mActivity) {
+        this.DisplayConfirmationDialog("Do you really want to delete your account ?", mActivity,
+                "Delete", GetUserData());
+    }
+
+    /**
+     * Method that displays a confirmation massage of `yes` or `no` to the user.
+     * @param message The message of the dialog.
+     * @param actObj Activity object.
+     * @param process The process to follow, either deletion or acceptance of a user.
+     * @param data The json object with all the users info.
+     */
+    private void DisplayConfirmationDialog(final String message, final Activity actObj,
+        final String process, final JSONObject data) {
+
+        boolean status = false;
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(actObj);
+
+        // Setting Dialog Title
+        alertDialog.setTitle("Confirmation Message");
+
+        // Setting Dialog Message
+        alertDialog.setMessage(message);
+        alertDialog.setCancelable(false);
+        // On pressing Settings button
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+                switch (process) {
+
+                    case "Update":
+                        AsyncUpdateProvidersProfile aupp = new AsyncUpdateProvidersProfile(actObj, data);
+                        aupp.execute();
+                    break;
+
+                    case "Delete":
+                        String username = null;
+                        try {
+                            username = data.get("username").toString();
+                            AsyncDeleteAccount ada = new AsyncDeleteAccount(actObj, username);
+                            ada.execute();
+                        } catch (JSONException e) {
+                            Log.e("Exception! ->", "JSONException: " + e);
+                        }
+                     break;
+                }
+            }
+        });
+
+        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
 
     }
+
 
     /**
      * Method that retrieves the geolocation info for update of the account and then it sets the
