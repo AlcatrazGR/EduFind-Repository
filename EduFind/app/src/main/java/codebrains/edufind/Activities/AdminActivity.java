@@ -5,7 +5,9 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
@@ -33,12 +35,15 @@ public class AdminActivity extends AppCompatActivity implements IAsyncResponse {
     private HashMap<String, List<String>> listDataChild;
 
     private JSONObject userAccInfo;
+    private static View content;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
+        content = findViewById(android.R.id.content);
         this.expListView = (ExpandableListView) findViewById(R.id.admin_expanded_menu);
         GetListData();
     }
@@ -67,8 +72,19 @@ public class AdminActivity extends AppCompatActivity implements IAsyncResponse {
 
             this.userAccInfo = response;
             this.listDataHeader = ac.GetListHeader();
-            this.listAdapter = new AdminExpandableListAdapter(this, this.listDataHeader, this.listDataChild);
+
+
+            if(ac.GetEmptyFlag()) {
+                this.listAdapter = new AdminExpandableListAdapter(this, this.listDataHeader,
+                        this.listDataChild, true);
+            }
+            else {
+                this.listAdapter = new AdminExpandableListAdapter(this, this.listDataHeader,
+                        this.listDataChild, false);
+            }
+
             this.expListView.setAdapter(this.listAdapter);
+
         }
 
     }

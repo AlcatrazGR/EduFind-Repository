@@ -1,12 +1,16 @@
 package codebrains.edufind.Controllers;
 
 import android.app.Activity;
+import android.view.View;
+import android.widget.Button;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import codebrains.edufind.Models.AdminPanel;
+import codebrains.edufind.R;
 import codebrains.edufind.Utils.MessageCenter;
 
 /**
@@ -16,10 +20,12 @@ import codebrains.edufind.Utils.MessageCenter;
 public class AdminController {
 
     private List<String> listHeader;
+    private boolean emptyList;
 
     //Constructor
     public AdminController() {
         this.listHeader = new ArrayList<String>();
+        this.emptyList = true;
     }
 
     /**
@@ -64,6 +70,8 @@ public class AdminController {
                     items.add("Currently there are no account creation requests!");
                     listDataChild.put("No pending requests found", items);
                     this.listHeader.add("No pending requests found");
+                    this.emptyList = false;
+
                     return listDataChild;
 
             } //End of switch
@@ -82,6 +90,14 @@ public class AdminController {
      */
     public List<String> GetListHeader() {
         return this.listHeader;
+    }
+
+    /**
+     * Method that returns the private flag that show if the list is empty (no requests).
+     * @return Returns a boolean flag.
+     */
+    public boolean GetEmptyFlag() {
+        return this.emptyList;
     }
 
 }

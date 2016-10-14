@@ -23,12 +23,15 @@ public class AdminExpandableListAdapter extends BaseExpandableListAdapter {
     // child data in format of header title, child title
     private HashMap<String, List<String>> listDataChild;
 
+    private boolean isEmpty;
+
     public AdminExpandableListAdapter(Context context, List<String> listDataHeader,
-        HashMap<String, List<String>> listChildData) {
+        HashMap<String, List<String>> listChildData, boolean empty) {
 
         this.context = context;
         this.listDataHeader = listDataHeader;
         this.listDataChild = listChildData;
+        this.isEmpty = empty;
     }
 
     @Override
@@ -89,7 +92,11 @@ public class AdminExpandableListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.admin_list_group, null);
+
+            if(this.isEmpty)
+                convertView = infalInflater.inflate(R.layout.admin_list_group, null);
+            else
+                convertView = infalInflater.inflate(R.layout.admin_empty_list_group, null);
         }
 
         TextView lblListHeader = (TextView) convertView
