@@ -29,7 +29,7 @@ public class InsertBookFragment extends Fragment {
     }
 
     /**
-     * Method that handles the addintion of a new book into the database by calling the
+     * Method that handles the addition of a new book into the database by calling the
      * responsible async task.
      * @param mActivity The activity that called the event.
      * @param userdata The json object that holds all the necessary information.

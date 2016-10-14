@@ -41,8 +41,7 @@ public class SystemControl {
 
         try {
 
-            InetAddress ipAddr = InetAddress.getByName(path);
-            if (ipAddr.equals("")) { return false; }
+            if (!InetAddress.getByName(path).isReachable(2000)) { return false; }
             else { return true; }
 
         } catch (UnknownHostException e) {
