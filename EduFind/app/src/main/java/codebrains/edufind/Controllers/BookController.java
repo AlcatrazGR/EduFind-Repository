@@ -2,13 +2,10 @@ package codebrains.edufind.Controllers;
 
 import android.app.Activity;
 import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.List;
-
 import codebrains.edufind.Initializers.Book;
 import codebrains.edufind.Models.BookModel;
 
@@ -51,7 +48,6 @@ public class BookController {
 
         try {
             int status = Integer.parseInt(bookData.get("status").toString());
-            JSONArray booksArray = (JSONArray) bookData.get("books");
             BookModel bm = new BookModel();
             List<Book> booksList = null;
             boolean flag = false;
@@ -60,13 +56,14 @@ public class BookController {
 
                 //Case the response contains books.
                 case 1:
+                    JSONArray booksArray = (JSONArray) bookData.get("books");
                     booksList = bm.SetProviderBookList(booksArray);
                     flag = true;
                 break;
 
                 //Case the response doesn't contain any books.
                 case 2:
-                    booksList = bm.SetEmptyProviderBookList();
+                    booksList = bm.SetEmptyProviderBookList(bookData.get("message").toString());
                     flag = false;
                 break;
 
@@ -81,7 +78,7 @@ public class BookController {
             }
 
         } catch (JSONException e) {
-            Log.e("Excepiton ! ->", "getStringExtra : " + e);
+            Log.e("Excepiton ! ->", "JSONException -> BookListData : " + e);
             return null;
         }
 

@@ -5,14 +5,11 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import codebrains.edufind.Initializers.Book;
 import codebrains.edufind.R;
 
@@ -85,10 +82,10 @@ public class BookModel {
      * Method that sets an empty array list to be displayed to the list view.
      * @return Returns a list with one row.
      */
-    public List<Book> SetEmptyProviderBookList() {
+    public List<Book> SetEmptyProviderBookList(String message) {
 
         List<Book> bookList = new ArrayList<Book>();
-        Book book = new Book("", "Your list is empty!", "", "", "", 0);
+        Book book = new Book("", message, "", "", "", 0);
         bookList.add(book);
 
         return bookList;

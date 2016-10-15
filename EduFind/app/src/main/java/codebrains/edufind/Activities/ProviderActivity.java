@@ -12,16 +12,12 @@ import android.view.View;
 import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import codebrains.edufind.Adapters.ProviderTabsAdapter;
 import codebrains.edufind.AsyncTasks.AsyncGetProviderBooks;
 import codebrains.edufind.Controllers.BookController;
+import codebrains.edufind.Fragments.DisplayProvidersBooks;
 import codebrains.edufind.Fragments.InsertBookFragment;
 import codebrains.edufind.Fragments.ProvidersProfileFragment;
-import codebrains.edufind.Initializers.Book;
 import codebrains.edufind.Interfaces.IAsyncResponse;
 import codebrains.edufind.R;
 
@@ -36,6 +32,7 @@ public class ProviderActivity extends ActionBarActivity implements
     //Fragment objects
     private ProvidersProfileFragment ppf;
     private InsertBookFragment ibf;
+    private DisplayProvidersBooks dpb;
 
     private static JSONObject userData;
     private static JSONObject bookList;
@@ -68,6 +65,7 @@ public class ProviderActivity extends ActionBarActivity implements
         //Initializing the fragment data
         this.ppf = new ProvidersProfileFragment();
         this.ibf = new InsertBookFragment();
+        this.dpb = new DisplayProvidersBooks();
 
         //Initializing the tab view of this activity
         tabsviewPager = (ViewPager) findViewById(R.id.tabspager);
@@ -111,22 +109,6 @@ public class ProviderActivity extends ActionBarActivity implements
             }
         });
 
-    }
-
-    /**
-     * Method that returns the providers information to all the available tabs (its static).
-     * @return Returns the providers account information.
-     */
-    public static JSONObject GetUserData() {
-        return userData;
-    }
-
-    /**
-     * Method that sets the providers account info.
-     * @param newUserData The new account info of the provider.
-     */
-    public static void SetUserData(JSONObject newUserData) {
-        userData = newUserData;
     }
 
     /**
@@ -180,13 +162,16 @@ public class ProviderActivity extends ActionBarActivity implements
         amountTv.setText(String.valueOf(this.bookAmount));
     }
 
+    /**
+     * Method that calls the appropriate methods to set the book list of a provider and then
+     * save the whole data in a static variable to later be used to the list view.
+     * @param output The response of the server containing all the providers books.
+     */
     private void ProcessProviderBookList(JSONObject output) {
 
         BookController bc = new BookController();
         JSONObject result = bc.BookListData(output);
         bookList = result;
-
-        Log.d("-- Setted ---", bookList.toString());
     }
 
     /**
@@ -196,6 +181,31 @@ public class ProviderActivity extends ActionBarActivity implements
     public void AddBookEvent(View view) {
         this.ibf.AddNewBookProcess(this, GetUserData());
     }
+
+    /**
+     * Method that returns the providers information to all the available tabs (its static).
+     * @return Returns the providers account information.
+     */
+    public static JSONObject GetUserData() {
+        return userData;
+    }
+
+    /**
+     * Method that sets the providers account info.
+     * @param newUserData The new account info of the provider.
+     */
+    public static void SetUserData(JSONObject newUserData) {
+        userData = newUserData;
+    }
+
+    /**
+     * Method that return the private static json booklist.
+     * @return Return the private booklist json.
+     */
+    public static JSONObject GetBookListData() {
+        return bookList;
+    }
+
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
