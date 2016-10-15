@@ -1,5 +1,6 @@
 package codebrains.edufind.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -12,11 +13,14 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 import codebrains.edufind.Adapters.ProviderTabsAdapter;
+import codebrains.edufind.AsyncTasks.AsyncGetProviderBooks;
 import codebrains.edufind.Fragments.InsertBookFragment;
 import codebrains.edufind.Fragments.ProvidersProfileFragment;
+import codebrains.edufind.Interfaces.IAsyncResponse;
 import codebrains.edufind.R;
 
-public class ProviderActivity extends ActionBarActivity implements android.support.v7.app.ActionBar.TabListener  {
+public class ProviderActivity extends ActionBarActivity implements
+        android.support.v7.app.ActionBar.TabListener, IAsyncResponse {
 
     //Tab objects
     private ViewPager tabsviewPager;
@@ -31,7 +35,6 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
 
     private int bookAmount;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +43,15 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
         Intent intent = getIntent();
         try {
             this.userData = new JSONObject(intent.getStringExtra("userdata"));
+
+            //Get book list data.
+            JSONObject retDataJson = new JSONObject();
+            retDataJson.put("username", this.userData.get("username").toString());
+            retDataJson.put("process", 1);
+            AsyncGetProviderBooks agpb = new AsyncGetProviderBooks(this, retDataJson);
+            agpb.delegate = this;
+            agpb.execute();
+
         } catch (JSONException e) {
             Log.e("Excepiton ! ->", "getStringExtra : " + e);
         }
@@ -163,6 +175,10 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
         amountTv.setText(String.valueOf(this.bookAmount));
     }
 
+    private void ProcessProviderBookList(JSONObject output) {
+
+    }
+
     /**
      * Event that is called whenever the submit button on the add book form is pressed.
      * @param view The view of the activity that called the event.
@@ -186,6 +202,11 @@ public class ProviderActivity extends ActionBarActivity implements android.suppo
         tabsviewPager.setCurrentItem(tab.getPosition());
     }
 
+    @Override
+    public void ProcessFinish(JSONObject output, Activity mActivity) {
 
+        Log.d("--- List Data ---", output.toString());
+        //this.DisplayUserAccountInfoToExpandableList(output, mActivity);
+    }
 
 }

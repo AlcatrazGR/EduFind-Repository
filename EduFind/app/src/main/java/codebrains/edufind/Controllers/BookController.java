@@ -1,7 +1,9 @@
 package codebrains.edufind.Controllers;
 
 import android.app.Activity;
+import android.util.Log;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import codebrains.edufind.Models.BookModel;
@@ -33,6 +35,31 @@ public class BookController {
             return false;
 
         return true;
+    }
+
+
+    public void BookListData(JSONObject bookData) {
+
+        try {
+            int status = Integer.parseInt(bookData.get("status").toString());
+
+            switch (status) {
+
+                case 1:
+
+                break;
+
+                case 2:
+
+                break;
+
+            }
+
+        } catch (JSONException e) {
+            Log.e("Excepiton ! ->", "getStringExtra : " + e);
+        }
+
+
     }
 
     /**

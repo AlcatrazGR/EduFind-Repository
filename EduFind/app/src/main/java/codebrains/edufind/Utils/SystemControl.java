@@ -40,8 +40,9 @@ public class SystemControl {
         String path = "edufind.comlu.com";
 
         try {
-
-            if (!InetAddress.getByName(path).isReachable(2000)) { return false; }
+           InetAddress inetAddress = InetAddress.getByName(path);
+            //if (!InetAddress.getByName(path).isReachable(2000)) { return false; }
+            if (inetAddress.equals("")) { return false; }
             else { return true; }
 
         } catch (UnknownHostException e) {

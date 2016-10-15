@@ -4,15 +4,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import codebrains.edufind.Interfaces.IAsyncResponse;
 import codebrains.edufind.Utils.JSONParser;
 import codebrains.edufind.Utils.MessageCenter;
@@ -70,14 +67,15 @@ public class AsyncGetProviderBooks extends AsyncTask<String, String, JSONObject>
             int status = Integer.parseInt(response.get("status").toString());
             switch(status) {
 
-                case 1:
-                    break;
+                //An error occurred.
+                case 0:
+                    MessageCenter msgCent = new MessageCenter(mActivity);
+                    msgCent.DisplayErrorDialog("Data Error", response.get("message").toString());
+                break;
 
-                case 2:
-                    break;
-
-                case 3:
-                    break;
+                default:
+                    this.delegate.ProcessFinish(response, this.mActivity);
+                break;
 
             }
 
