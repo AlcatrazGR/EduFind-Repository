@@ -12,10 +12,16 @@ import android.view.View;
 import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import codebrains.edufind.Adapters.ProviderTabsAdapter;
 import codebrains.edufind.AsyncTasks.AsyncGetProviderBooks;
+import codebrains.edufind.Controllers.BookController;
 import codebrains.edufind.Fragments.InsertBookFragment;
 import codebrains.edufind.Fragments.ProvidersProfileFragment;
+import codebrains.edufind.Initializers.Book;
 import codebrains.edufind.Interfaces.IAsyncResponse;
 import codebrains.edufind.R;
 
@@ -32,6 +38,7 @@ public class ProviderActivity extends ActionBarActivity implements
     private InsertBookFragment ibf;
 
     private static JSONObject userData;
+    private static JSONObject bookList;
 
     private int bookAmount;
 
@@ -104,8 +111,6 @@ public class ProviderActivity extends ActionBarActivity implements
             }
         });
 
-
-
     }
 
     /**
@@ -177,6 +182,11 @@ public class ProviderActivity extends ActionBarActivity implements
 
     private void ProcessProviderBookList(JSONObject output) {
 
+        BookController bc = new BookController();
+        JSONObject result = bc.BookListData(output);
+        bookList = result;
+
+        Log.d("-- Setted ---", bookList.toString());
     }
 
     /**
@@ -204,9 +214,7 @@ public class ProviderActivity extends ActionBarActivity implements
 
     @Override
     public void ProcessFinish(JSONObject output, Activity mActivity) {
-
-        Log.d("--- List Data ---", output.toString());
-        //this.DisplayUserAccountInfoToExpandableList(output, mActivity);
+        this.ProcessProviderBookList(output);
     }
 
 }

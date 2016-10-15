@@ -6,9 +6,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import codebrains.edufind.Initializers.Book;
 import codebrains.edufind.R;
 
 /**
@@ -52,5 +57,45 @@ public class BookModel {
 
         return newBookData;
     }
+
+    /**
+     * Method that processes the response from the server and initializes a list of books in
+     * order to be displayed to the listview.
+     * @param bookArray The array of all the provider's books.
+     * @return Returns a list of initialized books to be displayed to the listview
+     * @throws JSONException Throws a json exception if an error occurres while processing json data.
+     */
+    public List<Book> SetProviderBookList(JSONArray bookArray) throws JSONException {
+
+        List<Book> bookList = new ArrayList<Book>();
+
+        for(int i = 0; i < bookArray.length(); i++) {
+
+            JSONObject bookJSON = (JSONObject) bookArray.get(i);
+            Book book = new Book("", bookJSON.get("title").toString(), bookJSON.get("authors").toString(),
+                "", bookJSON.get("sector").toString(), Integer.parseInt(bookJSON.get("amount").toString()));
+
+            bookList.add(book);
+        }
+
+        return bookList;
+    }
+
+    /**
+     * Method that sets an empty array list to be displayed to the list view.
+     * @return Returns a list with one row.
+     */
+    public List<Book> SetEmptyProviderBookList() {
+
+        List<Book> bookList = new ArrayList<Book>();
+        Book book = new Book("", "Your list is empty!", "", "", "", 0);
+        bookList.add(book);
+
+        return bookList;
+    }
+
+
+
+
 
 }

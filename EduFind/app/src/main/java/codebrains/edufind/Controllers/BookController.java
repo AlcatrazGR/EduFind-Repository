@@ -3,9 +3,13 @@ package codebrains.edufind.Controllers;
 import android.app.Activity;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
+import codebrains.edufind.Initializers.Book;
 import codebrains.edufind.Models.BookModel;
 
 /**
@@ -37,29 +41,51 @@ public class BookController {
         return true;
     }
 
-
-    public void BookListData(JSONObject bookData) {
+    /**
+     * Method that handles the setting of all the data that will later be displayed to the book list
+     * view.
+     * @param bookData A json object result from the response of the server.
+     * @return Returns a json object which contains the info to be displayed.
+     */
+    public JSONObject BookListData(JSONObject bookData) {
 
         try {
             int status = Integer.parseInt(bookData.get("status").toString());
+            JSONArray booksArray = (JSONArray) bookData.get("books");
+            BookModel bm = new BookModel();
+            List<Book> booksList = null;
+            boolean flag = false;
 
             switch (status) {
 
+                //Case the response contains books.
                 case 1:
-
+                    booksList = bm.SetProviderBookList(booksArray);
+                    flag = true;
                 break;
 
+                //Case the response doesn't contain any books.
                 case 2:
-
+                    booksList = bm.SetEmptyProviderBookList();
+                    flag = false;
                 break;
 
             }
 
+            if(booksList != null) {
+                JSONObject result = new JSONObject();
+                result.put("status", flag);
+                result.put("list", booksList);
+
+                return result;
+            }
+
         } catch (JSONException e) {
             Log.e("Excepiton ! ->", "getStringExtra : " + e);
+            return null;
         }
 
-
+        return null;
     }
 
     /**
