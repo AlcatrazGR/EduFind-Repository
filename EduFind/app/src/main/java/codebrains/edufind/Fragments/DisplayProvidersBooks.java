@@ -1,5 +1,6 @@
 package codebrains.edufind.Fragments;
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +36,19 @@ public class DisplayProvidersBooks extends Fragment {
         return view;
     }
 
+    public void RefreshProviderBookList(Activity mActivity) {
 
+        JSONObject listBooksJSON = GetBookListData();
+        ListView listView = (ListView) mActivity.findViewById(R.id.listView);
+
+        try {
+            List<Book> bookList = (List<Book>) listBooksJSON.get("list");
+            listView.setAdapter(new ProviderCollectionAdapter(mActivity, bookList,
+                    (Boolean) listBooksJSON.get("status")));
+        } catch (JSONException e) {
+            Log.e("Excepiton ! ->", "JSONException : " + e);
+        }
+
+    }
 
 }

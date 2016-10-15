@@ -1,5 +1,6 @@
 package codebrains.edufind.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -62,5 +63,6 @@ public class ProviderCollectionAdapter extends ArrayAdapter<Book> {
 
         return rowView;
     }
+
 
 }

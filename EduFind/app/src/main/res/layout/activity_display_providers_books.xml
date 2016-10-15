@@ -6,19 +6,16 @@
     android:layout_height="match_parent"
     tools:context="codebrains.edufind.Fragments.DisplayProvidersBooks">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <ListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/relativeLayout">
+        android:id="@+id/listView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/relativeLayout" />
 
-        <ListView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/listView"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-    </ScrollView>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,30 +24,33 @@
         android:id="@+id/relativeLayout">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
             android:id="@+id/button10"
+            android:background="@drawable/refresh_icon"
+            android:onClick="RefreshProviderBookListEvent"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/button11"
             android:layout_toStartOf="@+id/button11"
-            android:background="@drawable/refresh_icon" />
+            android:layout_marginRight="10dp"/>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
             android:id="@+id/button11"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/delete_icon_2"/>
+            android:background="@drawable/delete_icon_2"
+            android:layout_marginRight="10dp" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
             android:id="@+id/button12"
+            android:background="@drawable/search_icon"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/button11"
-            android:layout_toEndOf="@+id/button11"
-            android:background="@drawable/search_icon"/>
+            android:layout_toEndOf="@+id/button11" />
     </RelativeLayout>
 
 

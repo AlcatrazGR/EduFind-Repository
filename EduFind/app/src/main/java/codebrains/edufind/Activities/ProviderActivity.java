@@ -38,6 +38,7 @@ public class ProviderActivity extends ActionBarActivity implements
     private static JSONObject bookList;
 
     private int bookAmount;
+    private boolean refreshFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,7 @@ public class ProviderActivity extends ActionBarActivity implements
             agpb.execute();
 
         } catch (JSONException e) {
-            Log.e("Excepiton ! ->", "getStringExtra : " + e);
+            Log.e("Excepiton ! ->", "JSONException->SetBookList : " + e);
         }
 
         this.bookAmount = 0;
@@ -135,6 +136,22 @@ public class ProviderActivity extends ActionBarActivity implements
         this.ppf.DeleteProvidersProfile(this);
     }
 
+    public void RefreshProviderBookListEvent(View view) {
+
+        this.refreshFlag = true;
+        JSONObject retDataJson = new JSONObject();
+        try {
+            retDataJson.put("username", this.userData.get("username").toString());
+            retDataJson.put("process", 1);
+            AsyncGetProviderBooks agpb = new AsyncGetProviderBooks(this, retDataJson);
+            agpb.delegate = this;
+            agpb.execute();
+            Log.d("--- List ---", "before call ");
+        } catch (JSONException e) {
+            Log.e("Excepiton ! ->", "JSONException->SetBookList : " + e);
+        }
+    }
+
     /**
      * Method that adds an additional number to the amount of books.
      * @param view The view of the activity.
@@ -172,6 +189,11 @@ public class ProviderActivity extends ActionBarActivity implements
         BookController bc = new BookController();
         JSONObject result = bc.BookListData(output);
         bookList = result;
+
+        if(this.refreshFlag)
+            this.dpb.RefreshProviderBookList(this);
+
+        Log.d("--- List ---", "Inside ProcessProviderBookList");
     }
 
     /**
