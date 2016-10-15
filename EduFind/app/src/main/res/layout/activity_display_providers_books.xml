@@ -21,31 +21,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:id="@+id/relativeLayout">
+        android:id="@+id/relativeLayout"
+        android:background="@color/lightCyan">
 
         <Button
-            android:layout_width="60dp"
-            android:layout_height="50dp"
+            android:layout_width="55dp"
+            android:layout_height="45dp"
             android:id="@+id/button10"
             android:background="@drawable/refresh_icon"
             android:onClick="RefreshProviderBookListEvent"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/button11"
             android:layout_toStartOf="@+id/button11"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp" />
 
         <Button
-            android:layout_width="60dp"
-            android:layout_height="50dp"
+            android:layout_width="55dp"
+            android:layout_height="45dp"
             android:id="@+id/button11"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:background="@drawable/delete_icon_2"
-            android:layout_marginRight="10dp" />
+            android:layout_marginRight="10dp"
+            android:onClick="DeleteProviderBook" />
 
         <Button
-            android:layout_width="60dp"
-            android:layout_height="50dp"
+            android:layout_width="55dp"
+            android:layout_height="45dp"
             android:id="@+id/button12"
             android:background="@drawable/search_icon"
             android:layout_alignParentTop="true"

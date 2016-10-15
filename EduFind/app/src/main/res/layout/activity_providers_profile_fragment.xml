@@ -135,8 +135,8 @@
             android:layout_marginRight="20dp"/>
 
         <Button style="?android:attr/buttonStyleSmall"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:text=""
             android:id="@+id/button"
             android:layout_below="@+id/provider_name"

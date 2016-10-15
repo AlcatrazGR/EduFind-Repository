@@ -1,7 +1,7 @@
 package codebrains.edufind.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,19 +22,24 @@ public class ProviderCollectionAdapter extends ArrayAdapter<Book> {
     private final Context context;
     private final List<Book> valuesArr;
     private boolean checkFlag;
+    private View previousView;
+
+    private int selectedPosition;
 
     public ProviderCollectionAdapter(Context context, List<Book> values, boolean chFlag) {
         super(context, R.layout.provider_collection_list, values);
         this.context = context;
         this.valuesArr = values;
         this.checkFlag = chFlag;
+
+        this.selectedPosition = -1;
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView;
+        final View rowView;
 
         if(this.checkFlag) {
             rowView = inflater.inflate(R.layout.provider_collection_list, parent, false);
@@ -50,7 +55,21 @@ public class ProviderCollectionAdapter extends ArrayAdapter<Book> {
             rowView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("----Clicked on : ---", valuesArr.get(position).GetTitle());
+
+                    v.setBackgroundColor(context.getResources().getColor(R.color.lightCyan));
+
+                    if(position != selectedPosition && selectedPosition != -1)
+                        previousView.setBackgroundColor(Color.TRANSPARENT);
+
+                    if(position == selectedPosition) {
+                        previousView.setBackgroundColor(Color.TRANSPARENT);
+                        selectedPosition = -1;
+                    }
+                    else {
+                        selectedPosition = position;
+                        previousView = v;
+                    }
+
                 }
             });
         }
@@ -60,8 +79,16 @@ public class ProviderCollectionAdapter extends ArrayAdapter<Book> {
             emptyTv.setText(this.valuesArr.get(position).GetTitle());
         }
 
-
         return rowView;
+    }
+
+    public Book GetBookItemFromSpecificPosition() {
+
+        if(this.selectedPosition != -1) {
+            return this.valuesArr.get(selectedPosition);
+        }
+
+        return null;
     }
 
 

@@ -18,6 +18,8 @@ import static codebrains.edufind.Activities.ProviderActivity.GetBookListData;
 
 public class DisplayProvidersBooks extends Fragment {
 
+    private ProviderCollectionAdapter pca;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_display_providers_books, container, false);
@@ -27,8 +29,9 @@ public class DisplayProvidersBooks extends Fragment {
 
         try {
             List<Book> bookList = (List<Book>) listBooksJSON.get("list");
-            listView.setAdapter(new ProviderCollectionAdapter(view.getContext(), bookList,
-                    (Boolean) listBooksJSON.get("status")));
+            this.pca =  new ProviderCollectionAdapter(view.getContext(), bookList,
+                    (Boolean) listBooksJSON.get("status"));
+            listView.setAdapter(this.pca);
         } catch (JSONException e) {
             Log.e("Excepiton ! ->", "JSONException : " + e);
         }
@@ -36,6 +39,11 @@ public class DisplayProvidersBooks extends Fragment {
         return view;
     }
 
+    /**
+     * Method that refreshes the book collection list of the provider and displaying the new
+     * data to it.
+     * @param mActivity The activity that called this method.
+     */
     public void RefreshProviderBookList(Activity mActivity) {
 
         JSONObject listBooksJSON = GetBookListData();
@@ -43,12 +51,19 @@ public class DisplayProvidersBooks extends Fragment {
 
         try {
             List<Book> bookList = (List<Book>) listBooksJSON.get("list");
-            listView.setAdapter(new ProviderCollectionAdapter(mActivity, bookList,
-                    (Boolean) listBooksJSON.get("status")));
+            this.pca = new ProviderCollectionAdapter(mActivity, bookList,
+                    (Boolean) listBooksJSON.get("status"));
+            listView.setAdapter(this.pca);
         } catch (JSONException e) {
             Log.e("Excepiton ! ->", "JSONException : " + e);
         }
 
+    }
+
+    public Book GetSelectedItemFromListViewAdapter() {
+
+        Book selectedBook = this.pca.GetBookItemFromSpecificPosition();
+        return selectedBook;
     }
 
 }

@@ -24,32 +24,58 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name=".Activities.LoginActivity" >
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="" />
+
+        <activity
+            android:name=".Activities.LoginActivity"
+            android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Fragments.LoginFragment" >
-        </activity>
-        <activity android:name=".Fragments.CreateAccountFragment" >
+
+        <activity
+            android:name=".Fragments.LoginFragment"
+            android:screenOrientation="portrait">
         </activity>
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="" />
+        <activity
+            android:name=".Fragments.CreateAccountFragment"
+            android:screenOrientation="portrait">
+        </activity>
 
-        <activity android:name=".Activities.AdminActivity" >
+        <activity
+            android:name=".Activities.AdminActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".Activities.ProviderActivity" >
+
+        <activity
+            android:name=".Activities.ProviderActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".Fragments.ProvidersProfileFragment" >
+
+        <activity
+            android:name=".Fragments.ProvidersProfileFragment"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".Fragments.InsertBookFragment" >
+
+        <activity
+            android:name=".Fragments.InsertBookFragment"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".Fragments.DisplayProvidersBooks" >
+
+        <activity
+            android:name=".Fragments.DisplayProvidersBooks"
+            android:screenOrientation="portrait">
         </activity>
+
+
     </application>
 
 </manifest>

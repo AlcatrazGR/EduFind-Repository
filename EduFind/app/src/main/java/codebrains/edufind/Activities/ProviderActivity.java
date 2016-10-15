@@ -18,8 +18,10 @@ import codebrains.edufind.Controllers.BookController;
 import codebrains.edufind.Fragments.DisplayProvidersBooks;
 import codebrains.edufind.Fragments.InsertBookFragment;
 import codebrains.edufind.Fragments.ProvidersProfileFragment;
+import codebrains.edufind.Initializers.Book;
 import codebrains.edufind.Interfaces.IAsyncResponse;
 import codebrains.edufind.R;
+import codebrains.edufind.Utils.MessageCenter;
 
 public class ProviderActivity extends ActionBarActivity implements
         android.support.v7.app.ActionBar.TabListener, IAsyncResponse {
@@ -136,8 +138,11 @@ public class ProviderActivity extends ActionBarActivity implements
         this.ppf.DeleteProvidersProfile(this);
     }
 
+    /**
+     * Event listener on click of the refresh button in the book list fragment.
+     * @param view The view of the activity that called this event.
+     */
     public void RefreshProviderBookListEvent(View view) {
-
         this.refreshFlag = true;
         JSONObject retDataJson = new JSONObject();
         try {
@@ -146,10 +151,26 @@ public class ProviderActivity extends ActionBarActivity implements
             AsyncGetProviderBooks agpb = new AsyncGetProviderBooks(this, retDataJson);
             agpb.delegate = this;
             agpb.execute();
-            Log.d("--- List ---", "before call ");
         } catch (JSONException e) {
             Log.e("Excepiton ! ->", "JSONException->SetBookList : " + e);
         }
+    }
+
+
+    public void DeleteProviderBook(View view) {
+
+        Book selectedBook = this.dpb.GetSelectedItemFromListViewAdapter();
+        if(selectedBook != null) {
+            Log.d("-- Result --", selectedBook.GetTitle());
+            Log.d("-- Result --", selectedBook.GetAuthors());
+            Log.d("-- Result --", selectedBook.GetSector());
+        }
+        else {
+            MessageCenter msgcenter = new MessageCenter(this);
+            msgcenter.DisplayErrorDialog("Deletion Error", "You must select one item in order " +
+                    "to proceed to deletion!");
+        }
+
     }
 
     /**
@@ -157,11 +178,9 @@ public class ProviderActivity extends ActionBarActivity implements
      * @param view The view of the activity.
      */
     public void BookAmountAddition(View view) {
-
         TextView amountTv = (TextView) findViewById(R.id.book_amount);
         this.bookAmount += 1;
         amountTv.setText(String.valueOf(this.bookAmount));
-
     }
 
     /**
@@ -169,7 +188,6 @@ public class ProviderActivity extends ActionBarActivity implements
      * @param view The view of the activity.
      */
     public void BookAmountSubtraction(View view) {
-
         TextView amountTv = (TextView) findViewById(R.id.book_amount);
         this.bookAmount -= 1;
 
@@ -192,8 +210,6 @@ public class ProviderActivity extends ActionBarActivity implements
 
         if(this.refreshFlag)
             this.dpb.RefreshProviderBookList(this);
-
-        Log.d("--- List ---", "Inside ProcessProviderBookList");
     }
 
     /**
