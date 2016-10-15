@@ -1,7 +1,6 @@
 package codebrains.edufind.Fragments;
 
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,5 +15,7 @@ public class DisplayProvidersBooks extends Fragment {
         View view = inflater.inflate(R.layout.activity_display_providers_books, container, false);
         return view;
     }
+
+
 
 }
