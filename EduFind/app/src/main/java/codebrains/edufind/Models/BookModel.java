@@ -70,7 +70,8 @@ public class BookModel {
 
             JSONObject bookJSON = (JSONObject) bookArray.get(i);
             Book book = new Book("", bookJSON.get("title").toString(), bookJSON.get("authors").toString(),
-                "", bookJSON.get("sector").toString(), Integer.parseInt(bookJSON.get("amount").toString()));
+                    bookJSON.get("publisher").toString(), bookJSON.get("sector").toString(),
+                    Integer.parseInt(bookJSON.get("amount").toString()));
 
             bookList.add(book);
         }

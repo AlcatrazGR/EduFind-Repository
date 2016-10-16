@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.util.List;
 import codebrains.edufind.Adapters.ProviderTabsAdapter;
 import codebrains.edufind.AsyncTasks.AsyncGetProviderBooks;
@@ -170,9 +172,6 @@ public class ProviderActivity extends ActionBarActivity implements
         this.refreshFlag = true;
         try {
             data.put("process", 4);
-
-            Log.d("Data to be sent --", data.toString());
-
             AsyncGetProviderBooks agpb = new AsyncGetProviderBooks(mActivity, data);
             agpb.delegate = this;
             agpb.execute();
@@ -211,6 +210,44 @@ public class ProviderActivity extends ActionBarActivity implements
             }
         } catch (JSONException e) {
             Log.e("Excepiton ! ->", "JSONException->DeleteProviderBook : " + e);
+        }
+
+    }
+
+    /**
+     * Event lister for the onclick event of inspect button in the list book display activity.
+     * @param view The view of the activity that fired the event.
+     */
+    public void InspectBookItemProcess(View view) {
+
+        try {
+            if(GetSelectedItemPosition() != -1) {
+
+                List<Book> bookList = (List<Book>) GetBookListData().get("list");
+                Book selectedBook = bookList.get(GetSelectedItemPosition());
+
+                JSONObject data = new JSONObject();
+                data.put("username", GetUserData().get("username").toString());
+                data.put("title", selectedBook.GetTitle());
+                data.put("authors", selectedBook.GetAuthors());
+                data.put("publisher", selectedBook.GetPublisher());
+                data.put("sector", selectedBook.GetSector());
+                data.put("amount", selectedBook.GetBookAmount());
+
+                Intent intent = new Intent(this, BookActivity.class);
+                intent.putExtra("data", String.valueOf(data));
+
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+
+            else {
+                MessageCenter msgcenter = new MessageCenter(this);
+                msgcenter.DisplayErrorDialog("Error Display", "You must first select an item in order" +
+                        " to inspect it.");
+            }
+        } catch (JSONException e) {
+            Log.e("Excepiton ! ->", "JSONException->InspectBookItemProcess : " + e);
         }
 
     }

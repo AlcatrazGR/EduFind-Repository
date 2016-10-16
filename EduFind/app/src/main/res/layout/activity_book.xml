@@ -50,7 +50,9 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:inputType="text"
+            android:hint="Enter the names of the author(s)"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -73,7 +75,9 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:inputType="text"
+            android:hint="Enter the publisher name" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -94,7 +98,8 @@
             android:layout_marginRight="20dp"
             android:layout_below="@+id/textView36"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:entries="@array/sectors" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -131,21 +136,23 @@
                 android:layout_height="50dp"
                 android:id="@+id/button13"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/addicon"/>
+                android:background="@drawable/addicon"
+                android:onClick="BookAmountAddition" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:id="@+id/button14"
-                android:background="@drawable/subtracticon"/>
+                android:background="@drawable/subtracticon"
+                android:onClick="BookAmountSubtraction"/>
 
         </LinearLayout>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submit"
+            android:text="Update"
             android:id="@+id/button15"
             android:layout_marginTop="30dp"
             android:layout_below="@+id/linearLayoutAmount"

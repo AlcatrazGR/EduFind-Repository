@@ -52,7 +52,8 @@
             android:background="@drawable/search_icon"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/button11"
-            android:layout_toEndOf="@+id/button11" />
+            android:layout_toEndOf="@+id/button11"
+            android:onClick="InspectBookItemProcess"/>
     </RelativeLayout>
 
 
