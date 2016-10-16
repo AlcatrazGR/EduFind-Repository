@@ -28,6 +28,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:inputType="text"
+            android:hint="Enter username"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:singleLine="true"/>
@@ -45,6 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
+            android:hint="Enter password"
             android:ems="10"
             android:id="@+id/editText2"
             android:layout_below="@+id/textView4"
@@ -52,6 +55,7 @@
             android:layout_alignStart="@+id/editText"
             android:layout_alignRight="@+id/editText"
             android:layout_alignEnd="@+id/editText"
+
             android:singleLine="true" />
 
         <TextView
@@ -67,6 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
+            android:hint="Enter password again"
             android:ems="10"
             android:id="@+id/editText3"
             android:layout_below="@+id/textView11"
@@ -89,6 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
+            android:hint="someemail@gmail.com"
             android:ems="10"
             android:id="@+id/editText4"
             android:layout_below="@+id/textView5"
@@ -113,6 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
+            android:hint="Enter number"
             android:ems="10"
             android:id="@+id/editText5"
             android:layout_below="@+id/textView12"
@@ -139,6 +146,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:id="@+id/editText6"
+            android:hint="Enter provider"
             android:layout_below="@+id/textView13"
             android:layout_alignLeft="@+id/editText5"
             android:layout_alignStart="@+id/editText5"

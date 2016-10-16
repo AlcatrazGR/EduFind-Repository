@@ -186,9 +186,7 @@ public class ProviderActivity extends ActionBarActivity implements
      * @param view The view of the activity that fired this event.
      */
     public void DeleteProviderBook(View view) {
-
-        Log.d("-- event -- ", "Inside event");
-
+        
         JSONObject listBooksJSON = GetBookListData();
         try {
 
@@ -223,8 +221,6 @@ public class ProviderActivity extends ActionBarActivity implements
      * @param data The json object with all the users info.
      */
     public void DisplayConfirmationDialog(final Activity actObj, final JSONObject data) throws JSONException {
-
-        Log.d("-- event -- ", "Inside display");
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 

@@ -1,10 +1,8 @@
 package codebrains.edufind.Fragments;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +12,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.List;
 import codebrains.edufind.Adapters.ProviderCollectionAdapter;
-import codebrains.edufind.AsyncTasks.AsyncGetProviderBooks;
 import codebrains.edufind.Initializers.Book;
 import codebrains.edufind.R;
 import static codebrains.edufind.Activities.ProviderActivity.GetBookListData;

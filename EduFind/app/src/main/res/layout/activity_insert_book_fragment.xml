@@ -33,6 +33,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            android:inputType="text"
             android:hint="Enter the title of the book"/>
 
         <TextView
@@ -57,7 +58,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:hint="Enter ther authors" />
+            android:inputType="text"
+            android:hint="Enter the authors" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -81,6 +83,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            android:inputType="text"
             android:hint="Enter the publisher of the book"/>
 
         <TextView

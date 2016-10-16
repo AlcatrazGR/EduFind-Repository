@@ -2,23 +2,22 @@
 <resources>
 
     <string-array name="sectors">
+        <item>Artificial Intelligence</item>
         <item>Biology</item>
         <item>Chemistry</item>
         <item>Circuits</item>
         <item>Economics</item>
         <item>Electronics</item>
+        <item>Geography</item>
         <item>Health</item>
         <item>Information Technology</item>
         <item>Management</item>
+        <item>Mathematics</item>
         <item>Mechanics</item>
         <item>Medicine</item>
         <item>Pedagogy</item>
         <item>Programming</item>
         <item>Business Management</item>
     </string-array>
-
-
-
-
 
 </resources>
