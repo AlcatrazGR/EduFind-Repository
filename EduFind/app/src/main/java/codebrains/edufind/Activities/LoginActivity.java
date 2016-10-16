@@ -1,12 +1,12 @@
 package codebrains.edufind.Activities;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import codebrains.edufind.Adapters.MainTabsAdapter;
@@ -140,7 +140,9 @@ public class LoginActivity extends ActionBarActivity implements android.support.
      * @param view The view of the activity that called this listener.
      */
     public void EnterAsAStudentProcess(View view) {
-
+        Intent intent = new Intent(this, StudentActivity.class);
+        this.finish();
+        this.startActivity(intent);
     }
 
     @Override
