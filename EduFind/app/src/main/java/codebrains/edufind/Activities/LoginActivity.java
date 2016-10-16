@@ -135,6 +135,14 @@ public class LoginActivity extends ActionBarActivity implements android.support.
 
     }
 
+    /**
+     * Method that opens the activity of the student.
+     * @param view The view of the activity that called this listener.
+     */
+    public void EnterAsAStudentProcess(View view) {
+
+    }
+
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
         tabsviewPager.setCurrentItem(tab.getPosition());

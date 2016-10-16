@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">EduFind</string>
+    <string name="title_activity_book_search_fragment">BookSearchFragment</string>
+    <string name="title_activity_map_search_fragment">MapSearchFragment</string>
 </resources>

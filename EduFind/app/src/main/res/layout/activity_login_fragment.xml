@@ -74,5 +74,19 @@
             android:layout_alignEnd="@+id/passwordEdt"
             android:onClick="LoginProcess"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter as Student"
+            android:id="@+id/textView39"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/loginBtn"
+            android:clickable="true"
+            android:textColor="@color/darkBlue"
+            android:layout_marginTop="25dp"
+            android:textSize="17dp"
+            android:onClick="EnterAsAStudentProcess" />
+
     </RelativeLayout>
 </ScrollView>
