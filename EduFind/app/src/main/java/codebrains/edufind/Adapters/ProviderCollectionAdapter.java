@@ -13,6 +13,8 @@ import codebrains.edufind.Initializers.Book;
 import codebrains.edufind.R;
 import android.view.View.OnClickListener;
 
+import static codebrains.edufind.Activities.ProviderActivity.SetSelectedItemPosition;
+
 /**
  * Custom adapter class that processes all the inserted book registries of the user and then
  * displays them on the list view element.
@@ -33,6 +35,7 @@ public class ProviderCollectionAdapter extends ArrayAdapter<Book> {
         this.checkFlag = chFlag;
 
         this.selectedPosition = -1;
+        SetSelectedItemPosition(selectedPosition);
     }
 
     @Override
@@ -70,6 +73,7 @@ public class ProviderCollectionAdapter extends ArrayAdapter<Book> {
                         previousView = v;
                     }
 
+                    SetSelectedItemPosition(selectedPosition);
                 }
             });
         }
@@ -80,15 +84,6 @@ public class ProviderCollectionAdapter extends ArrayAdapter<Book> {
         }
 
         return rowView;
-    }
-
-    public Book GetBookItemFromSpecificPosition() {
-
-        if(this.selectedPosition != -1) {
-            return this.valuesArr.get(selectedPosition);
-        }
-
-        return null;
     }
 
 

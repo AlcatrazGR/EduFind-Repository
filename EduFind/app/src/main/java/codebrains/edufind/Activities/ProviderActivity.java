@@ -1,17 +1,20 @@
 package codebrains.edufind.Activities;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.List;
 import codebrains.edufind.Adapters.ProviderTabsAdapter;
 import codebrains.edufind.AsyncTasks.AsyncGetProviderBooks;
 import codebrains.edufind.Controllers.BookController;
@@ -38,6 +41,7 @@ public class ProviderActivity extends ActionBarActivity implements
 
     private static JSONObject userData;
     private static JSONObject bookList;
+    private static int selectedItemPos;
 
     private int bookAmount;
     private boolean refreshFlag = false;
@@ -156,22 +160,101 @@ public class ProviderActivity extends ActionBarActivity implements
         }
     }
 
+    /**
+     * Method that calls the get provider books asynchronous task.
+     * @param mActivity The activity that called this event.
+     * @param data The data to be send to the server.
+     */
+    public void CallAsyncForDelete(Activity mActivity, JSONObject data) {
 
+        this.refreshFlag = true;
+        try {
+            data.put("process", 4);
+
+            Log.d("Data to be sent --", data.toString());
+
+            AsyncGetProviderBooks agpb = new AsyncGetProviderBooks(mActivity, data);
+            agpb.delegate = this;
+            agpb.execute();
+        } catch (JSONException e) {
+            Log.e("Excepiton ! ->", "JSONException->SetBookList : " + e);
+        }
+    }
+
+    /**
+     * Event listener that handles thee deletion of a selected book in the list view.
+     * @param view The view of the activity that fired this event.
+     */
     public void DeleteProviderBook(View view) {
 
-        Book selectedBook = this.dpb.GetSelectedItemFromListViewAdapter();
-        if(selectedBook != null) {
-            Log.d("-- Result --", selectedBook.GetTitle());
-            Log.d("-- Result --", selectedBook.GetAuthors());
-            Log.d("-- Result --", selectedBook.GetSector());
-        }
-        else {
-            MessageCenter msgcenter = new MessageCenter(this);
-            msgcenter.DisplayErrorDialog("Deletion Error", "You must select one item in order " +
-                    "to proceed to deletion!");
+        Log.d("-- event -- ", "Inside event");
+
+        JSONObject listBooksJSON = GetBookListData();
+        try {
+
+            List<Book> bookList = (List<Book>) listBooksJSON.get("list");
+
+            if(GetSelectedItemPosition() != -1) {
+
+                Book selectedBook = bookList.get(GetSelectedItemPosition());
+                JSONObject bookData = new JSONObject();
+                bookData.put("username", GetUserData().get("username"));
+                bookData.put("title", selectedBook.GetTitle());
+                bookData.put("authors", selectedBook.GetAuthors());
+                bookData.put("sector", selectedBook.GetSector());
+                this.refreshFlag = true;
+
+                this.DisplayConfirmationDialog(this, bookData);
+            }
+            else {
+                MessageCenter msgcenter = new MessageCenter(this);
+                msgcenter.DisplayErrorDialog("Deletion Error", "You must select one item in order " +
+                        "to proceed to deletion!");
+            }
+        } catch (JSONException e) {
+            Log.e("Excepiton ! ->", "JSONException->DeleteProviderBook : " + e);
         }
 
     }
+
+    /**
+     * Method that displays a confirmation massage of `yes` or `no` to the user.
+     * @param actObj Activity object.
+     * @param data The json object with all the users info.
+     */
+    public void DisplayConfirmationDialog(final Activity actObj, final JSONObject data) throws JSONException {
+
+        Log.d("-- event -- ", "Inside display");
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+        // Setting Dialog Title
+        alertDialog.setTitle("Confirmation Message");
+
+        // Setting Dialog Message
+        alertDialog.setMessage("Do you really want to delete `" + data.get("title") + "` from " +
+                "your list ?");
+
+        alertDialog.setCancelable(false);
+        // On pressing Settings button
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                CallAsyncForDelete(actObj, data);
+            }
+        });
+
+        // On pressing Settings button
+        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
+
+    }
+
 
     /**
      * Method that adds an additional number to the amount of books.
@@ -242,6 +325,22 @@ public class ProviderActivity extends ActionBarActivity implements
      */
     public static JSONObject GetBookListData() {
         return bookList;
+    }
+
+    /**
+     * Method that return the private static integer item position
+     * @return Return the private item position.
+     */
+    public static int GetSelectedItemPosition() {
+        return selectedItemPos;
+    }
+
+    /**
+     * Method that return the private static item position.
+     * @return Return the private item position.
+     */
+    public static void SetSelectedItemPosition(int pos) {
+        selectedItemPos = pos;
     }
 
 

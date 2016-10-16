@@ -1,8 +1,10 @@
 package codebrains.edufind.Fragments;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +14,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.List;
 import codebrains.edufind.Adapters.ProviderCollectionAdapter;
+import codebrains.edufind.AsyncTasks.AsyncGetProviderBooks;
 import codebrains.edufind.Initializers.Book;
 import codebrains.edufind.R;
 import static codebrains.edufind.Activities.ProviderActivity.GetBookListData;
 
 public class DisplayProvidersBooks extends Fragment {
-
-    private ProviderCollectionAdapter pca;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,9 +30,9 @@ public class DisplayProvidersBooks extends Fragment {
 
         try {
             List<Book> bookList = (List<Book>) listBooksJSON.get("list");
-            this.pca =  new ProviderCollectionAdapter(view.getContext(), bookList,
+            ProviderCollectionAdapter pca =  new ProviderCollectionAdapter(view.getContext(), bookList,
                     (Boolean) listBooksJSON.get("status"));
-            listView.setAdapter(this.pca);
+            listView.setAdapter(pca);
         } catch (JSONException e) {
             Log.e("Excepiton ! ->", "JSONException : " + e);
         }
@@ -51,19 +52,13 @@ public class DisplayProvidersBooks extends Fragment {
 
         try {
             List<Book> bookList = (List<Book>) listBooksJSON.get("list");
-            this.pca = new ProviderCollectionAdapter(mActivity, bookList,
+            ProviderCollectionAdapter pca = new ProviderCollectionAdapter(mActivity, bookList,
                     (Boolean) listBooksJSON.get("status"));
-            listView.setAdapter(this.pca);
+            listView.setAdapter(pca);
         } catch (JSONException e) {
             Log.e("Excepiton ! ->", "JSONException : " + e);
         }
 
-    }
-
-    public Book GetSelectedItemFromListViewAdapter() {
-
-        Book selectedBook = this.pca.GetBookItemFromSpecificPosition();
-        return selectedBook;
     }
 
 }
