@@ -180,6 +180,7 @@ public class ProviderActivity extends ActionBarActivity implements
         }
     }
 
+
     /**
      * Event listener that handles thee deletion of a selected book in the list view.
      * @param view The view of the activity that fired this event.
@@ -327,6 +328,7 @@ public class ProviderActivity extends ActionBarActivity implements
         if(this.refreshFlag)
             this.dpb.RefreshProviderBookList(this);
     }
+
 
     /**
      * Event that is called whenever the submit button on the add book form is pressed.

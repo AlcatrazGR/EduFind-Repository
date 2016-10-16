@@ -1,6 +1,9 @@
 package codebrains.edufind.Activities;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,11 +13,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import codebrains.edufind.AsyncTasks.AsyncUpdateBook;
 import codebrains.edufind.R;
 
 public class BookActivity extends AppCompatActivity {
 
-    private JSONObject oldData;
+    private JSONObject oldData; //<== exei kai to username
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +33,6 @@ public class BookActivity extends AppCompatActivity {
         } catch (JSONException e) {
             Log.e("Excepiton ! ->", "JSONException : " + e);
         }
-
-
     }
 
     /**
@@ -81,6 +84,73 @@ public class BookActivity extends AppCompatActivity {
 
         amountTv.setText(String.valueOf(amount));
     }
+
+    /**
+     * Event listener for the update of book information.
+     * @param view The view of the activity that called the listener.
+     */
+    public void UpdateBookInfoProcess(View view) {
+
+        JSONObject newData = new JSONObject();
+
+        TextView titleTv = (TextView) findViewById(R.id.textView33);
+        TextView amountTv = (TextView) findViewById(R.id.textView38);
+        EditText authorsEdt = (EditText) findViewById(R.id.editText7);
+        EditText publisherEdt = (EditText) findViewById(R.id.editText8);
+        Spinner spinner = (Spinner) findViewById(R.id.spinner2);
+
+        try {
+            newData.put("title", titleTv.getText().toString().trim());
+            newData.put("authors", authorsEdt.getText().toString().trim());
+            newData.put("publisher", publisherEdt.getText().toString().trim());
+            newData.put("sector", spinner.getSelectedItem().toString());
+            newData.put("amount", amountTv.getText().toString());
+            newData.put("username", this.oldData.get("username").toString());
+
+            this.DisplayConfirmationDialog(this, this.oldData, newData);
+            this.oldData = newData;
+
+        } catch (JSONException e) {
+            Log.e("Excepiton ! ->", "JSONException->UpdateBookInfoProcess : " + e);
+        }
+    }
+
+    /**
+     * Method that displays a confirmation massage of `yes` or `no` to the user.
+     * @param actObj Activity object.
+
+     */
+    public void DisplayConfirmationDialog(final Activity actObj, final JSONObject oldData,
+            final JSONObject newData) throws JSONException {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+        // Setting Dialog Title
+        alertDialog.setTitle("Confirmation Message");
+
+        // Setting Dialog Message
+        alertDialog.setMessage("Do you really want to update `" + oldData.get("title") + "`");
+        alertDialog.setCancelable(false);
+
+        // On pressing Settings button
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                AsyncUpdateBook aub = new AsyncUpdateBook(actObj, oldData, newData);
+                aub.execute();
+            }
+        });
+
+        // On pressing Settings button
+        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
+    }
+
 
 
 
