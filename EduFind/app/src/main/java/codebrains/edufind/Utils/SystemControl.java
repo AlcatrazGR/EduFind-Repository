@@ -37,7 +37,7 @@ public class SystemControl {
      */
     public boolean RemoteServerIsReachable() {
 
-        String path = "edufind.comlu.com";
+        String path = "edufind.hol.es";
 
         try {
            InetAddress inetAddress = InetAddress.getByName(path);

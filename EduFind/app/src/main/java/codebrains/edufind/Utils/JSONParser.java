@@ -28,7 +28,7 @@ public class JSONParser {
 
     //Constructor
     public JSONParser() {
-        this.path = "http://www.edufind.comlu.com/Android";
+        this.path = "http://edufind.hol.es/Android";
     }
 
 

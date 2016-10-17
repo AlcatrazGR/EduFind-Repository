@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
 
     <RelativeLayout
         xmlns:tools="http://schemas.android.com/tools"
@@ -23,7 +25,9 @@
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/textView"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="20dp"
+            android:textColorHint="@color/colorHint"
+            android:textColor="@color/colorAccent"/>
 
         <EditText
             android:layout_width="wrap_content"
@@ -37,7 +41,9 @@
             android:layout_alignRight="@+id/usernameEdt"
             android:layout_alignEnd="@+id/usernameEdt"
             android:layout_alignLeft="@+id/textView2"
-            android:layout_alignStart="@+id/textView2"/>
+            android:layout_alignStart="@+id/textView2"
+            android:textColorHint="@color/colorHint"
+            android:textColor="@color/colorAccent" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -48,7 +54,8 @@
             android:layout_marginTop="98dp"
             android:layout_alignParentTop="true"
             android:layout_alignLeft="@+id/usernameEdt"
-            android:layout_alignStart="@+id/usernameEdt" />
+            android:layout_alignStart="@+id/usernameEdt"
+            android:textColor="@color/colorAccent"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,7 +66,8 @@
             android:layout_below="@+id/usernameEdt"
             android:layout_alignLeft="@+id/usernameEdt"
             android:layout_alignStart="@+id/usernameEdt"
-            android:layout_marginTop="30dp"/>
+            android:layout_marginTop="30dp"
+            android:textColor="@color/colorAccent" />
 
         <Button
             android:layout_width="wrap_content"
@@ -72,7 +80,8 @@
             android:layout_marginTop="25dp"
             android:layout_alignRight="@+id/passwordEdt"
             android:layout_alignEnd="@+id/passwordEdt"
-            android:onClick="LoginProcess"/>
+            android:onClick="LoginProcess"
+            android:background="@color/yellowish"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -87,6 +96,15 @@
             android:layout_marginTop="25dp"
             android:textSize="17dp"
             android:onClick="EnterAsAStudentProcess" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_logo_app"/>
 
     </RelativeLayout>
 </ScrollView>
