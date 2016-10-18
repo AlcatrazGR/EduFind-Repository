@@ -2,7 +2,8 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,7 +24,8 @@
             android:id="@+id/textView14"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:textColor="@color/colorAccent" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -34,7 +36,8 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/textView14"
             android:layout_toEndOf="@+id/textView14"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/colorAccent" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -45,7 +48,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/textView14"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorAccent" />
 
         <EditText
             android:layout_width="fill_parent"
@@ -58,7 +62,9 @@
             android:layout_alignParentEnd="true"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:hint="*******" />
+            android:hint="*******"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorHint" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,7 +75,8 @@
             android:layout_below="@+id/provider_password"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorAccent" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -84,7 +91,9 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="20dp"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorHint" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -95,7 +104,8 @@
             android:layout_below="@+id/provider_email"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorAccent" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -110,7 +120,9 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="20dp"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorHint" />
 
 
         <TextView
@@ -122,7 +134,8 @@
             android:layout_below="@+id/provider_number"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorAccent" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -136,7 +149,9 @@
             android:layout_alignParentStart="true"
             android:inputType="text"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="20dp"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorHint" />
 
         <Button style="?android:attr/buttonStyleSmall"
             android:layout_width="50dp"
@@ -167,7 +182,8 @@
                 android:id="@+id/provider_longitude"
                 android:layout_below="@+id/editText4"
                 android:layout_toRightOf="@+id/textView3"
-                android:layout_toEndOf="@+id/textView3" />
+                android:layout_toEndOf="@+id/textView3"
+                android:textColor="@color/colorAccent" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -177,7 +193,8 @@
                 android:id="@+id/provider_latitude"
                 android:layout_below="@+id/textView6"
                 android:layout_alignLeft="@+id/textView6"
-                android:layout_alignStart="@+id/textView6" />
+                android:layout_alignStart="@+id/textView6"
+                android:textColor="@color/colorAccent" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -187,7 +204,8 @@
                 android:id="@+id/provider_city"
                 android:layout_alignParentBottom="true"
                 android:layout_alignLeft="@+id/textView7"
-                android:layout_alignStart="@+id/textView7" />
+                android:layout_alignStart="@+id/textView7"
+                android:textColor="@color/colorAccent" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -197,7 +215,8 @@
                 android:id="@+id/provider_postal"
                 android:layout_alignParentBottom="true"
                 android:layout_alignLeft="@+id/textView7"
-                android:layout_alignStart="@+id/textView7" />
+                android:layout_alignStart="@+id/textView7"
+                android:textColor="@color/colorAccent" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -207,7 +226,8 @@
                 android:id="@+id/provider_address"
                 android:layout_alignParentBottom="true"
                 android:layout_alignLeft="@+id/textView7"
-                android:layout_alignStart="@+id/textView7" />
+                android:layout_alignStart="@+id/textView7"
+                android:textColor="@color/colorAccent" />
         </LinearLayout>
 
         <Button
@@ -221,7 +241,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginTop="30dp"
-            android:onClick="UpdateProvidersProfile"/>
+            android:onClick="UpdateProvidersProfile"
+            android:background="@color/yellowish"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -234,7 +255,8 @@
             android:layout_alignRight="@+id/button5"
             android:layout_alignEnd="@+id/button5"
             android:layout_marginTop="10dp"
-            android:onClick="DeleteProvidersProfile"/>
+            android:onClick="DeleteProvidersProfile"
+            android:background="@color/yellowish"/>
 
 
     </RelativeLayout>

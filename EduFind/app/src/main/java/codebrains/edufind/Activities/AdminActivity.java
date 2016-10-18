@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -45,8 +46,11 @@ public class AdminActivity extends AppCompatActivity implements IAsyncResponse {
 
         content = findViewById(android.R.id.content);
         this.expListView = (ExpandableListView) findViewById(R.id.admin_expanded_menu);
+
         GetListData();
     }
+
+
 
     /**
      * Method that handles the call to server in order to retrieve the account info for the

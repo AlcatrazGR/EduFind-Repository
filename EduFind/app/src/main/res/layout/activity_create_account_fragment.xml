@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:padding="10dp">
 
     <RelativeLayout
         xmlns:tools="http://schemas.android.com/tools"
@@ -17,7 +19,8 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Username:"
             android:id="@+id/textView3"
-            android:layout_marginTop="15dp" />
+            android:layout_marginTop="15dp"
+            android:textColor="@color/colorAccent" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -32,7 +35,9 @@
             android:hint="Enter username"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorHint" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -41,7 +46,8 @@
             android:text="Password:"
             android:id="@+id/textView4"
             android:layout_below="@+id/editText"
-            android:layout_marginTop="15dp" />
+            android:layout_marginTop="15dp"
+            android:textColor="@color/colorAccent" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -56,7 +62,9 @@
             android:layout_alignRight="@+id/editText"
             android:layout_alignEnd="@+id/editText"
 
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorHint" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -65,7 +73,8 @@
             android:text="Retype Password:"
             android:id="@+id/textView11"
             android:layout_below="@+id/editText2"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp"
+            android:textColor="@color/colorAccent" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -79,7 +88,9 @@
             android:layout_alignStart="@+id/editText"
             android:layout_alignRight="@+id/editText"
             android:layout_alignEnd="@+id/editText"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorHint"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -88,7 +99,8 @@
             android:text="Email:"
             android:id="@+id/textView5"
             android:layout_below="@+id/editText3"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp"
+            android:textColor="@color/colorAccent" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -102,7 +114,9 @@
             android:layout_alignStart="@+id/editText2"
             android:layout_alignRight="@+id/editText2"
             android:layout_alignEnd="@+id/editText2"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorHint" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -113,7 +127,8 @@
             android:layout_below="@+id/editText4"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp"
+            android:textColor="@color/colorAccent" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -127,7 +142,9 @@
             android:layout_alignStart="@+id/editText4"
             android:layout_alignRight="@+id/linearLayout"
             android:layout_alignEnd="@+id/linearLayout"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorHint" />
 
 
         <TextView
@@ -139,7 +156,8 @@
             android:layout_below="@+id/editText5"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp"
+            android:textColor="@color/colorAccent" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -151,7 +169,9 @@
             android:layout_alignLeft="@+id/editText5"
             android:layout_alignStart="@+id/editText5"
             android:layout_alignRight="@+id/linearLayout"
-            android:layout_alignEnd="@+id/linearLayout" />
+            android:layout_alignEnd="@+id/linearLayout"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorHint" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -186,7 +206,8 @@
                 android:id="@+id/textView6"
                 android:layout_below="@+id/editText4"
                 android:layout_toRightOf="@+id/textView3"
-                android:layout_toEndOf="@+id/textView3" />
+                android:layout_toEndOf="@+id/textView3"
+                android:textColor="@color/colorAccent"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -196,7 +217,8 @@
                 android:id="@+id/textView7"
                 android:layout_below="@+id/textView6"
                 android:layout_alignLeft="@+id/textView6"
-                android:layout_alignStart="@+id/textView6" />
+                android:layout_alignStart="@+id/textView6"
+                android:textColor="@color/colorAccent" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -206,7 +228,8 @@
                 android:id="@+id/textView8"
                 android:layout_alignParentBottom="true"
                 android:layout_alignLeft="@+id/textView7"
-                android:layout_alignStart="@+id/textView7" />
+                android:layout_alignStart="@+id/textView7"
+                android:textColor="@color/colorAccent" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -216,7 +239,8 @@
                 android:id="@+id/textView9"
                 android:layout_alignParentBottom="true"
                 android:layout_alignLeft="@+id/textView7"
-                android:layout_alignStart="@+id/textView7" />
+                android:layout_alignStart="@+id/textView7"
+                android:textColor="@color/colorAccent" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -226,7 +250,8 @@
                 android:id="@+id/textView10"
                 android:layout_alignParentBottom="true"
                 android:layout_alignLeft="@+id/textView7"
-                android:layout_alignStart="@+id/textView7" />
+                android:layout_alignStart="@+id/textView7"
+                android:textColor="@color/colorAccent" />
         </LinearLayout>
 
         <CheckBox
@@ -238,7 +263,9 @@
             android:layout_alignLeft="@+id/button2"
             android:layout_alignStart="@+id/button2"
             android:layout_marginTop="15dp"
-            android:checked="false" />
+            android:checked="false"
+            android:padding="5dp"
+            android:background="@color/yellowish"/>
 
 
         <Button
@@ -253,8 +280,8 @@
             android:layout_alignLeft="@+id/editText6"
             android:layout_alignStart="@+id/editText6"
             android:layout_marginTop="15dp"
-            android:onClick="CreateNewAccountProcess"/>
-
+            android:onClick="CreateNewAccountProcess"
+            android:background="@color/yellowish"/>
 
     </RelativeLayout>
 </ScrollView>

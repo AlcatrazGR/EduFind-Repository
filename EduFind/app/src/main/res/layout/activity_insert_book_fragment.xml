@@ -2,7 +2,8 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
@@ -20,7 +21,8 @@
             android:id="@+id/textView15"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+            android:layout_alignParentStart="true"
+            android:textColor="@color/colorAccent" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -34,7 +36,9 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:inputType="text"
-            android:hint="Enter the title of the book"/>
+            android:hint="Enter the title of the book"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorHint" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -45,7 +49,8 @@
             android:layout_below="@+id/book_title"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorAccent" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -59,7 +64,9 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:inputType="text"
-            android:hint="Enter the authors" />
+            android:hint="Enter the authors"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorHint" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -70,7 +77,8 @@
             android:layout_below="@+id/book_authors"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorAccent" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -84,7 +92,9 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:inputType="text"
-            android:hint="Enter the publisher of the book"/>
+            android:hint="Enter the publisher of the book"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorHint" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -93,7 +103,8 @@
             android:text="Sector:"
             android:id="@+id/textView22"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/book_publisher" />
+            android:layout_below="@+id/book_publisher"
+            android:textColor="@color/colorAccent" />
 
         <Spinner
             android:layout_width="wrap_content"
@@ -105,7 +116,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
-            android:entries="@array/sectors" />
+            android:entries="@array/sectors"
+            android:background="@color/yellowish"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -114,7 +126,8 @@
             android:text="Amount:"
             android:id="@+id/textView23"
             android:layout_below="@+id/spinner"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorAccent" />
 
         <Button
             android:layout_width="wrap_content"
@@ -127,7 +140,8 @@
             android:layout_alignRight="@+id/linearLayout2"
             android:layout_alignEnd="@+id/linearLayout2"
             android:layout_marginTop="10dp"
-            android:onClick="AddBookEvent"/>
+            android:onClick="AddBookEvent"
+            android:background="@color/yellowish"/>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -147,7 +161,8 @@
                 android:layout_below="@+id/textView23"
                 android:layout_alignLeft="@+id/textView24"
                 android:layout_alignStart="@+id/textView24"
-                android:layout_marginLeft="20dp"/>
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/colorAccent" />
 
             <Button
                 android:layout_width="50dp"

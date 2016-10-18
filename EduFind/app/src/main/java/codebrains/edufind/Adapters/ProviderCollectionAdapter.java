@@ -58,7 +58,7 @@ public class ProviderCollectionAdapter extends ArrayAdapter<Book> {
                 @Override
                 public void onClick(View v) {
 
-                    v.setBackgroundColor(context.getResources().getColor(R.color.lightCyan));
+                    v.setBackgroundColor(context.getResources().getColor(R.color.yellowish));
 
                     if(position != selectedPosition && selectedPosition != -1)
                         previousView.setBackgroundColor(Color.TRANSPARENT);
