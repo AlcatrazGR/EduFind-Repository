@@ -29,7 +29,8 @@
             android:layout_marginLeft="5dp"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/textView32"
-            android:layout_toEndOf="@+id/textView32" />
+            android:layout_toEndOf="@+id/textView32"
+            android:textColor="@color/colorAccent"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -111,7 +112,8 @@
             android:entries="@array/sectors"
             android:textColor="@color/colorAccent"
             android:textColorHint="@color/colorHint"
-            android:background="@color/yellowish"/>
+            android:background="@color/yellowish"
+            android:padding="10dp" />
 
         <TextView
             android:layout_width="wrap_content"

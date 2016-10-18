@@ -25,7 +25,7 @@
 
         <Button
             android:layout_width="55dp"
-            android:layout_height="45dp"
+            android:layout_height="55dp"
             android:id="@+id/button10"
             android:background="@drawable/refresh_icon"
             android:onClick="RefreshProviderBookListEvent"
@@ -36,7 +36,7 @@
 
         <Button
             android:layout_width="55dp"
-            android:layout_height="45dp"
+            android:layout_height="55dp"
             android:id="@+id/button11"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
@@ -46,7 +46,7 @@
 
         <Button
             android:layout_width="55dp"
-            android:layout_height="45dp"
+            android:layout_height="55dp"
             android:id="@+id/button12"
             android:background="@drawable/search_icon"
             android:layout_alignParentTop="true"
