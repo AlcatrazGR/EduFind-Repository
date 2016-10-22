@@ -37,6 +37,7 @@ public class CreateAccount {
 
         } catch (JSONException e) {
             e.printStackTrace();
+            return null;
         }
 
         return geoJson;

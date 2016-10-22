@@ -1,6 +1,7 @@
 package codebrains.edufind.Utils;
 
 import android.content.Context;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.util.Log;
 import java.io.IOException;
@@ -29,6 +30,19 @@ public class SystemControl {
 
         ConnectivityManager cm = (ConnectivityManager) this.mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
+    }
+
+    /**
+     * Method that checks if the users has enabled the gps service on his device.
+     * @return Returns a boolean showing the status of the check.
+     */
+    public boolean HasActiveGPSService() {
+
+        LocationManager manager = (LocationManager) this.mContext.getSystemService( Context.LOCATION_SERVICE );
+        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) )
+            return false;
+
+        return true;
     }
 
     /**

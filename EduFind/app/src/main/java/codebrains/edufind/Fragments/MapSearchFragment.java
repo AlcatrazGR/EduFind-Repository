@@ -44,7 +44,7 @@ public class MapSearchFragment extends Fragment {
         this.ConfigureGoogleMaps();
         */
         try {
-
+/*
                 map = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 
                 //Disable zoom buttons
@@ -65,7 +65,7 @@ public class MapSearchFragment extends Fragment {
                 if (map == null) {
                     //TODO: Print error message
                 }
-
+*/
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -140,9 +140,19 @@ public class LoginActivity extends ActionBarActivity implements android.support.
      * @param view The view of the activity that called this listener.
      */
     public void EnterAsAStudentProcess(View view) {
-        Intent intent = new Intent(this, StudentActivity.class);
-        this.finish();
-        this.startActivity(intent);
+
+        SystemControl sc = new SystemControl(this);
+
+        if(sc.HasActiveGPSService()) {
+            Intent intent = new Intent(this, StudentActivity.class);
+            this.finish();
+            this.startActivity(intent);
+        }
+        else {
+            MessageCenter msgCent = new MessageCenter(this);
+            msgCent.GPSNotEnabledErrorDialog();
+        }
+
     }
 
     @Override
