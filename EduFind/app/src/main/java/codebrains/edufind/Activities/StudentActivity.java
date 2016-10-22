@@ -5,7 +5,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import org.json.JSONException;
+import org.json.JSONObject;
 import codebrains.edufind.Adapters.StudentTabsAdapter;
+import codebrains.edufind.Fragments.BookSearchFragment;
 import codebrains.edufind.R;
 
 public class StudentActivity extends ActionBarActivity implements android.support.v7.app.ActionBar.TabListener {
@@ -13,6 +17,9 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
     private ViewPager tabsviewPager;
     private StudentTabsAdapter mTabsAdapter;
     private ActionBar actionBar;
+
+    //Fragments
+    private BookSearchFragment bsf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,9 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
         getSupportActionBar().addTab(searchTab);
         getSupportActionBar().addTab(mapTab);
 
+        //Fragment initialization
+        this.bsf = new BookSearchFragment();
+
         //Event listener that runs whenever the tabs are swiped, it is used to make enable the
         //respective tab.
         tabsviewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -56,7 +66,39 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
             public void onPageScrollStateChanged(int arg0) {
             }
         });
+
+
+
+        /*
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("process", 3);
+            jsonObject.put("shCode", 0);
+            jsonObject.put("city", "");
+        } catch (JSONException e) {
+            Log.e("Excepiton ! ->", "JSONException : " + e);
+        }
+
+        this.CallBookSearchAsyncTask(jsonObject);
+        */
     }
+
+    private void CallBookSearchAsyncTask(JSONObject data) {
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {

@@ -96,7 +96,8 @@
             android:textColor="@color/darkBlue"
             android:layout_marginTop="25dp"
             android:textSize="17dp"
-            android:onClick="EnterAsAStudentProcess" />
+            android:onClick="EnterAsAStudentProcess"
+            android:padding="20dp"/>
 
         <ImageView
             android:layout_width="200dp"

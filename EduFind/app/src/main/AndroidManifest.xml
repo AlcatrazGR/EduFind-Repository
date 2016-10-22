@@ -9,8 +9,11 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- GPS Permissions -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <!-- Feature for openGL to render map for application -->
@@ -24,9 +27,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="" />
 
         <activity
             android:name=".Activities.LoginActivity"
@@ -79,6 +79,15 @@
             android:label="@string/title_activity_map_search_fragment"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+
+        <uses-library android:name="com.google.android.maps" />
+
+        <!-- Goolge Maps API Key -->
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="" />
+
+
     </application>
 
 </manifest>
