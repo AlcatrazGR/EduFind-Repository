@@ -80,11 +80,9 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
 
-        <uses-library android:name="com.google.android.maps" />
-
         <!-- Goolge Maps API Key -->
         <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
+            android:name="com.google.android.geo.API_KEY"
             android:value="" />
 
 

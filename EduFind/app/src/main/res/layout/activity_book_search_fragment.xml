@@ -9,7 +9,8 @@
     tools:context="codebrains.edufind.Fragments.BookSearchFragment"
     android:background="@color/colorPrimaryDark">
 
-    <ListView
+
+    <ExpandableListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/listView"
@@ -26,5 +27,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_search_category_default"
         app:backgroundTint="@color/yellowish" />
+
+
 
 </android.support.design.widget.CoordinatorLayout>

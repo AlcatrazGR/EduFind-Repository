@@ -5,6 +5,8 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
 import codebrains.edufind.Initializers.Book;
 import codebrains.edufind.Models.BookModel;
@@ -16,10 +18,13 @@ import codebrains.edufind.Models.BookModel;
 public class BookController {
 
     private JSONObject newBookData;
+    private List<String> listDataHeader;
+    private HashMap<String, List<String>> listDataChild;
 
     //Constructor
     public BookController() {
         this.newBookData = new JSONObject();
+
     }
 
     /**
@@ -84,6 +89,79 @@ public class BookController {
 
         return null;
     }
+
+    /**
+     * Method that controls the process of handling the expandable list data from the server
+     * response and setting those to the expandable list item.
+     * @param data The response of the server.
+     * @param mActivity The activity that called this method.
+     * @return Returns a boolean showing the result of the process.
+     */
+    public boolean SetStudentExpandableListContent(JSONObject data, Activity mActivity) {
+
+        BookModel bm = new BookModel();
+        boolean check = true;
+
+        try {
+            int status = Integer.parseInt(data.get("status").toString());
+
+            switch(status) {
+
+                //Data came.
+                case 1:
+                    if(bm.SetNoneEmptyExpandableListContent(data, mActivity)) {
+                        this.listDataHeader = bm.GetListDataHeader();
+                        this.listDataChild = bm.GetListDataChild();
+                        check = true;
+                    }
+                    else {
+                        JSONObject fakeResp = new JSONObject();
+                        fakeResp.put("message", "There are no available books from the eudoxus system...");
+                        bm.SetEmptyExpandableListContent(fakeResp);
+                        check = false;
+                    }
+                break;
+
+                //Empty data.
+                case 2:
+                    if(bm.SetEmptyExpandableListContent(data)) {
+                        this.listDataHeader = bm.GetListDataHeader();
+                        this.listDataChild = bm.GetListDataChild();
+                        check = false;
+                    }
+                    else {
+                        JSONObject fakeResp = new JSONObject();
+                        fakeResp.put("message", "There are no available books from the eudoxus system...");
+                        bm.SetEmptyExpandableListContent(fakeResp);
+                        check = false;
+                    }
+                break;
+            }
+
+        } catch (JSONException e) {
+            Log.e("Excepiton ! ->", "JSONException -> SetStudentExpandableListContent : " + e);
+        }
+
+        return check;
+    }
+
+    /**
+     * Returns the private list data header.
+     * @return Returns the list of header for the expandable list.
+     */
+    public List<String> GetListDataHeader() {
+        return this.listDataHeader;
+    }
+
+    /**
+     * Method that returns the list data child for the expandable list.
+     * @return Returns the child data of the expandable list.
+     */
+    public HashMap<String, List<String>> GetListDataChild() {
+        return this.listDataChild;
+    }
+
+
 
     /**
      * Method that returns the initialized book json.

@@ -11,11 +11,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import codebrains.edufind.Controllers.CreateAccountController;
 import codebrains.edufind.Interfaces.IAsyncResponse;
 import codebrains.edufind.Utils.JSONParser;
 import codebrains.edufind.Utils.MessageCenter;
 import static codebrains.edufind.Activities.StudentActivity.GetStudentGeolocationInfo;
 import static codebrains.edufind.Activities.StudentActivity.SetSortedBookList;
+import static codebrains.edufind.Activities.StudentActivity.SetStudentGeolocationInfo;
+
 
 /**
  * Asynchronous task that handles the search of books by a certain sorting method.
@@ -25,6 +28,7 @@ public class AsyncBookSearch extends AsyncTask<String, String, JSONObject> {
     private Activity mActivity;
     private ProgressDialog pDialog;
     private JSONObject data;
+    private JSONObject studentGeoInfo;
 
     public IAsyncResponse delegate; //Interface Object
 
@@ -43,15 +47,30 @@ public class AsyncBookSearch extends AsyncTask<String, String, JSONObject> {
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(true);
         pDialog.show();
+
+        studentGeoInfo = GetStudentGeolocationInfo();
+        Log.d("-- 1 Geo Info --", studentGeoInfo.toString());
+
+        try {
+            if(studentGeoInfo.get("longitude") == 0 || studentGeoInfo.get("latitude") == 0) {
+                //Setting new geolocation info for the student.
+                CreateAccountController cac = new CreateAccountController();
+                studentGeoInfo = cac.HandleGeoLocationInfo(this.mActivity);
+                SetStudentGeolocationInfo(cac.HandleGeoLocationInfo(this.mActivity));
+            }
+        } catch (JSONException e) {
+            Log.e("Excepiton ! ->", "JSONException : " + e);
+        }
+
     }
 
     @Override
     protected JSONObject doInBackground(String... params) {
 
-        Log.d("-- Geo Info --", GetStudentGeolocationInfo().toString());
+        Log.d("-- 2 Geo Info --", studentGeoInfo.toString());
 
         try {
-            this.data.put("city", GetStudentGeolocationInfo().get("city"));
+            this.data.put("city", studentGeoInfo.get("city"));
         } catch (JSONException e) {
             Log.e("Excepiton ! ->", "JSONException : " + e);
         }
@@ -88,7 +107,6 @@ public class AsyncBookSearch extends AsyncTask<String, String, JSONObject> {
                 //case everything ok and data came or everything ok but no data.
                 case 1:
                 case 2:
-                    SetSortedBookList(response);
                     this.delegate.ProcessFinish(response, this.mActivity);
                 break;
 

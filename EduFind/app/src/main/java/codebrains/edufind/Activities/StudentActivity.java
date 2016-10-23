@@ -29,7 +29,7 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
     public MapSearchFragment msf;
 
     private static JSONObject studentGeo;
-    private static JSONObject sortedList;
+    private static JSONObject sortedList; //It can either be 1 or 2
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,12 +148,16 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
     @Override
     public void ProcessFinish(JSONObject output, Activity mActivity) {
 
+        SetSortedBookList(output);
+
         if(this.bsf == null || this.msf == null) {
 
             Log.d("-- Phase --", "Initializing Fragments ");
             //Fragment initialization
             this.bsf = new BookSearchFragment();
             this.msf = new MapSearchFragment();
+
+            this.bsf.SetExpandableListContent(mActivity);
         }
 
 
