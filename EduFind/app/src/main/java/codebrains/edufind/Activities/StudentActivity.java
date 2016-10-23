@@ -91,7 +91,10 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
     }
 
 
-
+    /**
+     * Method that calls the asynchronous task that sets the new sorted book data.
+     * @param data A json object containing the necessary data and sorting codes to determine the process to follow.
+     */
     private void CallBookSearchAsyncTask(JSONObject data) {
         AsyncBookSearch abs = new AsyncBookSearch(this, data);
         abs.delegate = this;
@@ -102,17 +105,30 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
 
 
 
+
+
+
+
+
+
+
+
+
+    /**
+     * Method that sets the static book list json object.
+     * @param newList The new json sorted book list that will replace the old one.
+     */
     public static void SetSortedBookList(JSONObject newList) {
         sortedList = newList;
     }
 
+    /**
+     * Method that gets the static json book list object.
+     * @return Returns a json tha contains all the info for the sorted book list.
+     */
     public static JSONObject GetSortedBookList() {
         return sortedList;
     }
-
-
-
-
 
     /**
      * Method that sets the static student geolocation info JSON Object
@@ -148,7 +164,7 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
     @Override
     public void ProcessFinish(JSONObject output, Activity mActivity) {
 
-        SetSortedBookList(output);
+        SetSortedBookList(output); //sets the new sorted book list.
 
         if(this.bsf == null || this.msf == null) {
 
