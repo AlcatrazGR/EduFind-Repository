@@ -26,7 +26,8 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_search_category_default"
-        app:backgroundTint="@color/yellowish" />
+        app:backgroundTint="@color/yellowish"
+        android:onClick="BookSortingProcess"/>
 
 
 

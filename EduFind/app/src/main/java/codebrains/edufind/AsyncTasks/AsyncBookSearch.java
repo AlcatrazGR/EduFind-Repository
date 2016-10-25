@@ -29,13 +29,15 @@ public class AsyncBookSearch extends AsyncTask<String, String, JSONObject> {
     private ProgressDialog pDialog;
     private JSONObject data;
     private JSONObject studentGeoInfo;
+    private boolean citySortFlag;
 
     public IAsyncResponse delegate; //Interface Object
 
     //Constructor
-    public AsyncBookSearch(Activity act, JSONObject dt) {
+    public AsyncBookSearch(Activity act, JSONObject dt, boolean csf) {
         this.mActivity = act;
         this.data = dt;
+        this.citySortFlag = csf;
     }
 
     @Override
@@ -70,7 +72,8 @@ public class AsyncBookSearch extends AsyncTask<String, String, JSONObject> {
         Log.d("-- 2 Geo Info --", studentGeoInfo.toString());
 
         try {
-            this.data.put("city", studentGeoInfo.get("city"));
+            if(citySortFlag)
+                this.data.put("city", studentGeoInfo.get("city"));
         } catch (JSONException e) {
             Log.e("Excepiton ! ->", "JSONException : " + e);
         }

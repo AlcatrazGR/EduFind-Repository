@@ -1,12 +1,17 @@
 package codebrains.edufind.Activities;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.View;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import codebrains.edufind.Adapters.StudentTabsAdapter;
@@ -23,6 +28,14 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
     private ViewPager tabsviewPager;
     private StudentTabsAdapter mTabsAdapter;
     private ActionBar actionBar;
+
+    private String sortingValue;
+    private int sortingMethod;
+    /* 0 -> by area
+     * 1 -> by sector
+     * 2 -> by publisher
+     * 3 -> by title
+     */
 
     //Fragments
     public BookSearchFragment bsf;
@@ -47,8 +60,7 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
         } catch (JSONException e) {
             Log.e("Excepiton ! ->", "JSONException : " + e);
         }
-
-        this.CallBookSearchAsyncTask(jsonObject);
+        this.CallBookSearchAsyncTask(jsonObject, true);
 
         //Initializing the tab view of this activity
         tabsviewPager = (ViewPager) findViewById(R.id.tabspager);
@@ -88,20 +100,63 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
             }
         });
 
+        this.sortingMethod = 0;
+        try {
+            this.sortingValue = this.studentGeo.get("city").toString();
+        } catch (JSONException e) {
+            Log.e("Excepiton ! ->", "JSONException : OnCreate->" + e);
+        }
+
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 2 && resultCode == RESULT_OK && data != null) {
+
+            this.sortingValue = data.getStringExtra("sortingValue");
+            String sortingKey = data.getStringExtra("sortingKey");
+            try {
+                this.sortingMethod = Integer.parseInt(data.getStringExtra("sortingMethod"));
+            }
+            catch(NumberFormatException ex) {
+                Log.e("Exception! ->", "NumberFormatException : onActivityResult ->"+ex);
+                this.sortingMethod = 0;
+            }
+
+            //Build json for service call.
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("process", 3);
+                jsonObject.put("shCode", this.sortingMethod);
+                jsonObject.put(sortingKey, this.sortingValue);
+            } catch (JSONException e) {
+                Log.e("Excepiton ! ->", "JSONException : onActivityResult->" + e);
+            }
+            this.CallBookSearchAsyncTask(jsonObject, false);
+
+        }
+
+    }
+
+    /**
+     * Method that opens the activity search of books.
+     * @param view The view of the activity that called this method.
+     */
+    public void BookSortingProcess(View view) {
+        Intent sortingIntent = new Intent(this, SortingActivity.class);
+        startActivityForResult(sortingIntent, 2);
+    }
 
     /**
      * Method that calls the asynchronous task that sets the new sorted book data.
      * @param data A json object containing the necessary data and sorting codes to determine the process to follow.
      */
-    private void CallBookSearchAsyncTask(JSONObject data) {
-        AsyncBookSearch abs = new AsyncBookSearch(this, data);
+    private void CallBookSearchAsyncTask(JSONObject data, boolean citySortFlag) {
+        AsyncBookSearch abs = new AsyncBookSearch(this, data, citySortFlag);
         abs.delegate = this;
         abs.execute();
     }
-
-
 
 
 
@@ -172,10 +227,9 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
             //Fragment initialization
             this.bsf = new BookSearchFragment();
             this.msf = new MapSearchFragment();
-
-            this.bsf.SetExpandableListContent(mActivity);
         }
 
+        this.bsf.SetExpandableListContent(mActivity);
 
     }
 

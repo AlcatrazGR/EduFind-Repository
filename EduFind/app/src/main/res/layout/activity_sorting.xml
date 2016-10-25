@@ -6,179 +6,134 @@
     tools:context="codebrains.edufind.Activities.SortingActivity"
     android:background="@color/colorPrimaryDark" >
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sort by city"
-        android:id="@+id/radioButton"
-        android:checked="false"
-        android:background="@color/yellowish"
-        android:padding="10dp" />
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="34dp"
-        android:id="@+id/relativeLayout2"
-        android:padding="5dp"
-        android:clickable="false">
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText9"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_toLeftOf="@+id/button16"
-            android:layout_toStartOf="@+id/button16"
-            android:textColor="@color/colorAccent"
-            android:textColorHint="@color/colorHint"
-            android:hint="Latin characters only"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sort by city"
+                android:id="@+id/radioButton"
+                android:checked="true"
+                android:background="@color/yellowish"
+                android:padding="10dp"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Submit"
-            android:id="@+id/button16"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText9"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/button16"
+                android:layout_toStartOf="@+id/button16"
+                android:textColor="@color/colorAccent"
+                android:textColorHint="@color/colorHint"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Latin characters only (`Serres`)"/>
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sort by sector"
-        android:id="@+id/radioButton2"
-        android:layout_below="@+id/relativeLayout2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:checked="false"
-        android:background="@color/yellowish"
-        android:padding="10dp"
-        android:layout_marginTop="20dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sort by sector"
+                android:id="@+id/radioButton2"
+                android:layout_below="@+id/relativeLayout2"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:checked="false"
+                android:background="@color/yellowish"
+                android:padding="10dp"
+                android:layout_marginTop="20dp"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/radioButton2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/relativeLayout3"
-        android:padding="5dp">
+            <Spinner
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/spinner3"
+                 android:layout_centerVertical="true"
+                 android:layout_toLeftOf="@+id/button17"
+                 android:layout_toStartOf="@+id/button17"
+                 android:background="@color/yellowish"
+                 android:padding="10dp"
+                 android:entries="@array/sectors"
+                 android:layout_marginLeft="20dp"
+                 android:layout_marginRight="20dp"
+                 android:layout_marginTop="5dp"/>
 
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinner3"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/button17"
-            android:layout_toStartOf="@+id/button17"
-            android:background="@color/yellowish"
-            android:padding="10dp"
-            android:entries="@array/sectors" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sort by publisher"
+                android:id="@+id/radioButton3"
+                android:layout_below="@+id/relativeLayout3"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:checked="false"
+                android:background="@color/yellowish"
+                android:padding="10dp"
+                android:layout_marginTop="20dp" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Submit"
-            android:id="@+id/button17"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText10"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/button18"
+                android:layout_toStartOf="@+id/button18"
+                android:textColor="@color/colorAccent"
+                android:textColorHint="@color/colorHint"
+                android:hint="Enter publisher"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"/>
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sort by publisher"
-        android:id="@+id/radioButton3"
-        android:layout_below="@+id/relativeLayout3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:checked="false"
-        android:background="@color/yellowish"
-        android:padding="10dp"
-        android:layout_marginTop="20dp" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sort by title"
+                android:id="@+id/radioButton4"
+                android:layout_below="@+id/relativeLayout4"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:checked="false"
+                android:background="@color/yellowish"
+                android:padding="10dp"
+                android:layout_marginTop="20dp"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/radioButton3"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/relativeLayout4"
-        android:padding="5dp">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText11"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/button19"
+                android:layout_toStartOf="@+id/button19"
+                android:textColor="@color/colorAccent"
+                android:textColorHint="@color/colorHint"
+                android:hint="Enter the exact book title"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp" />
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText10"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_toLeftOf="@+id/button18"
-            android:layout_toStartOf="@+id/button18"
-            android:textColor="@color/colorAccent"
-            android:textColorHint="@color/colorHint"
-            android:hint="Enter publisher" />
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:id="@+id/button20"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/yellowish"
+                android:onClick="SortingProcess"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Submit"
-            android:id="@+id/button18"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sort by title"
-        android:id="@+id/radioButton4"
-        android:layout_below="@+id/relativeLayout4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:checked="false"
-        android:background="@color/yellowish"
-        android:padding="10dp"
-        android:layout_marginTop="20dp"/>
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/radioButton4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:padding="5dp">
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText11"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_toLeftOf="@+id/button19"
-            android:layout_toStartOf="@+id/button19"
-            android:textColor="@color/colorAccent"
-            android:textColorHint="@color/colorHint"
-            android:hint="Enter the exact book title"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Submit"
-            android:id="@+id/button19"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
-
+        </RadioGroup>
+    </ScrollView>
 </RelativeLayout>

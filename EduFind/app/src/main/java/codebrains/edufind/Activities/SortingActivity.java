@@ -1,10 +1,13 @@
 package codebrains.edufind.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.RelativeLayout;
-
+import android.view.View;
+import android.widget.EditText;
+import android.widget.RadioButton;
 import codebrains.edufind.R;
+import codebrains.edufind.Utils.MessageCenter;
 
 public class SortingActivity extends AppCompatActivity {
 
@@ -12,17 +15,66 @@ public class SortingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sorting);
+    }
 
-        RelativeLayout rl1 = (RelativeLayout) findViewById(R.id.relativeLayout2);
-        RelativeLayout rl2 = (RelativeLayout) findViewById(R.id.relativeLayout3);
-        RelativeLayout rl3 = (RelativeLayout) findViewById(R.id.relativeLayout4);
-        RelativeLayout rl4 = (RelativeLayout) findViewById(R.id.relativeLayout5);
+    /**
+     * Event listener onClick which is fired whenever the `Submit` button is pressed and it handles
+     * the process of setting the sorting data and returning them to the main activity.
+     * @param view The view of the activity that fired this event.
+     */
+    public void SortingProcess(View view){
 
-        rl2.setEnabled(false);
-        rl3.setEnabled(false);
-        rl4.setEnabled(false);
+        MessageCenter msgCenter = new MessageCenter(this);
+
+        RadioButton rd1 = (RadioButton) findViewById(R.id.radioButton);
+        RadioButton rd2 = (RadioButton) findViewById(R.id.radioButton2);
+        RadioButton rd3 = (RadioButton) findViewById(R.id.radioButton3);
+        RadioButton rd4 = (RadioButton) findViewById(R.id.radioButton4);
+
+        if(rd1.isChecked()) {
+
+            EditText areaSortEdt = (EditText) findViewById(R.id.editText9);
+            String areaToSort = areaSortEdt.getText().toString().trim();
+
+            if(this.EmptySortingFieldCheck(areaToSort)) {
+                String code = "0";
+                Intent output = new Intent();
+                output.putExtra("sortingMethod", code);
+                output.putExtra("sortingValue", areaToSort);
+                output.putExtra("sortingKey", "city");
+                setResult(RESULT_OK, output);
+                finish();
+            }
+            else {
+                msgCenter.DisplayErrorDialog("Sorting Error", "The `city` sorting field is empty! " +
+                        "Please fill the necessary field and then resubmit ...");
+            }
+        }
+        else if (rd2.isChecked()) {
+
+        }
+        else if (rd3.isChecked()) {
+
+        }
+        else {
+
+        }
 
     }
+
+    /**
+     * Method that checks if the sorting value entered is empty.
+     * @param value The sorting value entered by the user.
+     * @return Returns a boolean flag representing the status of the check.
+     */
+    private boolean EmptySortingFieldCheck(String value) {
+
+        if(value == "" || value == null)
+            return false;
+
+        return true;
+    }
+
 
 
 }

@@ -14,8 +14,6 @@ import android.view.View;
 import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.Serializable;
 import java.util.List;
 import codebrains.edufind.Adapters.ProviderTabsAdapter;
 import codebrains.edufind.AsyncTasks.AsyncGetProviderBooks;
