@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import codebrains.edufind.R;
 import codebrains.edufind.Utils.MessageCenter;
 
@@ -52,11 +53,56 @@ public class SortingActivity extends AppCompatActivity {
         }
         else if (rd2.isChecked()) {
 
+            Spinner spinner = (Spinner) findViewById(R.id.spinner3);
+            String sectorToSort = spinner.getSelectedItem().toString();
+
+            String code = "1";
+            Intent output = new Intent();
+            output.putExtra("sortingMethod", code);
+            output.putExtra("sortingValue", sectorToSort);
+            output.putExtra("sortingKey", "sector");
+            setResult(RESULT_OK, output);
+            finish();
+
         }
         else if (rd3.isChecked()) {
 
+            EditText publisherSortEdt = (EditText) findViewById(R.id.editText10);
+            String publisherToSort = publisherSortEdt.getText().toString().trim();
+
+            if(this.EmptySortingFieldCheck(publisherToSort)) {
+                String code = "2";
+                Intent output = new Intent();
+                output.putExtra("sortingMethod", code);
+                output.putExtra("sortingValue", publisherToSort);
+                output.putExtra("sortingKey", "publisher");
+                setResult(RESULT_OK, output);
+                finish();
+            }
+            else {
+                msgCenter.DisplayErrorDialog("Sorting Error", "The `publisher` sorting field is empty! " +
+                        "Please fill the necessary field and then resubmit ...");
+            }
+
         }
         else {
+
+            EditText titleSortEdt = (EditText) findViewById(R.id.editText11);
+            String titleToSort = titleSortEdt.getText().toString().trim();
+
+            if(this.EmptySortingFieldCheck(titleToSort)) {
+                String code = "3";
+                Intent output = new Intent();
+                output.putExtra("sortingMethod", code);
+                output.putExtra("sortingValue", titleToSort);
+                output.putExtra("sortingKey", "title");
+                setResult(RESULT_OK, output);
+                finish();
+            }
+            else {
+                msgCenter.DisplayErrorDialog("Sorting Error", "The `title` sorting field is empty! " +
+                        "Please fill the necessary field and then resubmit ...");
+            }
 
         }
 

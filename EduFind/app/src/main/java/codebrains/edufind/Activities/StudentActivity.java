@@ -2,8 +2,6 @@ package codebrains.edufind.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.provider.ContactsContract;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -11,7 +9,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import codebrains.edufind.Adapters.StudentTabsAdapter;

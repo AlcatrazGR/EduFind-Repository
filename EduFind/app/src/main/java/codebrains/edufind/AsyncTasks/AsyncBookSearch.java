@@ -10,13 +10,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
-
 import codebrains.edufind.Controllers.CreateAccountController;
 import codebrains.edufind.Interfaces.IAsyncResponse;
 import codebrains.edufind.Utils.JSONParser;
 import codebrains.edufind.Utils.MessageCenter;
 import static codebrains.edufind.Activities.StudentActivity.GetStudentGeolocationInfo;
-import static codebrains.edufind.Activities.StudentActivity.SetSortedBookList;
 import static codebrains.edufind.Activities.StudentActivity.SetStudentGeolocationInfo;
 
 
