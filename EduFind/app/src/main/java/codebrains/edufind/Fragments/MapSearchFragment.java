@@ -20,6 +20,7 @@ import codebrains.edufind.R;
 import codebrains.edufind.Utils.Coordinates;
 
 import static codebrains.edufind.Activities.StudentActivity.GetStudentGeolocationInfo;
+import static codebrains.edufind.Activities.StudentActivity.SetStudentGeolocationInfo;
 
 public class MapSearchFragment extends Fragment {
 
@@ -62,11 +63,13 @@ public class MapSearchFragment extends Fragment {
             if(userGeoInfo.get("longitude") == 0 || userGeoInfo.get("latitude") == 0) {
                 CreateAccountController cac = new CreateAccountController();
                 userGeoInfo = cac.HandleGeoLocationInfo(this.getActivity());
+                SetStudentGeolocationInfo(userGeoInfo);
             }
         } catch (JSONException e) {
             Log.e("Excepiton ! ->", "JSONException : SetPointsOnMap->" + e);
             CreateAccountController cac = new CreateAccountController();
             userGeoInfo = cac.HandleGeoLocationInfo(this.getActivity());
+            SetStudentGeolocationInfo(userGeoInfo);
         }
 
 

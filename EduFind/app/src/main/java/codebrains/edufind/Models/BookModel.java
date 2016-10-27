@@ -100,7 +100,7 @@ public class BookModel {
 
     /**
      * Method that sets the expandable list view of the student for none empty response.
-     * @param data The response data of the rerver.
+     * @param data The response data of the server.
      * @param mActivity The activity that called this method.
      * @return Returns a boolean stating the result of the process.
      * @throws JSONException exception that is fired whenever an error occurs while handling json data.

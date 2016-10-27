@@ -11,6 +11,8 @@ public class MapDistanceController {
 
     }
 
+
+
     public void CalculateDistanceControl(double distance) {
 
     }
