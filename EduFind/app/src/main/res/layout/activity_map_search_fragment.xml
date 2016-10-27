@@ -9,11 +9,10 @@
     tools:context="codebrains.edufind.Fragments.MapSearchFragment"
     android:background="@color/colorPrimaryDark">
 
-    <fragment
-        android:id="@+id/map"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="com.google.android.gms.maps.SupportMapFragment" />
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab2"

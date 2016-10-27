@@ -1,6 +1,7 @@
 package codebrains.edufind.Models;
 
 import android.app.Activity;
+import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import org.json.JSONException;
@@ -117,7 +118,7 @@ public class CreateAccount {
             accountJSON.put("number", numberEdt.getText().toString());
             accountJSON.put("provider", providerEdt.getText().toString());
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e("Excepiton ! ->", "JSONException : CreateNewAccountJSONObject->" + e);
         }
 
         return accountJSON;
