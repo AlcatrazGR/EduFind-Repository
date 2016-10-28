@@ -7,18 +7,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import codebrains.edufind.Controllers.CreateAccountController;
+import codebrains.edufind.Controllers.MapDistanceController;
 import codebrains.edufind.R;
-import codebrains.edufind.Utils.Coordinates;
-
 import static codebrains.edufind.Activities.StudentActivity.GetStudentGeolocationInfo;
 import static codebrains.edufind.Activities.StudentActivity.SetStudentGeolocationInfo;
 
@@ -26,6 +29,7 @@ public class MapSearchFragment extends Fragment {
 
     private MapView mapView;
     private static GoogleMap map;
+    private JSONArray sortedByDistList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,53 +52,97 @@ public class MapSearchFragment extends Fragment {
         map = mapView.getMap();
 
 
-        this.SetPointsOnMap(200.0);
+        this.CalculateDistanceForMap(200.0);
 
         return view;
     }
 
 
 
-    private void SetPointsOnMap(double distance) {
+    private void CalculateDistanceForMap(double distance) {
 
-
-        JSONObject userGeoInfo = GetStudentGeolocationInfo();
         try {
-            if(userGeoInfo.get("longitude") == 0 || userGeoInfo.get("latitude") == 0) {
+            if(GetStudentGeolocationInfo().get("longitude") == 0 || GetStudentGeolocationInfo().get("latitude") == 0) {
                 CreateAccountController cac = new CreateAccountController();
-                userGeoInfo = cac.HandleGeoLocationInfo(this.getActivity());
-                SetStudentGeolocationInfo(userGeoInfo);
+                SetStudentGeolocationInfo(cac.HandleGeoLocationInfo(this.getActivity()));
             }
         } catch (JSONException e) {
             Log.e("Excepiton ! ->", "JSONException : SetPointsOnMap->" + e);
             CreateAccountController cac = new CreateAccountController();
-            userGeoInfo = cac.HandleGeoLocationInfo(this.getActivity());
-            SetStudentGeolocationInfo(userGeoInfo);
+            SetStudentGeolocationInfo(cac.HandleGeoLocationInfo(this.getActivity()));
+        }
+
+        MapDistanceController mdc = new MapDistanceController();
+        if(mdc.CalculateDistanceControl(distance)) {
+            this.sortedByDistList = mdc.GetListOfProvidersSortedByDistance();
+        }
+        else {
+            this.sortedByDistList = null;
+        }
+
+        this.SetPointsOnMap();
+
+    }
+
+
+    private void SetPointsOnMap() {
+
+        JSONObject userGeoInfo = GetStudentGeolocationInfo();
+
+        if(this.sortedByDistList != null || this.sortedByDistList.length() != 0) {
+            for(int i = 0; i < this.sortedByDistList.length(); i++) {
+
+                try {
+                    JSONObject providerJSON = (JSONObject) this.sortedByDistList.get(i);
+
+                    String title = "Provider: " + providerJSON.get("provider") +
+                            "\nAddress: " + providerJSON.get("address") +
+                            "\nNumber: " + providerJSON.get("number") +
+                            "\nDistance: " + providerJSON.get("distance");
+
+                    map.addMarker(new MarkerOptions()
+                            .position(new LatLng(Double.parseDouble(providerJSON.get("latitude").toString()),
+                                    Double.parseDouble(providerJSON.get("longitude").toString())))
+                            .title(title)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+
+                } catch (JSONException e) {
+                    Log.e("Excepiton ! ->", "JSONException : SetPointsOnMap->" + e);
+                    break;
+                } catch (NumberFormatException e) {
+                    Log.e("Excepiton ! ->", "NumberFormatException : SetPointsOnMap->" + e);
+                    break;
+                }
+
+
+
+            }
         }
 
 
-        CalculateDistancesController cdc = new CalculateDistancesController();
 
-        cdc.ControlMethodForCalculatingDistance(output, coordinates.GetLongitude(),
-                coordinates.GetLatitude(), spinner.getSelectedItem().toString());
-        JSONArray jsonArray = cdc.GetArrayOfProductInArea();
 
-        try {
-            this.DisplayMarkersForProductsOnArea(jsonArray);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+
+
+
 
         // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
         MapsInitializer.initialize(this.getActivity());
 
         // Updates the location and zoom of the MapView
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(coordinates.GetLatitude(),
-                coordinates.GetLongitude()), 10);
+        CameraUpdate cameraUpdate = null;
+        try {
+            cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(userGeoInfo.get("latitude").toString()),
+                    Double.parseDouble(userGeoInfo.get("longitude").toString())), 7);
+        } catch (JSONException e) {
+            CreateAccountController cac = new CreateAccountController();
+            SetStudentGeolocationInfo(cac.HandleGeoLocationInfo(this.getActivity()));
+        }
+
+
         map.animateCamera(cameraUpdate);
     }
-
-
 
 
 
