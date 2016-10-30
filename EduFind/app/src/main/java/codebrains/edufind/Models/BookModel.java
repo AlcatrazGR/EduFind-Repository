@@ -126,8 +126,6 @@ public class BookModel {
                 item.add("Address: "+sc.ConvertUTF8EncodedStringToReadable(user.get("address").toString()));
                 item.add("Amount: " + book.get("amount").toString());
 
-                Log.d("-- book --", book.toString() + " in " + j);
-
                 this.listDataHeader.add(sc.ConvertUTF8EncodedStringToReadable( book.get("title").toString() ));
                 this.listDataChild.put(sc.ConvertUTF8EncodedStringToReadable(book.get("title").toString()), item);
             }

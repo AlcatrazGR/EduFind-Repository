@@ -1,5 +1,6 @@
 package codebrains.edufind.Fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -12,10 +13,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,14 +52,34 @@ public class MapSearchFragment extends Fragment {
         map = mapView.getMap();
 
 
-        this.CalculateDistanceForMap(200.0);
+        //Log.d("--- CHECK ---", "HERE 1");
+
+        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
+        MapsInitializer.initialize(this.getActivity());
+
+        // Updates the location and zoom of the MapView
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(-34, 151), 10);
+        map.animateCamera(cameraUpdate);
+
+        //Log.d("--- CHECK ---", "HERE 2");
+
 
         return view;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
 
-    private void CalculateDistanceForMap(double distance) {
+    }
+
+
+    public void ConfigureGoogleMaps(Activity mActivity) {
+        this.CalculateDistanceForMap(200.0, mActivity);
+    }
+
+    private void CalculateDistanceForMap(double distance, Activity mActivity) {
 
         try {
             if(GetStudentGeolocationInfo().get("longitude") == 0 || GetStudentGeolocationInfo().get("latitude") == 0) {
@@ -80,15 +100,14 @@ public class MapSearchFragment extends Fragment {
             this.sortedByDistList = null;
         }
 
-        this.SetPointsOnMap();
+        this.SetPointsOnMap(mActivity);
 
     }
 
 
-    private void SetPointsOnMap() {
+    private void SetPointsOnMap(Activity mActivity) {
 
-        JSONObject userGeoInfo = GetStudentGeolocationInfo();
-
+        //Set providers markers on map
         if(this.sortedByDistList != null || this.sortedByDistList.length() != 0) {
             for(int i = 0; i < this.sortedByDistList.length(); i++) {
 
@@ -103,8 +122,8 @@ public class MapSearchFragment extends Fragment {
                     map.addMarker(new MarkerOptions()
                             .position(new LatLng(Double.parseDouble(providerJSON.get("latitude").toString()),
                                     Double.parseDouble(providerJSON.get("longitude").toString())))
-                            .title(title)
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+                            .title(title));
+
 
                 } catch (JSONException e) {
                     Log.e("Excepiton ! ->", "JSONException : SetPointsOnMap->" + e);
@@ -113,35 +132,33 @@ public class MapSearchFragment extends Fragment {
                     Log.e("Excepiton ! ->", "NumberFormatException : SetPointsOnMap->" + e);
                     break;
                 }
-
-
-
             }
         }
 
-
-
-
-
-
-
-
-
-        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
-        MapsInitializer.initialize(this.getActivity());
-
-        // Updates the location and zoom of the MapView
-        CameraUpdate cameraUpdate = null;
+        //set student marker on map
+        JSONObject userGeoInfo = GetStudentGeolocationInfo();
         try {
+            map.addMarker(new MarkerOptions()
+                    .position(new LatLng(Double.parseDouble(userGeoInfo.get("latitude").toString()),
+                            Double.parseDouble(userGeoInfo.get("longitude").toString())))
+                    .title("You"));
+
+            // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
+            MapsInitializer.initialize(mActivity);
+
+            // Updates the location and zoom of the MapView
+            CameraUpdate cameraUpdate = null;
+
             cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(userGeoInfo.get("latitude").toString()),
                     Double.parseDouble(userGeoInfo.get("longitude").toString())), 7);
-        } catch (JSONException e) {
-            CreateAccountController cac = new CreateAccountController();
-            SetStudentGeolocationInfo(cac.HandleGeoLocationInfo(this.getActivity()));
+
+            map.animateCamera(cameraUpdate);
+
+        } catch (JSONException | NumberFormatException e) {
+            Log.e("Excepiton ! ->", " SetPointsOnMap->" + e);
         }
 
 
-        map.animateCamera(cameraUpdate);
     }
 
 

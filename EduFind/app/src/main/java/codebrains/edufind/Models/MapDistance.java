@@ -1,6 +1,7 @@
 package codebrains.edufind.Models;
 
 import android.location.Location;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +31,9 @@ public class MapDistance {
 
         JSONObject studentGeoInfo = GetStudentGeolocationInfo();
         JSONObject sortedList = GetSortedBookList();
+
+        Log.d("--- Check ---", sortedList.toString());
+
         JSONArray usersArray = (JSONArray) sortedList.get("users");
 
         JSONArray sortedByDistProv = new JSONArray();
@@ -46,7 +50,9 @@ public class MapDistance {
                     pointLong, pointLat);
             if(distance <= limitDistance) {
                 JSONObject approvedUser = new JSONObject();
-                approvedUser.put("provider", userObject.get("provider"));
+                approvedUser.put("longitude", userObject.get("longitude"));
+                approvedUser.put("latitude", userObject.get("latitude"));
+                approvedUser.put("provider", userObject.get("name"));
                 approvedUser.put("address", userObject.get("address"));
                 approvedUser.put("number", userObject.get("number"));
                 approvedUser.put("distance", distance);

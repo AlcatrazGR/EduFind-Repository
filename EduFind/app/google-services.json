@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "957010985722",
+    "project_id": "thesis-1477724247199"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957010985722:android:c535b58a72274596",
+        "android_client_info": {
+          "package_name": "codebrains.edufind"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "957010985722-10mvm4iethiii90ehov49vsnfbh4onpi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "codebrains.edufind",
+            "certificate_hash": "E4FC13A5EF70E70D7A4E6582078D789AFFD21423"
+          }
+        },
+        {
+          "client_id": "957010985722-9mfknbvl1eid8c2soroimt6ft2sm17lp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYTZpTXhM5cPQhV6ELENknV0dnTqMfmy0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

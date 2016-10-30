@@ -156,7 +156,11 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
     }
 
 
-
+    public void OpenMaps(View view) {
+        Intent intent = new Intent(this, MapsActivity.class);
+        this.finish();
+        this.startActivity(intent);
+    }
 
 
 
@@ -217,7 +221,7 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
     public void ProcessFinish(JSONObject output, Activity mActivity) {
 
         SetSortedBookList(output); //sets the new sorted book list.
-
+        Log.d("--- Check ---", "--- Here ---");
         if(this.bsf == null || this.msf == null) {
 
             Log.d("-- Phase --", "Initializing Fragments ");
@@ -227,6 +231,7 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
         }
 
         this.bsf.SetExpandableListContent(mActivity);
+       // this.msf.ConfigureGoogleMaps(mActivity);
 
     }
 

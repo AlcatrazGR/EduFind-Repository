@@ -80,11 +80,37 @@
         </activity>
 
         <!-- Goolge Maps API Key -->
+        <!--
         <meta-data
+        android:name="com.google.android.maps.v2.API_KEY"
             android:name="com.google.android.geo.API_KEY"
-            android:value="" />
+            android:value="AIzaSyD8jWG7cxmXRqTauYIUartSD8S55TuC6hc" />
+        -->
+
+        <uses-library android:name="com.google.android.maps" />
+
+      <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBQMYNx9pXTI6WnG7nZ7LJ7R2Wp19paZCQ" />
 
         <activity android:name=".Activities.SortingActivity" >
+        </activity>
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+             android:name="com.google.android.geo.API_KEY"
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" /> -->
+
+        <activity
+            android:name=".Activities.MapsActivity"
+            android:label="@string/title_activity_maps" >
         </activity>
     </application>
 
