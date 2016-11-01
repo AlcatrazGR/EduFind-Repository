@@ -49,8 +49,6 @@ public class AsyncBookSearch extends AsyncTask<String, String, JSONObject> {
         pDialog.show();
 
         studentGeoInfo = GetStudentGeolocationInfo();
-        Log.d("-- 1 Geo Info --", studentGeoInfo.toString());
-
         try {
             if(studentGeoInfo.get("longitude") == 0 || studentGeoInfo.get("latitude") == 0) {
                 //Setting new geolocation info for the student.
@@ -94,23 +92,33 @@ public class AsyncBookSearch extends AsyncTask<String, String, JSONObject> {
         pDialog.dismiss();
 
         try {
-            int status = Integer.parseInt(response.get("status").toString());
 
-            switch (status) {
+            if(response != null) {
+                int status = Integer.parseInt(response.get("status").toString());
 
-                //case error
-                case 0 :
-                    MessageCenter msgCent = new MessageCenter(this.mActivity);
-                    msgCent.FatalErrorDialogDisplay(this.mActivity, "Data Error",
-                            response.get("message").toString());
-                break;
+                switch (status) {
 
-                //case everything ok and data came or everything ok but no data.
-                case 1:
-                case 2:
-                    this.delegate.ProcessFinish(response, this.mActivity);
-                break;
+                    //case error
+                    case 0 :
+                        MessageCenter msgCent = new MessageCenter(this.mActivity);
+                        msgCent.FatalErrorDialogDisplay(this.mActivity, "Data Error",
+                                response.get("message").toString());
+                        break;
 
+                    //case everything ok and data came or everything ok but no data.
+                    case 1:
+                    case 2:
+                        this.delegate.ProcessFinish(response, this.mActivity);
+                        break;
+
+                }
+            }
+            else {
+                Log.e("Error ! ->", "Inside else of onPostExecute of AsyncBookSearch.php");
+                response.put("status", 2);
+                response.put("message", "An error occurred while trying to fetch data from the" +
+                        " database...");
+                this.delegate.ProcessFinish(response, this.mActivity);
             }
 
         } catch (JSONException e) {

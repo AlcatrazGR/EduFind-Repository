@@ -2,29 +2,23 @@ package codebrains.edufind.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import org.json.JSONException;
 import org.json.JSONObject;
-import codebrains.edufind.Adapters.StudentTabsAdapter;
+import codebrains.edufind.Adapters.AdminExpandableListAdapter;
+import codebrains.edufind.Adapters.StudentExpandableListAdapter;
 import codebrains.edufind.AsyncTasks.AsyncBookSearch;
+import codebrains.edufind.Controllers.BookController;
 import codebrains.edufind.Controllers.CreateAccountController;
-import codebrains.edufind.Fragments.BookSearchFragment;
-import codebrains.edufind.Fragments.MapSearchFragment;
 import codebrains.edufind.Interfaces.IAsyncResponse;
 import codebrains.edufind.R;
 
-public class StudentActivity extends ActionBarActivity implements android.support.v7.app.ActionBar.TabListener,
-        IAsyncResponse{
-
-    private ViewPager tabsviewPager;
-    private StudentTabsAdapter mTabsAdapter;
-    private ActionBar actionBar;
+public class StudentActivity extends AppCompatActivity implements IAsyncResponse {
 
     private String sortingValue;
     private int sortingMethod;
@@ -34,12 +28,13 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
      * 3 -> by title
      */
 
-    //Fragments
-    public BookSearchFragment bsf;
-    public MapSearchFragment msf;
+    private ExpandableListAdapter listAdapter;
+    private ExpandableListView expListView;
 
     private static JSONObject studentGeo;
     private static JSONObject sortedList; //It can either be 1 or 2
+
+    private JSONObject lastSortingPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,48 +49,13 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
         try {
             jsonObject.put("process", 3);
             jsonObject.put("shCode", 0);
+
+            this.lastSortingPref = jsonObject;
+            this.lastSortingPref.put("citySortFlag", true);
         } catch (JSONException e) {
             Log.e("Excepiton ! ->", "JSONException : " + e);
         }
         this.CallBookSearchAsyncTask(jsonObject, true);
-
-        //Initializing the tab view of this activity
-        tabsviewPager = (ViewPager) findViewById(R.id.tabspager);
-        mTabsAdapter = new StudentTabsAdapter(getSupportFragmentManager());
-        tabsviewPager.setAdapter(mTabsAdapter);
-        actionBar = getSupportActionBar();
-
-        this.getSupportActionBar().setHomeButtonEnabled(false);
-        this.getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-        ActionBar.Tab searchTab = getSupportActionBar().newTab()
-                .setText(" Search")
-                .setTabListener(this);
-
-        ActionBar.Tab mapTab = getSupportActionBar().newTab()
-                .setText(" Map")
-                .setTabListener(this);
-
-        getSupportActionBar().addTab(searchTab);
-        getSupportActionBar().addTab(mapTab);
-
-        //Event listener that runs whenever the tabs are swiped, it is used to make enable the
-        //respective tab.
-        tabsviewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            @Override
-            public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position); //Enable the respective tab.
-            }
-
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int arg0) {
-            }
-        });
 
         this.sortingMethod = 0;
         try {
@@ -127,6 +87,9 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
                 jsonObject.put("process", 3);
                 jsonObject.put("shCode", this.sortingMethod);
                 jsonObject.put(sortingKey, this.sortingValue);
+
+                this.lastSortingPref = jsonObject;
+                this.lastSortingPref.put("citySortFlag", false);
             } catch (JSONException e) {
                 Log.e("Excepiton ! ->", "JSONException : onActivityResult->" + e);
             }
@@ -165,6 +128,41 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
         this.startActivity(intent);
     }
 
+    /**
+     * Method that handles the setting of the expandable list data.
+     */
+    public void SetExpandableListContent() {
+
+        JSONObject bookData = GetSortedBookList();
+
+        BookController bc = new BookController();
+        this.expListView = (ExpandableListView) this.findViewById(R.id.listView);
+
+        if(bc.SetStudentExpandableListContent(bookData, this)) {
+            this.listAdapter = new StudentExpandableListAdapter(this, bc.GetListDataHeader(),
+                    bc.GetListDataChild(), true);
+            this.expListView.setAdapter(this.listAdapter);
+        }
+        else {
+            this.listAdapter = new AdminExpandableListAdapter(this, bc.GetListDataHeader(),
+                    bc.GetListDataChild(), false);
+            this.expListView.setAdapter(this.listAdapter);
+        }
+
+
+    }
+
+    public void RefreshSearchBooksList(View view) {
+
+        boolean citySortFlag = true;
+        try {
+            citySortFlag = (boolean) this.lastSortingPref.get("citySortFlag");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        this.CallBookSearchAsyncTask(this.lastSortingPref, citySortFlag);
+
+    }
 
 
 
@@ -206,33 +204,10 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
     }
 
     @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-        tabsviewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-        tabsviewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
     public void ProcessFinish(JSONObject output, Activity mActivity) {
 
         SetSortedBookList(output); //sets the new sorted book list.
-        if(this.bsf == null || this.msf == null) {
-            
-            //Fragment initialization
-            this.bsf = new BookSearchFragment();
-            this.msf = new MapSearchFragment();
-        }
-
-        this.bsf.SetExpandableListContent(mActivity);
-       // this.msf.ConfigureGoogleMaps(mActivity);
+        this.SetExpandableListContent();
 
     }
 

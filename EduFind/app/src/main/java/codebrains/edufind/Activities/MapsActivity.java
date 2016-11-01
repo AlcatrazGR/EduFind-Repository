@@ -110,8 +110,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             this.sortedByDistList = null;
         }
 
-        //Log.d("-- Check Sorted --", this.sortedByDistList.toString());
-
         this.SetPointsOnMap();
     }
 
@@ -131,9 +129,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     JSONObject providerJSON = (JSONObject) this.sortedByDistList.get(i);
 
                     String title = providerJSON.get("provider") + ", " + providerJSON.get("distance") + "m";
-                            //"\nAddress: " + providerJSON.get("address") +
-                            //"\nNumber: " + providerJSON.get("number") +
-                            //"\nDistance: " + providerJSON.get("distance");
 
                     LatLng point = new LatLng(Double.parseDouble(providerJSON.get("latitude").toString()),
                             Double.parseDouble(providerJSON.get("longitude").toString()));
