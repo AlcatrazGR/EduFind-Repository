@@ -64,9 +64,13 @@
             android:name=".Fragments.DisplayProvidersBooks"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".Activities.BookActivity" >
+        <activity
+            android:name=".Activities.BookActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".Activities.StudentActivity" >
+        <activity
+            android:name=".Activities.StudentActivity"
+            android:screenOrientation="portrait">
         </activity>
 
         <uses-library android:name="com.google.android.maps" />

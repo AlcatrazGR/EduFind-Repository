@@ -170,5 +170,4 @@ public class LoginActivity extends ActionBarActivity implements android.support.
         tabsviewPager.setCurrentItem(tab.getPosition());
     }
 
-
 }

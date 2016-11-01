@@ -265,8 +265,8 @@
             android:layout_marginTop="15dp"
             android:checked="false"
             android:padding="5dp"
-            android:background="@color/yellowish"/>
-
+            android:textColor="@color/colorAccent"
+            android:buttonTint="@color/yellowish"/>
 
         <Button
             android:layout_width="wrap_content"

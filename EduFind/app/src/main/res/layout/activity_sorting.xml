@@ -24,8 +24,9 @@
                 android:text="Sort by city"
                 android:id="@+id/radioButton"
                 android:checked="true"
-                android:background="@color/yellowish"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:textColor="@color/colorAccent"
+                android:buttonTint="@color/yellowish"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -51,9 +52,10 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:checked="false"
-                android:background="@color/yellowish"
                 android:padding="10dp"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="20dp"
+                android:textColor="@color/colorAccent"
+                android:buttonTint="@color/yellowish" />
 
             <Spinner
                  android:layout_width="fill_parent"
@@ -78,9 +80,10 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:checked="false"
-                android:background="@color/yellowish"
                 android:padding="10dp"
-                android:layout_marginTop="20dp" />
+                android:layout_marginTop="20dp"
+                android:textColor="@color/colorAccent"
+                android:buttonTint="@color/yellowish"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -106,9 +109,10 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:checked="false"
-                android:background="@color/yellowish"
                 android:padding="10dp"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="20dp"
+                android:textColor="@color/colorAccent"
+                android:buttonTint="@color/yellowish"/>
 
             <EditText
                 android:layout_width="match_parent"
