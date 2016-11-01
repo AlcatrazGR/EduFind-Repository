@@ -111,12 +111,12 @@ public class CreateAccount {
         EditText providerEdt = (EditText) mActivity.findViewById(R.id.editText6);
 
         try {
-            accountJSON.put("username", usernameEdt.getText().toString());
-            accountJSON.put("password", passwordEdt.getText().toString());
-            accountJSON.put("repass", rePassedt.getText().toString());
-            accountJSON.put("email", emailEdt.getText().toString());
-            accountJSON.put("number", numberEdt.getText().toString());
-            accountJSON.put("provider", providerEdt.getText().toString());
+            accountJSON.put("username", usernameEdt.getText().toString().trim());
+            accountJSON.put("password", passwordEdt.getText().toString().trim());
+            accountJSON.put("repass", rePassedt.getText().toString().trim());
+            accountJSON.put("email", emailEdt.getText().toString().trim());
+            accountJSON.put("number", numberEdt.getText().toString().trim());
+            accountJSON.put("provider", providerEdt.getText().toString().trim());
         } catch (JSONException e) {
             Log.e("Excepiton ! ->", "JSONException : CreateNewAccountJSONObject->" + e);
         }

@@ -6,6 +6,9 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.DecimalFormat;
+
 import static codebrains.edufind.Activities.StudentActivity.GetSortedBookList;
 import static codebrains.edufind.Activities.StudentActivity.GetStudentGeolocationInfo;
 
@@ -31,11 +34,7 @@ public class MapDistance {
 
         JSONObject studentGeoInfo = GetStudentGeolocationInfo();
         JSONObject sortedList = GetSortedBookList();
-
-        Log.d("--- Check ---", sortedList.toString());
-
         JSONArray usersArray = (JSONArray) sortedList.get("users");
-
         JSONArray sortedByDistProv = new JSONArray();
 
         for(int i = 0; i < usersArray.length(); i++) {
@@ -48,14 +47,20 @@ public class MapDistance {
 
             double distance = this.CalculateDistanceForSortedItems(userLong, userLat,
                     pointLong, pointLat);
+            Log.d("-- Dist Check --", userObject.get("name") + " : " + distance);
+
             if(distance <= limitDistance) {
+
+                DecimalFormat df = new DecimalFormat();
+                df.setMaximumFractionDigits(2);
+
                 JSONObject approvedUser = new JSONObject();
                 approvedUser.put("longitude", userObject.get("longitude"));
                 approvedUser.put("latitude", userObject.get("latitude"));
                 approvedUser.put("provider", userObject.get("name"));
                 approvedUser.put("address", userObject.get("address"));
                 approvedUser.put("number", userObject.get("number"));
-                approvedUser.put("distance", distance);
+                approvedUser.put("distance", df.format(distance)); //Sets only 2 digits
 
                 sortedByDistProv.put(approvedUser);
             }

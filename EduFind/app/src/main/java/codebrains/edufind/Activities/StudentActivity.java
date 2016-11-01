@@ -155,10 +155,13 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
         abs.execute();
     }
 
-
-    public void OpenMaps(View view) {
+    /**
+     * Event listener for the button in the book search activity that opens the activity of the
+     * google maps.
+     * @param view The view of the activity that called this event.
+     */
+    public void OpenGoogleMaps(View view) {
         Intent intent = new Intent(this, MapsActivity.class);
-        this.finish();
         this.startActivity(intent);
     }
 
@@ -221,10 +224,8 @@ public class StudentActivity extends ActionBarActivity implements android.suppor
     public void ProcessFinish(JSONObject output, Activity mActivity) {
 
         SetSortedBookList(output); //sets the new sorted book list.
-        Log.d("--- Check ---", "--- Here ---");
         if(this.bsf == null || this.msf == null) {
-
-            Log.d("-- Phase --", "Initializing Fragments ");
+            
             //Fragment initialization
             this.bsf = new BookSearchFragment();
             this.msf = new MapSearchFragment();

@@ -35,6 +35,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayAdapter<String> mAdapter;
     private DrawerLayout mDrawerLayout;
     private boolean drawerState;
+    private String[] distancesArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,26 +50,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         this.drawerState = false;
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.navList);
-        String[] osArray = { "200m", "500m", "1000m", "2000m", "3000m", "4000m", "5000m" };
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
-        mDrawerList.setAdapter(mAdapter);
+        this.mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        this.mDrawerList = (ListView) findViewById(R.id.navList);
+        this.distancesArray = new String[]{"200m", "500m", "1000m", "2000m", "4000m", "6000m"};
+        this.mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, this.distancesArray);
+        this.mDrawerList.setAdapter(mAdapter);
 
-    }
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                double realDistance;
+                try {
+                    String selectedStrDist = distancesArray[position];
+                    realDistance = Double.parseDouble(selectedStrDist.replace("m", ""));
+                } catch (Exception ex) {
+                    Log.e("Exception! -> ", "Exception : DrawerItemClickListener ->" + ex);
+                    realDistance = 200.0;
+                }
 
-        }
+                Log.d("--- Selected Dist ---", String.valueOf(realDistance));
+                ConfigureGoogleMaps(realDistance);
+
+            }
+        });
+
     }
 
     /**
      * Method that configures the results to be display to the map by distance selected by the user.
      */
-    public void ConfigureGoogleMaps() {
-        this.CalculateDistanceForMap(200.0);
+    public void ConfigureGoogleMaps(double distance) {
+        this.CalculateDistanceForMap(distance);
     }
 
     /**
@@ -97,6 +110,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             this.sortedByDistList = null;
         }
 
+        //Log.d("-- Check Sorted --", this.sortedByDistList.toString());
+
         this.SetPointsOnMap();
     }
 
@@ -106,14 +121,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     private void SetPointsOnMap() {
 
+        mMap.clear();
+
         //Set providers markers on map
-        if(this.sortedByDistList != null || this.sortedByDistList.length() != 0) {
+        if(this.sortedByDistList != null) {
             for(int i = 0; i < this.sortedByDistList.length(); i++) {
 
                 try {
                     JSONObject providerJSON = (JSONObject) this.sortedByDistList.get(i);
 
-                    String title = "Provider: " + providerJSON.get("provider");
+                    String title = providerJSON.get("provider") + ", " + providerJSON.get("distance") + "m";
                             //"\nAddress: " + providerJSON.get("address") +
                             //"\nNumber: " + providerJSON.get("number") +
                             //"\nDistance: " + providerJSON.get("distance");
@@ -182,7 +199,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        this.ConfigureGoogleMaps();
+        this.ConfigureGoogleMaps(200.0);
     }
 
 }
