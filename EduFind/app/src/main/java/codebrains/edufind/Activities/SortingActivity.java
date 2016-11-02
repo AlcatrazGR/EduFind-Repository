@@ -12,10 +12,71 @@ import codebrains.edufind.Utils.MessageCenter;
 
 public class SortingActivity extends AppCompatActivity {
 
+    private RadioButton rd1;
+    private RadioButton rd2;
+    private RadioButton rd3;
+    private RadioButton rd4;
+
+    private Spinner spinner;
+    private EditText areaSortEdt;
+    private EditText publisherSortEdt;
+    private EditText titleSortEdt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sorting);
+
+        this.rd1 = (RadioButton) findViewById(R.id.radioButton);
+        this.rd2 = (RadioButton) findViewById(R.id.radioButton2);
+        this.rd3 = (RadioButton) findViewById(R.id.radioButton3);
+        this.rd4 = (RadioButton) findViewById(R.id.radioButton4);
+
+        this.spinner = (Spinner) findViewById(R.id.spinner3);
+        this.areaSortEdt = (EditText) findViewById(R.id.editText9);
+        this.publisherSortEdt = (EditText) findViewById(R.id.editText10);
+        this.titleSortEdt = (EditText) findViewById(R.id.editText11);
+
+        //By default the enable one is the sorting by area.
+        this.areaSortEdt.setEnabled(true);
+        this.publisherSortEdt.setEnabled(false);
+        this.titleSortEdt.setEnabled(false);
+        this.spinner.setEnabled(false);
+
+    }
+
+    /**
+     * Event listener that is fired whenever a radio button is checked and it enables or disable
+     * all the elements that are not connected with the selected radio button (sorting method).
+     * @param view The view of the activity that fired this event.
+     */
+    public void EnableDisableFields(View view) {
+
+        if(rd1.isChecked()) {
+            this.areaSortEdt.setEnabled(true);
+            this.publisherSortEdt.setEnabled(false);
+            this.titleSortEdt.setEnabled(false);
+            this.spinner.setEnabled(false);
+        }
+        else if (rd2.isChecked()) {
+            this.areaSortEdt.setEnabled(false);
+            this.publisherSortEdt.setEnabled(false);
+            this.titleSortEdt.setEnabled(false);
+            this.spinner.setEnabled(true);
+        }
+        else if (rd3.isChecked()) {
+            this.areaSortEdt.setEnabled(false);
+            this.publisherSortEdt.setEnabled(true);
+            this.titleSortEdt.setEnabled(false);
+            this.spinner.setEnabled(false);
+        }
+        else if (rd4.isChecked()) {
+            this.areaSortEdt.setEnabled(false);
+            this.publisherSortEdt.setEnabled(false);
+            this.titleSortEdt.setEnabled(true);
+            this.spinner.setEnabled(false);
+        }
+
     }
 
     /**
@@ -27,16 +88,9 @@ public class SortingActivity extends AppCompatActivity {
 
         MessageCenter msgCenter = new MessageCenter(this);
 
-        RadioButton rd1 = (RadioButton) findViewById(R.id.radioButton);
-        RadioButton rd2 = (RadioButton) findViewById(R.id.radioButton2);
-        RadioButton rd3 = (RadioButton) findViewById(R.id.radioButton3);
-        RadioButton rd4 = (RadioButton) findViewById(R.id.radioButton4);
-
         if(rd1.isChecked()) {
 
-            EditText areaSortEdt = (EditText) findViewById(R.id.editText9);
             String areaToSort = areaSortEdt.getText().toString().trim();
-
             if(this.EmptySortingFieldCheck(areaToSort)) {
                 String code = "0";
                 Intent output = new Intent();
@@ -53,9 +107,7 @@ public class SortingActivity extends AppCompatActivity {
         }
         else if (rd2.isChecked()) {
 
-            Spinner spinner = (Spinner) findViewById(R.id.spinner3);
             String sectorToSort = spinner.getSelectedItem().toString();
-
             String code = "1";
             Intent output = new Intent();
             output.putExtra("sortingMethod", code);
@@ -67,9 +119,7 @@ public class SortingActivity extends AppCompatActivity {
         }
         else if (rd3.isChecked()) {
 
-            EditText publisherSortEdt = (EditText) findViewById(R.id.editText10);
             String publisherToSort = publisherSortEdt.getText().toString().trim();
-
             if(this.EmptySortingFieldCheck(publisherToSort)) {
                 String code = "2";
                 Intent output = new Intent();
@@ -87,9 +137,7 @@ public class SortingActivity extends AppCompatActivity {
         }
         else {
 
-            EditText titleSortEdt = (EditText) findViewById(R.id.editText11);
             String titleToSort = titleSortEdt.getText().toString().trim();
-
             if(this.EmptySortingFieldCheck(titleToSort)) {
                 String code = "3";
                 Intent output = new Intent();

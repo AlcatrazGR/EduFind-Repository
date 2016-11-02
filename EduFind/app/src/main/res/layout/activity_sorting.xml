@@ -26,7 +26,8 @@
                 android:checked="true"
                 android:padding="10dp"
                 android:textColor="@color/colorAccent"
-                android:buttonTint="@color/yellowish"/>
+                android:buttonTint="@color/yellowish"
+                android:onClick="EnableDisableFields"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -55,7 +56,8 @@
                 android:padding="10dp"
                 android:layout_marginTop="20dp"
                 android:textColor="@color/colorAccent"
-                android:buttonTint="@color/yellowish" />
+                android:buttonTint="@color/yellowish"
+                android:onClick="EnableDisableFields" />
 
             <Spinner
                  android:layout_width="fill_parent"
@@ -83,7 +85,8 @@
                 android:padding="10dp"
                 android:layout_marginTop="20dp"
                 android:textColor="@color/colorAccent"
-                android:buttonTint="@color/yellowish"/>
+                android:buttonTint="@color/yellowish"
+                android:onClick="EnableDisableFields" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -112,7 +115,8 @@
                 android:padding="10dp"
                 android:layout_marginTop="20dp"
                 android:textColor="@color/colorAccent"
-                android:buttonTint="@color/yellowish"/>
+                android:buttonTint="@color/yellowish"
+                android:onClick="EnableDisableFields" />
 
             <EditText
                 android:layout_width="match_parent"

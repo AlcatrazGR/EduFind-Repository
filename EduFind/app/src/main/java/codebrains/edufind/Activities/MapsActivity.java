@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -165,8 +164,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    /**
+     * Event listener for the positioning button. It re setts the geo location info of the student
+     * and re sets the markers to their new position (the student if it moves).
+     * @param view The view of the activity that fired this event.
+     */
+    public void GetNewPositionOfUser(View view) {
+
+        try {
+            CreateAccountController cac = new CreateAccountController();
+            SetStudentGeolocationInfo(cac.HandleGeoLocationInfo(this));
+        }
+        catch(Exception ex) {
+            Log.e("Excepiton ! ->", "Exception : GetNewPositionOfUser->" + ex);
+            CreateAccountController cac = new CreateAccountController();
+            SetStudentGeolocationInfo(cac.HandleGeoLocationInfo(this));
+        }
+
+        this.SetPointsOnMap();
+    }
 
 
+    /**
+     * Event listener that opens and closes the navigation drawer and also changes a boolean
+     * flag that represents the current state of the drawer (if its closed or opened).
+     * @param view The view of the activity that fired this listener.
+     */
     public void DrawerDisplayProcess(View view) {
 
         if(this.drawerState) { //if its opened

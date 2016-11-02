@@ -30,8 +30,6 @@
 
     </android.support.v4.widget.DrawerLayout>
 
-
-
     <Button
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -42,6 +40,18 @@
         android:layout_alignParentEnd="true"
         android:background="@drawable/search_icon"
         android:onClick="DrawerDisplayProcess" />
+
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/button22"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="65dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/positioning_icon"
+        android:onClick="GetNewPositionOfUser" />
 
 
 </RelativeLayout>
