@@ -52,7 +52,12 @@ public class ProviderCollectionAdapter extends ArrayAdapter<Book> {
 
             titleTv.setText(this.valuesArr.get(position).GetTitle());
             sectorTv.setText(this.valuesArr.get(position).GetSector());
-            authorsTv.setText(this.valuesArr.get(position).GetAuthors());
+
+            String authors = this.valuesArr.get(position).GetAuthors();
+            if(authors.length() >= 27) {
+                authors = authors.substring(0, 25) + "...";
+            }
+            authorsTv.setText(authors);
 
             rowView.setOnClickListener(new OnClickListener() {
                 @Override

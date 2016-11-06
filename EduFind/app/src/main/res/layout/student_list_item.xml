@@ -8,7 +8,7 @@
         android:id="@+id/lblListItem"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="13dip"
+        android:textSize="12dp"
         android:paddingTop="2dp"
         android:paddingBottom="2dp"
         android:layout_marginLeft="20dp"
