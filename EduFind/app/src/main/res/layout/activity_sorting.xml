@@ -9,10 +9,22 @@
     android:paddingBottom="10dp"
     android:paddingTop="10dp">
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/button29"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/information_icon"
+        android:onClick="OpenInformationWebPage"/>
+
+
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
+
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
@@ -146,5 +158,8 @@
                 android:layout_marginTop="20dp"/>
 
         </RadioGroup>
+
+
+
     </ScrollView>
 </RelativeLayout>

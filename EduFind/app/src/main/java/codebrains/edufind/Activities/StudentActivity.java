@@ -2,6 +2,7 @@ package codebrains.edufind.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -152,6 +153,12 @@ public class StudentActivity extends AppCompatActivity implements IAsyncResponse
 
     }
 
+    /**
+     * Event lister for the refresh floating button on the bottom right side of teh screen.
+     * It makes a http request to the server to retrieve books with the same sorting method
+     * that was previously selected by the user.
+     * @param view The view of the activity that called this event.
+     */
     public void RefreshSearchBooksList(View view) {
 
         boolean citySortFlag = true;
@@ -164,11 +171,16 @@ public class StudentActivity extends AppCompatActivity implements IAsyncResponse
 
     }
 
-
-
-
-
-
+    /**
+     * Event listener for the information button, which opens on the web browser the web page
+     * of the application.
+     * @param view The view of the activity that called this event.
+     */
+    public void OpenInformationWebPage(View view) {
+        Uri uri = Uri.parse("http://edufind.hol.es");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
 
 
     /**

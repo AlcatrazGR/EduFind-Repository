@@ -1,6 +1,7 @@
 package codebrains.edufind.Activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -153,6 +154,17 @@ public class LoginActivity extends ActionBarActivity implements android.support.
             msgCent.GPSNotEnabledErrorDialog();
         }
 
+    }
+
+    /**
+     * Event listener for the information button, which opens on the web browser the web page
+     * of the application.
+     * @param view The view of the activity that called this event.
+     */
+    public void OpenInformationWebPage(View view) {
+        Uri uri = Uri.parse("http://edufind.hol.es");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
     }
 
     @Override

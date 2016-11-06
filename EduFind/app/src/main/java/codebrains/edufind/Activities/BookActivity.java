@@ -3,6 +3,7 @@ package codebrains.edufind.Activities;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -151,6 +152,17 @@ public class BookActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+
+    /**
+     * Event listener for the information button, which opens on the web browser the web page
+     * of the application.
+     * @param view The view of the activity that called this event.
+     */
+    public void OpenInformationWebPage(View view) {
+        Uri uri = Uri.parse("http://edufind.hol.es");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
 
 
 

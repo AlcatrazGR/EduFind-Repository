@@ -9,7 +9,6 @@
     tools:context="codebrains.edufind.Fragments.BookSearchFragment"
     android:background="@color/colorPrimaryDark">
 
-
     <ExpandableListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -51,5 +50,13 @@
         app:backgroundTint="@color/turquoise"
         android:onClick="OpenGoogleMaps"/>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab5"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="top|end"
+        android:onClick="OpenInformationWebPage"
+        android:src="@android:drawable/ic_dialog_info"
+        app:backgroundTint="@color/yellowish" />
 
 </android.support.design.widget.CoordinatorLayout>

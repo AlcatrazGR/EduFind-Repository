@@ -3,6 +3,7 @@ package codebrains.edufind.Activities;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -327,6 +328,16 @@ public class ProviderActivity extends ActionBarActivity implements
             this.dpb.RefreshProviderBookList(this);
     }
 
+    /**
+     * Event listener for the information button, which opens on the web browser the web page
+     * of the application.
+     * @param view The view of the activity that called this event.
+     */
+    public void OpenInformationWebPage(View view) {
+        Uri uri = Uri.parse("http://edufind.hol.es");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
 
     /**
      * Event that is called whenever the submit button on the add book form is pressed.

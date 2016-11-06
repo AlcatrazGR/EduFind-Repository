@@ -179,5 +179,16 @@
             android:onClick="UpdateBookInfoProcess"
             android:background="@color/yellowish" />
 
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/button24"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/information_icon"
+            android:onClick="OpenInformationWebPage"/>
+
+
     </RelativeLayout>
 </ScrollView>

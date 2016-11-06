@@ -1,5 +1,7 @@
 package codebrains.edufind.Activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -203,6 +205,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    /**
+     * Event listener for the information button, which opens on the web browser the web page
+     * of the application.
+     * @param view The view of the activity that called this event.
+     */
+    public void OpenInformationWebPage(View view) {
+        Uri uri = Uri.parse("http://edufind.hol.es");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
 
     /**
      * Manipulates the map once available.
