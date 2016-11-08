@@ -47,7 +47,6 @@ public class MapDistance {
 
             double distance = this.CalculateDistanceForSortedItems(userLong, userLat,
                     pointLong, pointLat);
-            Log.d("-- Dist Check --", userObject.get("name") + " : " + distance);
 
             if(distance <= limitDistance) {
 

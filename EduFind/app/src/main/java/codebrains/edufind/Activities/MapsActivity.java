@@ -1,6 +1,8 @@
 package codebrains.edufind.Activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -11,19 +13,25 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import codebrains.edufind.Controllers.CreateAccountController;
 import codebrains.edufind.Controllers.MapDistanceController;
 import codebrains.edufind.R;
+import codebrains.edufind.Utils.MessageCenter;
+
 import static codebrains.edufind.Activities.StudentActivity.GetStudentGeolocationInfo;
 import static codebrains.edufind.Activities.StudentActivity.SetStudentGeolocationInfo;
 
@@ -37,6 +45,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private DrawerLayout mDrawerLayout;
     private boolean drawerState;
     private String[] distancesArray;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +85,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
     }
 
     /**
@@ -93,7 +109,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void CalculateDistanceForMap(double distance) {
 
         try {
-            if(GetStudentGeolocationInfo().get("longitude") == 0 || GetStudentGeolocationInfo().get("latitude") == 0) {
+            if (GetStudentGeolocationInfo().get("longitude") == 0 || GetStudentGeolocationInfo().get("latitude") == 0) {
                 CreateAccountController cac = new CreateAccountController();
                 SetStudentGeolocationInfo(cac.HandleGeoLocationInfo(this));
             }
@@ -104,10 +120,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         MapDistanceController mdc = new MapDistanceController();
-        if(mdc.CalculateDistanceControl(distance)) {
+        if (mdc.CalculateDistanceControl(distance)) {
             this.sortedByDistList = mdc.GetListOfProvidersSortedByDistance();
-        }
-        else {
+        } else {
             this.sortedByDistList = null;
         }
 
@@ -123,8 +138,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.clear();
 
         //Set providers markers on map
-        if(this.sortedByDistList != null) {
-            for(int i = 0; i < this.sortedByDistList.length(); i++) {
+        if (this.sortedByDistList != null) {
+            for (int i = 0; i < this.sortedByDistList.length(); i++) {
 
                 try {
                     JSONObject providerJSON = (JSONObject) this.sortedByDistList.get(i);
@@ -135,7 +150,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             Double.parseDouble(providerJSON.get("longitude").toString()));
                     mMap.addMarker(new MarkerOptions()
                             .position(point)
-                            .title(title));
+                            .title(title)
+                            .snippet("Call: " + providerJSON.get("number")));
 
                 } catch (JSONException e) {
                     Log.e("Excepiton ! ->", "JSONException : SetPointsOnMap->" + e);
@@ -176,8 +192,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         try {
             CreateAccountController cac = new CreateAccountController();
             SetStudentGeolocationInfo(cac.HandleGeoLocationInfo(this));
-        }
-        catch(Exception ex) {
+        } catch (Exception ex) {
             Log.e("Excepiton ! ->", "Exception : GetNewPositionOfUser->" + ex);
             CreateAccountController cac = new CreateAccountController();
             SetStudentGeolocationInfo(cac.HandleGeoLocationInfo(this));
@@ -194,11 +209,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     public void DrawerDisplayProcess(View view) {
 
-        if(this.drawerState) { //if its opened
+        if (this.drawerState) { //if its opened
             mDrawerLayout.closeDrawer(Gravity.LEFT);
             this.drawerState = false;
-        }
-        else { //if its closed
+        } else { //if its closed
             mDrawerLayout.openDrawer(Gravity.LEFT);
             this.drawerState = true;
         }
@@ -217,6 +231,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     /**
+     * Method that handles the call of the selected provider.
+     * @param title The title of the selected marker.
+     * @param snippet The snippet of the selected marker.
+     */
+    private void CallProviderProcess(String title, String snippet) {
+
+        if (!title.equals("You")) {
+
+            String numberStr = snippet.replace("Call:", "").trim();
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel:" + numberStr));
+            startActivity(callIntent);
+
+        }
+        else {
+            MessageCenter msgCenter = new MessageCenter(this);
+            msgCenter.DisplayErrorDialog("Call Error", "You must first select a provider in order " +
+                    "to start the calling process...");
+        }
+
+    }
+
+
+
+    /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
      * This is where we can add markers or lines, add listeners or move the camera. In this case,
@@ -228,8 +267,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
         this.ConfigureGoogleMaps(200.0);
+
+        //Marker click listener.
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+
+                String title = marker.getTitle();
+                String snippet = marker.getSnippet();
+                Log.d("-- Marker Title --", title);
+                CallProviderProcess(title, snippet);
+
+            }
+        });
+
     }
 
 }
